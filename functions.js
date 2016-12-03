@@ -826,8 +826,8 @@ function findString ( searchString ) {
 		var re = new RegExp(searchString, "i");
 		found = false;
 		for (i=0; i<scriptGroups.length-1; i++) {
-			if (scriptGroups[i][0] != '131072' && scriptGroups[i][0] != '13312' && scriptGroups[i][0] != '44032' && 
-				scriptGroups[i][0] != '57344' && scriptGroups[i][0] != '983040' && scriptGroups[i][0] != '1048576') { 
+			if (scriptGroups[i][0] != 131072 && scriptGroups[i][0] != 13312 && scriptGroups[i][0] != 44032 && 
+				scriptGroups[i][0] != 57344 && scriptGroups[i][0] != 983040 && scriptGroups[i][0] != 1048576) { 
 				for (j=scriptGroups[i][0]; j<scriptGroups[i][1]; j++) {
 				//if (isset(desc[j])) { print "."; }
 					if (U[j]) {
@@ -956,7 +956,7 @@ function getDataFor (codepoint) {
 	else if (charType == 3) {
 		return hexcp+";["+ findScriptGroup( codepoint )+"];Lo;0;L;;;;;N;;;;;;;;;";
 		}
-	else if (charType = 5) {
+	else if (charType == 5) {
 		return hexcp+";["+ findScriptGroup( codepoint )+"];Co;0;L;;;;;N;;;;;;;;;";
 		}
 	else if (charType > 4) {
@@ -977,9 +977,9 @@ function getRange ( str ) {
 	var range = '';
 	for (i=1; i<scriptGroups.length; i++) {
 		if (scriptGroups[i][2].toLowerCase() == lcstr) {
-			start = dec2hex(parseInt(scriptGroups[i][0]));
+			start = dec2hex(scriptGroups[i][0]);
 			if (start.length == 3) { start = '0'+start; }
-			end = dec2hex(parseInt(scriptGroups[i][1]));
+			end = dec2hex(scriptGroups[i][1]);
 			if (end.length == 3) { end = '0'+end; }
 			range = start+':'+end;
 			document.getElementById('block').value = range;
@@ -1149,9 +1149,9 @@ function listProperties ( searchString ) {
 		var re = new RegExp(searchString);
 		found = false;
 		for (i=0; i<scriptGroups.length-1; i++) { 
-			if (scriptGroups[i][0] != '131072' && scriptGroups[i][0] != '13312' && scriptGroups[i][0] != '44032' && scriptGroups[i][0] != '19968' && 
-				scriptGroups[i][0] != '57344' && scriptGroups[i][0] != '983040' && scriptGroups[i][0] != '1048576') {  
-				for (j=parseInt(scriptGroups[i][0]); j<parseInt(scriptGroups[i][1]); j++) {
+			if (scriptGroups[i][0] != 131072 && scriptGroups[i][0] != 13312 && scriptGroups[i][0] != 44032 && scriptGroups[i][0] != 19968 && 
+				scriptGroups[i][0] != 57344 && scriptGroups[i][0] != 983040 && scriptGroups[i][0] != 1048576) {  
+				for (j=scriptGroups[i][0]; j<scriptGroups[i][1]; j++) {
 					if (U[j]) {
 						found = false;
 						
