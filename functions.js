@@ -2556,12 +2556,12 @@ function printProperties ( codepoint ) {
 				span = p.appendChild( document.createElement('span') );
 				span.className = 'notesexpl'
 				a = span.appendChild( document.createElement('a'));
-					a.href = '/scripts/'+blockfile+'/block#char'+cRecord[0];
+					a.href = '../r12a.github.io/scripts/'+blockfile+'/block#char'+cRecord[0];
 					a.target = 'blockdata';
 				a.appendChild( document.createTextNode('Open the notes in a separate page.'));
 				span.style.fontSize = '80%';
 
-				document.getElementById('notesIframe').src = '/scripts/'+blockfile+'/block?char='+cRecord[0]
+				document.getElementById('notesIframe').src = '../r12a.github.io/scripts/'+blockfile+'/block?char='+cRecord[0]
 				}
 			// if _showNotes isn't on, just mention that there are some notes
 			else if (blockfile) {  
@@ -2781,7 +2781,7 @@ function displayBlockData (block) {
 	
 	var blockname = scriptGroups[block][3];
 	
-	info = window.open('/scripts/links?script='+blockname, 'info'); info.focus();
+	info = window.open('../r12a.github.io/scripts/links?script='+blockname, 'info'); info.focus();
 
 	}
 
