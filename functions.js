@@ -828,7 +828,7 @@ function findString ( searchString ) {
 		for (i=0; i<scriptGroups.length-1; i++) {
 			if (scriptGroups[i][0] != 131072 && scriptGroups[i][0] != 13312 && scriptGroups[i][0] != 44032 && 
 				scriptGroups[i][0] != 57344 && scriptGroups[i][0] != 983040 && scriptGroups[i][0] != 1048576) { 
-				for (j=scriptGroups[i][0]; j<scriptGroups[i][1]; j++) {
+				for (j=scriptGroups[i][0]; j<=scriptGroups[i][1]; j++) {
 				//if (isset(desc[j])) { print "."; }
 					if (U[j]) {
 						fields = U[j].split(';');
