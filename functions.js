@@ -124,7 +124,7 @@ function addLine (codepoint, newContent) {
 				//scriptGroup = findScriptGroup(codepoint);
 				if (cRecord[GRAPHIC_FIELD] == 'm') {
 					scriptGroup = findScriptGroup(codepoint);
-					img.src = '/c/'+scriptGroup.replace(/ /g,'_')+'/'+cRecord[0]+'.png'; }
+					img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+cRecord[0]+'.png'; }
 				else { img.src = 'http://decodeunicode.org/data/glyph/26x26/'+cRecord[0]+'.gif'; dugraphics=true; }
 				//img.src = 'http://decodeunicode.org/data/glyph/26x26/'+cRecord[0]+'.gif';
 				}
@@ -147,7 +147,7 @@ function addLine (codepoint, newContent) {
 				var img = div.appendChild( document.createElement( 'img' ));
 				if (cRecord[GRAPHIC_FIELD] == 'm') {
 					scriptGroup = findScriptGroup(codepoint);
-					img.src = '/c/'+scriptGroup.replace(/ /g,'_')+'/'+cRecord[0]+'.png'; }
+					img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+cRecord[0]+'.png'; }
 				else { img.src = 'http://decodeunicode.org/data/glyph/26x26/'+cRecord[0]+'.gif';  }
 				//img.src = 'http://decodeunicode.org/data/glyph/26x26/'+cRecord[0]+'.gif';
 				}
@@ -574,7 +574,7 @@ function createMatrix ( formField ) {
 								scriptGroup = findScriptGroup(cCell);
 							//scriptGroup = findScriptGroup(cCell); 
 							//if (localGraphics.indexOf(scriptGroup+',') > -1) {
-								img.src = '/c/'+scriptGroup.replace(/ /g,'_')+'/'+hexNum+'.png'; 
+								img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+hexNum+'.png'; 
 								}
 							else { 
 								img.src = 'http://decodeunicode.org/data/glyph/26x26/'+hexNum+'.gif'; dugraphics = true; 
@@ -652,7 +652,7 @@ function doN11n (form) {
 	
 function olddoN11n (form) {
 	var str = document.getElementById('picker').value;
-	var uri = encodeURI('/code/normalization/getn11n.php?n='+form+'&str='+str);
+	var uri = encodeURI('../shared/code/normalization/getn11n.php?n='+form+'&str='+str);
 	httpRequest('GET', uri, true, getn11n);
 	}
 	
@@ -1734,7 +1734,7 @@ function showConverter (codepoints, origin) {
 	else { codepoints = cleanHexCPs(codepoints); } 
 	if ( codepoints == '' || codepoints == ' ') { alert('No codepoints found.'); return 0; }
 	if ( codepoints.match(/[^abcdefABCDEF0-9\s]/)) { alert('Can\'t work out what the codepoints are. Unexpected characters found. Boiled down to: '+codepoints); return 0; }
-	converter = window.open('/apps/conversion?codepoints='+codepoints+'&origin='+origin, 'converter');
+	converter = window.open('../r12a.github.io/apps/conversion?codepoints='+codepoints+'&origin='+origin, 'converter');
 	converter.focus();
 	}
 
@@ -2030,7 +2030,7 @@ function toggleGraphic (graphic) {
 					cRecord = U[titlefields[3]].split(';');
 					if (cRecord[GRAPHIC_FIELD] == 'm') {
 						scriptGroup = findScriptGroup(parseInt(titlefields[3]));
-						img.src = '/c/'+scriptGroup.replace(/ /g,'_')+'/'+hexNum+'.png'; 
+						img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+hexNum+'.png'; 
 						}
 					
 					//scriptGroup = findScriptGroup(parseInt(titlefields[3])); 
@@ -2063,7 +2063,7 @@ function toggleGraphic (graphic) {
 					cRecord = U[titlefields[3]].split(';');
 					if (cRecord[GRAPHIC_FIELD] == 'm') {
 						scriptGroup = findScriptGroup(parseInt(titlefields[3]));
-						img.src = '/c/'+scriptGroup.replace(/ /g,'_')+'/'+hexNum+'.png'; 
+						img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+hexNum+'.png'; 
 						}
 
 					//scriptGroup = findScriptGroup(parseInt(titlefields[3])); 
@@ -2207,7 +2207,7 @@ function printProperties ( codepoint ) {
 				img.title = parseInt(cRecord[0], 16); 
 				
 				if (cRecord[GRAPHIC_FIELD] == 'm') {
-					img.src = '/c/'+scriptGroup.replace(/ /g,'_')+'/large/'+cRecord[0]+'.png'; 
+					img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/large/'+cRecord[0]+'.png'; 
 					}
 
 				//if (localGraphics.indexOf(scriptGroup+',') > -1) { 
@@ -2397,7 +2397,7 @@ function printProperties ( codepoint ) {
 			p.appendChild( document.createTextNode( 'View data in ' ));
 			a = p.appendChild( document.createElement( 'a' ));
 			a.appendChild( document.createTextNode( 'UniHan database' ));
-			a.setAttribute( 'href', 'http://www.unicode.org/cgi-bin/GetUnihanData.pl?codepoint='+cRecord[0]+'&amp;useutf8=true' );
+			a.setAttribute( 'href', 'http://www.unicode.org/cgi-bin/GetUnihanData.pl?codepoint='+cRecord[0]+'&useutf8=true' );
 			a.setAttribute( 'target', 'unihan' );
 			//a.onclick = function () { unihan.focus(); };
 			}
@@ -2450,7 +2450,7 @@ function printProperties ( codepoint ) {
 		tr = tbody.appendChild( document.createElement( 'tr' ));
 		td = tr.appendChild( document.createElement( 'td' ));
 			td.setAttribute( 'colspan', '2');
-			td.innerHTML = '<a href="/apps/conversion?q='+getCharFromInt(parseInt(cRecord[0],16))+'" target="conversion">More alternative forms</a>';
+			td.innerHTML = '<a href="../r12a.github.io/apps/conversion?q='+getCharFromInt(parseInt(cRecord[0],16))+'" target="conversion">More alternative forms</a>';
 
 
 		//add link to Conversion tool
