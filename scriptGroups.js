@@ -23,6 +23,7 @@ var titles = new Array(
 "1984¶2047¶NKo¶nko¶",
 "2048¶2111¶Samaritan¶samaritan¶",
 "2112¶2143¶Mandaic¶mandaic¶",
+"2144¶2159¶Syriac Supplement¶syriacsupplement¶",
 "2208¶2303¶Arabic Extended-A¶arabic¶2209 2216",
 "2304¶2431¶Devanagari¶devanagari¶2364 2404:2405",
 "2432¶2559¶Bengali¶bengali¶2433:2435 2437:2444 2447:2448 2451:2472 2474:2480 2482 2486:2489 2492:2500 2503:2504 2507:2510 2519 2524:2525 2527:2531 2534:2546 2548:2554",
@@ -225,9 +226,12 @@ var titles = new Array(
 "71296¶71375¶Takri¶takri¶",
 "71424¶71487¶Ahom¶ahom¶",
 "71840¶71935¶Warang Citi¶warangciti¶",
+"72192¶72271¶Zanabazar Square¶zanabazarsquare¶",
+"72272¶72367¶Soyombo¶soyombo¶",
 "72384¶72447¶Pau Cin Hau¶paucinhau¶",
 "72704¶72815¶Bhaiksuki¶¶",
 "72816¶72895¶Marchen¶¶",
+"72960¶73055¶Masaram Gondi¶masaramgondi¶",
 "73728¶74751¶Cuneiform¶cuneiform¶",
 "74752¶74879¶Cuneiform Numbers and Punctuation¶cuneiform¶",
 "74880¶75087¶Early Dynastic Cuneiform¶cuneiform¶",
@@ -242,6 +246,8 @@ var titles = new Array(
 "94208¶100351¶Tangut¶¶",
 "100352¶101119¶Tangut Components¶¶",
 "110592¶110847¶Kana Supplement¶japanese¶",
+"110848¶110895¶Kana Extended-A¶japanese¶",
+"110960¶111359¶Nushu¶nushu¶",
 "113664¶113823¶Duployan¶¶",
 "113824¶113839¶Shorthand Format Controls¶¶",
 "118784¶119039¶Byzantine Musical Symbols¶¶",
@@ -282,10 +288,7 @@ var titles = new Array(
 
 var scriptGroups = []
 for (var i=0; i<titles.length; i++) {
-	var temp = titles[i].split('¶')
-	temp[0] = parseInt(temp[0])
-	temp[1] = parseInt(temp[1])
-	scriptGroups[i+1] = temp
+	scriptGroups[i+1] = titles[i].split('¶');
 	}
 scriptGroups[0] = "▲";
 

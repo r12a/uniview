@@ -4,16 +4,10 @@
 <meta charset="utf-8"/>
 
 
-<!--
-NEW STUFF
-
-- add spaces to picker function from old add single space
-
--->
-<title>UniView 9.0.0</title>
+<title>UniView 10.0.0</title>
 <link rel="stylesheet" href="uniview-style.css" type="text/css"/>
 
-<!-- &copy; Copyright 2001-2015 Richard Ishida [ishida@w3.org].  All rights reserved.  -->
+<!-- &copy; Copyright 2001-2017 Richard Ishida [ishida@w3.org].  All rights reserved.  -->
 <script src="u.js" type="text/javascript"></script>
 <script src="descriptions.js" type="text/javascript"></script>
 <script src="local.js" type="text/javascript"></script>
@@ -45,7 +39,7 @@ NEW STUFF
 <body>
 <header>
 <div id="header-boilerplate"><div id="site-navigation"> <img id="bp_picture" class="compact" alt=" " src="../shared/images/world.gif"></div><div id="boilerplate"><div id="line" class="midlength">&nbsp;</div></div>
-<div id="topbar"><a href="/">r12a</a> &gt;&gt; apps  &gt;&gt; UniView 9.0.0</div><div id="sitelinks" class="noprint"><a href="http://rishida.net/blog/">blog</a>&nbsp; <a href="../doclist">docs</a>&nbsp; <a href="../maplist">maps</a>&nbsp; <a href="../applist">apps</a>&nbsp; <a href="../photos">photos</a>&nbsp;&nbsp;</div></div>
+<div id="topbar"><a href="/">r12a</a> &gt;&gt; apps  &gt;&gt; UniView 10.0.0</div><div id="sitelinks" class="noprint"><a href="http://rishida.net/blog/">blog</a>&nbsp; <a href="../doclist">docs</a>&nbsp; <a href="../maplist">maps</a>&nbsp; <a href="../applist">apps</a>&nbsp; <a href="../photos">photos</a>&nbsp;&nbsp;</div></div>
 </header>
 
 <div role="main">
@@ -69,7 +63,7 @@ NEW STUFF
           <td><form action="none" onsubmit="showSelection(document.getElementById('block').value);  return false;">
               <select name="block" onchange="showSelection(this.value)" id="block" style="font-size: 100%;">
                 <!--select name="block" id="block"-->
-                <option value="0020:00FF" selected="selected">Select a block (* indicates new in 9.0)</option>
+                <option value="0020:00FF" selected="selected">Select a block (* indicates new in 10.0)</option>
                 <optgroup label="European scripts">
                 <option value="0530:058F">Armenian</option>
                 <option value="FB13:FB17" class="pb">Armenian ligatures</option>
@@ -79,12 +73,12 @@ NEW STUFF
                 <option value="0500:052F">Cyrillic Supplement</option>
                 <option value="2DE0:2DFF">Cyrillic Extended-A</option>
                 <option value="A640:A69F">Cyrillic Extended-B</option>
-<option value="1C80:1C8F">Cyrillic Extended-C *</option>
+                <option value="1C80:1C8F">Cyrillic Extended-C</option>
                 <option value="10500:1052F">Elbasan</option>
                 <option value="10A0:10FF">Georgian</option>
                 <option value="2D00:2D2F">Georgian Supplement</option>
                 <option value="2C00:2C5F">Glagolitic</option>
-<option value="1E000:1E02F">Glagolitic Supplement *</option>
+                <option value="1E000:1E02F">Glagolitic Supplement</option>
                 <option value="10330:1034F">Gothic</option>
                 <option value="0370:03FF">Greek and Coptic</option>
                 <option value="1F00:1FFF">Greek Extended</option>
@@ -126,7 +120,7 @@ NEW STUFF
                 <option value="FE20:FE2F">Combining Half Marks</option>
                 </optgroup>
                 <optgroup label="African Scripts">
-<option value="1E900:1E95F">Adlam *</option>
+                <option value="1E900:1E95F">Adlam</option>
                 <option value="A6A0:A6FF">Bamum</option>
                 <option value="16800:16A3F">Bamum Supplement</option>
                 <option value="16AD0:16AFF">Bassa Vah</option>
@@ -176,21 +170,24 @@ NEW STUFF
                 <option value="10B80:10BAF">Psalter Pahlavi</option>
                 <option value="0800:083F">Samaritan</option>
                 <option value="0700:074F">Syriac</option>
+<option value="0860:086F">Syriac Supplement *</option>
                 <option value="10380:1039F">Ugaritic</option>
                 </optgroup>
                 <optgroup label="Central Asian Scripts">
                 <option value="10AC0:10AFF">Manichaean</option>
-<option value="11C70:11CBF">Marchen *</option>
+                <option value="11C70:11CBF">Marchen</option>
                 <option value="1800:18AF">Mongolian</option>
-<option value="11660:1167F">Mongolian Supplement *</option>
+                <option value="11660:1167F">Mongolian Supplement</option>
                 <option value="10C00:10C4F">Old Turkic</option>
                 <option value="A840:A87F">Phags-pa</option>
+<option value="11A50:11AAF">Soyombo *</option>
                 <option value="0F00:0FFF">Tibetan</option>
+<option value="11A00:11A4F">Zanabazar Square *</option>
                 </optgroup>
                 <optgroup label="South Asian Scripts">
 				<option value="11700:1173F">Ahom</option>
                <option value="0980:09FF">Bengali</option>
-<option value="11C00:11C6F">Bhaiksuki *</option>
+                <option value="11C00:11C6F">Bhaiksuki</option>
                 <option value="11000:1107F">Brahmi</option>
                 <option value="11100:1114F">Chakma</option>
                 <option value="0900:097F">Devanagari</option>
@@ -207,12 +204,13 @@ NEW STUFF
                 <option value="1900:194F">Limbu</option>
                 <option value="11150:1117F">Mahajani</option>
                 <option value="0D00:0D7F">Malayalam</option>
+<option value="11D00:11D5F">Masaram Gondi *</option>
                 <option value="ABC0:ABFF">Meetei Mayek</option>
                 <option value="AAE0:AAEF">Meetei Mayek Extensions</option>
                 <option value="11600:1165F">Modi</option>
                 <option value="16A40:16A6F">Mro</option>
 				<option value="11280:112AF">Multani</option>
-<option value="11400:1147F">Newa *</option>
+                <option value="11400:1147F">Newa</option>
                 <option value="1C50:1C7F">Ol Chiki</option>
                 <option value="0B00:0B7F">Oriya</option>
                 <option value="A880:A8DF">Saurashtra</option>
@@ -269,13 +267,14 @@ NEW STUFF
                 <option value="2A700:2B73F">CJK Unified Ideographs Extension C (big!)</option>
                 <option value="2B740:2B81F">CJK Unified Ideographs Extension D</option>
 				<option value="2B820:2CEA1">CJK Unified Ideographs Extension E (big!)</option>
+<option value="2CEB0:2EBE0">CJK Unified Ideographs Extension F *(big!)</option>
                 <option value="F900:FAFF">CJK Compatibility Ideographs</option>
                 <option value="2F800:2FA1F">CJK Compatibility Ideographs Supplement</option>
                 <option value="2F00:2FDF">Kangxi Radicals</option>
                 <option value="2E80:2EFF">CJK Radicals Supplement</option>
                 <option value="31C0:31EF">CJK Strokes</option>
                 <option value="2FF0:2FFF">Ideographic Description Characters</option>
-<option value="16FE0:16FFF">Ideographic Symbols and Punctuation *</option>
+                <option value="16FE0:16FFF">Ideographic Symbols and Punctuation</option>
                 <option value="AC00:D7AF">Hangul Syllables (big!)</option>
                 <option value="1100:11FF">Hangul Jamo</option>
                 <option value="A960:A97F">Hangul Jamo Extended-A</option>
@@ -283,15 +282,17 @@ NEW STUFF
                 <option value="3130:318F">Hangul Compatibility Jamo</option>
                 <option value="FFA0:FFDC" class="pb">Halfwidth Jamo</option>
                 <option value="3040:309F">Hiragana</option>
+<option value="1B100:1B12F">Kana Extended-A *</option>
+                <option value="1B000:1B0FF">Kana Supplement</option>
                 <option value="30A0:30FF">Katakana</option>
                 <option value="31F0:31FF">Katakana Phonetic Extensions</option>
-                <option value="1B000:1B0FF">Kana Supplement</option>
                 <option value="FF65:FF9F" class="pb">Halfwidth Katakana</option>
                 <option value="3190:319F">Kanbun</option>
                 <option value="A4D0:A4FF">Lisu</option>
                 <option value="16F00:16F9F">Miao</option>
-<option value="17000:187FF">Tangut *</option>
-<option value="18800:18AFF">Tangut Components *</option>
+<option value="1B170:1B2FF">Nushu *</option>
+                <option value="17000:187FF">Tangut</option>
+                <option value="18800:18AFF">Tangut Components</option>
                 <option value="A000:A48F">Yi Syllables</option>
                 <option value="A490:A4CF">Yi Radicals</option>
                 </optgroup>
@@ -299,7 +300,7 @@ NEW STUFF
                 <option value="13A0:13FF">Cherokee</option>
 				<option value="AB70:ABBF">Cherokee Supplement</option>
                 <option value="10400:1044F">Deseret</option>
- <option value="104B0:104FF">Osage *</option>
+                 <option value="104B0:104FF">Osage</option>
                <option value="1400:167F">Unified Canadian Aboriginal Syllabics</option>
                 <option value="18B0:18FF">UCAS Extended</option>
                 </optgroup>

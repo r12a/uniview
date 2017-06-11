@@ -5,10 +5,10 @@
 <title>UniView Help &amp; User Guide</title>
 <meta name="description" content="User guide and help for the UniView Unicode viewing tool."/>
 
-<link rel="stylesheet" href="/style/docs.css" type="text/css" />
+<link rel="stylesheet" href="../shared/style/docs.css" type="text/css" />
 
-<script type="text/javascript" src="/code/toc_section.js"></script>
-<script type="text/javascript" src="/code/boilerplate.js"></script>
+<script type="text/javascript" src="../shared/code/toc_2016.js"></script>
+<script type="text/javascript" src="../shared/code/boilerplate.js"></script>
 <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 <style type="text/css">
 h3 a:link {
@@ -45,13 +45,13 @@ div.topic p {
 .toc2:before { content:'• '; }
 img { border-radius: 4px; }
 </style>
-<script type="text/javascript" language="JavaScript" src="/code/expand-collapse/expand-collapse-content.js"></script>
+<script type="text/javascript" language="JavaScript" src="../shared/code/expand-collapse/expand-collapse-content.js"></script>
 </head>
 
 <body>
 <header>
 <div id="header-boilerplate"></div>
-<script>document.getElementById('header-boilerplate').innerHTML = bp_header('/images/world.gif','docs');</script>
+<script>document.getElementById('header-boilerplate').innerHTML = bp_header('../shared/images/world.gif','docs');</script>
 </header>
 
 <h1>UniView Help &amp; User Guide</h1>
@@ -331,16 +331,16 @@ img { border-radius: 4px; }
 <p style="text-align:center;"><img usemap="#filterSelector" alt="Filter selector." src="images/help/filter_panel.png"/></p>
 
 
-  <section>
-    <h3 id="show_properties"><a href="#show_properties">Filter &gt; Show properties</a></h3>
+  <section id="show_properties">
+    <h3><a href="#show_properties">Filter &gt; Show properties</a></h3>
     <p><img src="images/help/show_properties.png" alt=""></p>
     <p>This control allows you to search for characters with a particular property. It creates a list of matching characters.</p>
     <p>By default, searches match against  the characters  in a list or table in the <span class="onscreen">Character list panel</span>. Matching characters will be highlighted. (You can then produce a list of just the highlighted characters by clicking on the icon next to <span class="onscreen">Filter </span><span class="onscreen">&gt; Make list from highlights</span>. If you need to refine your search, you could then search again on this list, and so on.)</p>
     <p>To enlarge the search to the whole of  Unicode, deselect the check box labelled <span class="onscreen">Local</span>. </p>
   </section>
     
-          <section>
-    <h3 id="list_from_highlights"><a href="#list_from_highlights">Filter &gt; Make list from highlights</a></h3>
+   <section id="list_from_highlights">
+    <h3><a href="#list_from_highlights">Filter &gt; Make list from highlights</a></h3>
     <p><img src="images/help/list_from_highlights.png" alt=""></p>
     <p>If you have highlighted items in a list, using the <span class="onscreen">Find</span> or <span class="onscreen">Show properties </span>controls, this control will remove all but the highlighted items from the list.</p>
   </section>
@@ -608,14 +608,14 @@ img { border-radius: 4px; }
 
 
 <div class="smallprint"> <span id="version">This version <span id="version-info"> 
-  <!-- #BeginDate format:IS1m -->2017-01-09  11:22<!-- #EndDate --> 
+  <!-- #BeginDate format:IS1m -->2017-05-19  18:32<!-- #EndDate --> 
   </span> GMT. &nbsp;&bull;&nbsp; Copyright <a href="mailto:r12a@w3.org">r12a@w3.org</a>. Licence <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC-By</a>.</span> </div>
   
 
 
 
 <script type="text/javascript">
-createtoc();
+createtoc(3);
 
 //if (document.getElementById) { 
 //	openIMG='/code/expand-collapse/open.gif';
