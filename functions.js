@@ -972,16 +972,18 @@ function getRange ( str ) {
 	// returns hex start and end values for a range, separated by colon
 	// str the name of the range, as specified in the scriptGroups.js,
 	//   but possibly with underscores instead of spaces
-	var lcstr = str.replace( /_/g, ' ' ).toLowerCase();
-	var start = ''; var end = '';
-	var range = '';
+	var lcstr = str.replace( /_/g, ' ' ).toLowerCase()
+	var start, end
+	var range = ''
 	for (i=1; i<scriptGroups.length; i++) {
 		if (scriptGroups[i][2].toLowerCase() == lcstr) {
-			start = dec2hex(scriptGroups[i][0]);
-			if (start.length == 3) { start = '0'+start; }
-			end = dec2hex(scriptGroups[i][1]);
-			if (end.length == 3) { end = '0'+end; }
-			range = start+':'+end;
+			start = parseInt(scriptGroups[i][0])
+			start = start.toString(16).toUpperCase()
+			if (start.length == 3) { start = '0'+start }
+			end = parseInt(scriptGroups[i][1])
+			end = end.toString(16).toUpperCase()
+			if (end.length == 3) { end = '0'+end }
+			range = start+':'+end
 			document.getElementById('block').value = range;
 			break;
 			}
