@@ -218,6 +218,9 @@ p		{ margin-top: 0; margin-bottom: 0; }
 	float: right; 
 	width: 48%; 
 	margin-top: 1em;
+	position: -webkit-sticky;
+	position: sticky;
+	top: 2em;
 	}
 #chart td {
 	width: 30px;
