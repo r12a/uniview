@@ -157,7 +157,7 @@ var titles = new Array(
 "57344¶63743¶Private Use Area¶¶",
 "63744¶64255¶CJK Compatibility Ideographs¶han¶",
 "64256¶64335¶Alphabetic Presentation Forms¶¶",
-"64336¶65023¶Arabic Presentation Forms-A¶arabic¶",
+"64336¶65023¶Arabic Presentation Forms-A¶arabic¶65010 65018:65021",
 "65024¶65039¶Variation Selectors¶¶",
 "65040¶65055¶Vertical Forms¶¶",
 "65056¶65071¶Combining Half Marks¶¶",
