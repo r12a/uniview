@@ -1736,7 +1736,7 @@ function showConverter (codepoints, origin) {
 	else { codepoints = cleanHexCPs(codepoints); } 
 	if ( codepoints == '' || codepoints == ' ') { alert('No codepoints found.'); return 0; }
 	if ( codepoints.match(/[^abcdefABCDEF0-9\s]/)) { alert('Can\'t work out what the codepoints are. Unexpected characters found. Boiled down to: '+codepoints); return 0; }
-	converter = window.open('../r12a.github.io/apps/conversion?codepoints='+codepoints+'&origin='+origin, 'converter');
+	converter = window.open('../app-conversion?codepoints='+codepoints+'&origin='+origin, 'converter');
 	converter.focus();
 	}
 
@@ -2452,7 +2452,7 @@ function printProperties ( codepoint ) {
 		tr = tbody.appendChild( document.createElement( 'tr' ));
 		td = tr.appendChild( document.createElement( 'td' ));
 			td.setAttribute( 'colspan', '2');
-			td.innerHTML = '<a href="../r12a.github.io/apps/conversion?q='+getCharFromInt(parseInt(cRecord[0],16))+'" target="conversion">More alternative forms</a>';
+			td.innerHTML = '<a href="../app-conversion?q='+getCharFromInt(parseInt(cRecord[0],16))+'" target="conversion">More alternative forms</a>';
 
 
 		//add link to Conversion tool
@@ -2558,12 +2558,12 @@ function printProperties ( codepoint ) {
 				span = p.appendChild( document.createElement('span') );
 				span.className = 'notesexpl'
 				a = span.appendChild( document.createElement('a'));
-					a.href = '../r12a.github.io/scripts/'+blockfile+'/block#char'+cRecord[0];
+					a.href = '../scripts/'+blockfile+'/block#char'+cRecord[0];
 					a.target = 'blockdata';
 				a.appendChild( document.createTextNode('Open the notes in a separate page.'));
 				span.style.fontSize = '80%';
 
-				document.getElementById('notesIframe').src = '../r12a.github.io/scripts/'+blockfile+'/block?char='+cRecord[0]
+				document.getElementById('notesIframe').src = '../scripts/'+blockfile+'/block?char='+cRecord[0]
 				}
 			// if _showNotes isn't on, just mention that there are some notes
 			else if (blockfile) {  
@@ -2755,7 +2755,7 @@ function foundInList (ch, range) {
 
 
 function charInfoPointer (codepoint) {
-	// find the name of the file in /block/, if one exists,
+	// find the name of the file in the /block/ directory, if one exists,
 	// for the character in codepoint
 	// only returns the block name if the code point is listed in the 4th field of a scriptGroups row
 	// codepoint: hex codepoint value
@@ -2783,7 +2783,7 @@ function displayBlockData (block) {
 	
 	var blockname = scriptGroups[block][3];
 	
-	info = window.open('../r12a.github.io/scripts/links?script='+blockname, 'info'); info.focus();
+	info = window.open('../scripts/links?script='+blockname, 'info'); info.focus();
 
 	}
 
