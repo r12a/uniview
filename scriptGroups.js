@@ -74,7 +74,7 @@ var titles = new Array(
 "7616¶7679¶Combining Diacritical Marks Supplement¶¶",
 "7680¶7935¶Latin Extended Additional¶latin¶",
 "7936¶8191¶Greek Extended¶greek¶",
-"8192¶8303¶General Punctuation¶¶",
+"8192¶8303¶General Punctuation¶punctuation¶8204:8205",
 "8304¶8351¶Superscripts and Subscripts¶¶",
 "8352¶8399¶Currency Symbols¶¶",
 "8400¶8447¶Combining Diacritical Marks for Symbols¶¶",
