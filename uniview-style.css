@@ -654,9 +654,9 @@ span[lang|='ur'] {
 .noteslink a { background-color: #ede4d0; }
 
 #notesIframe {
-	width: 100%;
+	width: 50%;
 	border: 0;
-	height: 500px;
+	height: 2000px;
 	margin-top: 2em;
 	}
 
