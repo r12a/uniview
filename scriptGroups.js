@@ -5,7 +5,7 @@
 
 var titles = new Array(
 "0¶127¶Basic Latin¶latin¶39 45 95",
-"128¶255¶Latin-1 Supplement¶latin¶",
+"128¶255¶Latin-1 Supplement¶latin¶161",
 "256¶383¶Latin Extended-A¶latin¶",
 "384¶591¶Latin Extended-B¶latin¶577:578",
 "592¶687¶IPA Extensions¶latin¶660",
@@ -41,7 +41,7 @@ var titles = new Array(
 "4096¶4255¶Myanmar¶myanmar¶4096:4129 4131:4135 4137:4146 4150:4175",
 "4256¶4351¶Georgian¶georgian¶",
 "4352¶4607¶Hangul Jamo¶hangul¶",
-"4608¶4991¶Ethiopic¶ethiopic¶",
+"4608¶4991¶Ethiopic¶ethiopic¶4763 4845 4960:4968",
 "4992¶5023¶Ethiopic Supplement¶ethiopic¶",
 "5024¶5119¶Cherokee¶cherokee¶",
 "5120¶5759¶Unified Canadian Aboriginal Syllabics¶ucas¶",
