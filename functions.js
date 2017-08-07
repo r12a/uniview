@@ -1884,6 +1884,7 @@ function showSelection (range) {
 	//if (found) { 
 		drawSelection(range); 
 		displayTags(listTags())
+		if (document.getElementById('showNotesToggle').checked) highlightIndexChars()
 		
 	//	}
 	//else { 
@@ -1892,6 +1893,61 @@ function showSelection (range) {
 	//	_selections[_selections.length] = range;
 	//	}
 	}
+
+
+
+function highlightIndexChars () {
+	if (document.getElementById('chart')) {
+		charlist = document.querySelectorAll('#chart td.ch')
+		for (var i=0;i<charlist.length;i++) {
+			path = charlist[i].title.split(' ')
+			if (charInfoPointer(path[1])) {
+				//charlist[i].style.color = 'red'
+				charlist[i].style.border = '1px solid #FF7704'
+				}
+			}
+		}
+	}
+	
+	
+
+function charInfoPointer (codepoint) {
+	// find the name of the file in /block/, if one exists,
+	// for the character in codepoint
+	// codepoint: hex codepoint value
+	// returns: the filename, if successful
+	//          otherwise ''
+	
+	var charNum = parseInt(codepoint,16) 
+	if (charNum < 128) { return scriptGroups[0][3] }
+	var i=1
+	while ( i<scriptGroups.length && charNum > scriptGroups[i][1] ) { i++ } 
+	if ( i == scriptGroups.length ) { return '' }
+	else { 
+		if (foundInList(charNum, scriptGroups[i][4])) {	return( scriptGroups[i][3] ) }
+		else { return '' }
+		}
+	}
+
+
+function foundInList (ch, range) { 
+	// takes a list of decimal numbers, with ranges represented as xxx:yyy
+	// and a decimal code point, and returns true if the codepoint is in the list
+	// ch: the codepoint to search for
+	// range: the list of codepoints, with ranges separated by spaces
+	
+	var runs = range.split(' ')
+	ch = parseInt(ch)
+	for (i=0;i<runs.length;i++) {
+		var startEnd = runs[i].split(":")
+		//alert(i+'--'+startEnd[0]+' '+startEnd[1])
+		if (startEnd.length == 1 && ch == parseInt(startEnd[0])) { return true } 
+		else if (startEnd.length > 1 && (ch >= parseInt(startEnd[0]) && ch <= parseInt(startEnd[1]))) { return true }
+		}
+	return false
+	}
+
+
 	
 
 function displayTags (list) {
