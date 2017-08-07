@@ -968,6 +968,7 @@
           <img src="images/selectall.png" alt="Select" title="Select all text in the Copy &amp; Paste box." onclick="document.getElementById('picker').focus();document.getElementById('picker').select()" style="margin-left: 5px;" />
           <img src="images/tochar.png" alt="Add characters" title="Add characters in a list or table to the Copy &amp; Paste box." onclick="output2CharArea();"  style="margin-left:3px;" />
           <img src="images/addspace.png" alt="Select" title="Separate the characters in the edit buffer with spaces." onclick="addSpacesToPicker(' ');"  style="margin-left: 10px;" />
+          <img src="images/removespace.png" alt="Select" title="Remove all spaces from the text area." onclick="document.getElementById('picker').value = document.getElementById('picker').value.replace(/\s/g,'')" />
           <img src="images/addcomma.png" alt="Select" title="Separate the characters in the edit buffer with commas." onclick="addSpacesToPicker(',');"/>
           <img src="images/expand.png" alt="Expand" title="Expand ranges of characters in the Copy &amp; Paste box. For example, 'a-zA-Z'." onclick="if (document.getElementById('picker').value== '') { alert('Add characters to the text area.'); } else { document.getElementById('picker').value = expandList(document.getElementById('picker').value); }"/>
           <img src="images/count.png" alt="Count" title="Count the characters in the text area." onclick="if (document.getElementById('picker').value== '') { alert('None.'); } else { alert(countPickerChars()); }"/><br/>
