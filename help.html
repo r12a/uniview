@@ -45,7 +45,6 @@ div.topic p {
 .toc2:before { content:'• '; }
 img { border-radius: 4px; }
 </style>
-<script type="text/javascript" language="JavaScript" src="../shared/code/expand-collapse/expand-collapse-content.js"></script>
 </head>
 
 <body>
@@ -345,15 +344,15 @@ img { border-radius: 4px; }
     <p>If you have highlighted items in a list, using the <span class="onscreen">Find</span> or <span class="onscreen">Show properties </span>controls, this control will remove all but the highlighted items from the list.</p>
   </section>
   
-          <section>
-    <h3 id="list_from_unhighlight"><a href="#list_from_unhighlight">Filter &gt; Make list from non-highlighted items</a></h3>
+  <section id="list_from_unhighlight">
+    <h3><a href="#list_from_unhighlight">Filter &gt; Make list from non-highlighted items</a></h3>
     <p><img src="images/help/list_from_unhighlight.png" alt=""></p>
     <p>If you have highlighted items in a list in the lower left panel, using the <span class="onscreen">Find</span> or <span class="onscreen">Show properties </span>controls, this control will remove all  the highlighted items from the list, leaving the non-highlighted items only.</p>
   </section>
   
 
-    <section>
-    <h3 id="show_age"><a href="#show_age">Filter &gt; Show age</a></h3>
+    <section id="show_age">
+    <h3><a href="#show_age">Filter &gt; Show age</a></h3>
     <p><img src="images/help/show_age.png" alt=""></p>
     <p>This control allows you to see when a character was added to Unicode. It shows version numbers for characters added after Unicode version 1.1.</p>
     <p>You can also find the same information on a character-by-character basis in the <span class="onscreen">Character detail panel</span> for that character.</p>
@@ -412,6 +411,7 @@ img { border-radius: 4px; }
     <p> These controls allows you to change the height of the display box in the lower left panel. Just enter the height you want in pixels (just the number) or select a preset size.</p>
     <p>This is particularly useful when you are dealing with lists on a small screen such as a netbook. If you set the height to something like 400px, you can scroll through a long list, but still see the details in the right panel when you click on a character in the list.</p>
   </section>
+  
   <section id="left_font_size">
     <h3><a href="#left_font_size">Options &gt; Left panel font size</a></h3>
     <p><img src="images/help/left_panel_font.png" alt=""></p>
@@ -496,28 +496,26 @@ img { border-radius: 4px; }
 
         
 <section id="tailor">
-  <h2>Customising the app<a href="#tailor"></a></h2>
-          <section class="topic" id="startupdata">
-    <h3 class="collapse"><a href="#startupdata">Using URIs to start up UniView with data in left or right panels</a></h3>
-    <p> This is useful for pointing people to particular information using a URI, for example in email. By providing query parameters in the
+  <h2>Sharing links<a href="#tailor"></a></h2>
+    <p> This is useful for pointing people to particular information using a URL, for example in email. By providing query parameters in the
               URI you can start up UniView with specific information displayed as follows:</p>
     <ul>
               <li><strong>uniview/?char=&lt;hex-codepoint&gt;</strong> Displays the information about the specified character in the right panel on
         startup.<br/>
         Eg. <a
 						href="/uniview/?char=0449">http://r12a.github.io/uniview/?char=0449</a></li>
-              <li><strong>uniview/?block=&lt;block-name&gt;</strong> Displays the specified block in the left panel on startup. The block name must
-        be written exactly as it appears in the pulldown selector at the top left of the page, except that any spaces must be replaced by either underscores
-        ('_') or '%20', and case is not important. (Tip: when typing the this in a browser's address bar you can just use spaces.) <br/>
-        Eg. <a
-						href="/uniview/?block=latin%20extended-b">http://r12a.github.io/uniview/?block=latin%20extended-b</a></li>
+              <li><strong>uniview/?char=&lt;list-of-characters&gt;</strong> Displays the a list of the specified characters in the left panel on
+                startup.<br/>
+                Eg. <a href="/uniview/?charlist=adg">http://r12a.github.io/uniview/?charlist=adg</a></li>
+              <li><strong>uniview/?block=&lt;block_name&gt;</strong> Displays the specified block in the left panel on startup. The block name must
+        be written exactly as it appears in the pulldown selector at the top left of the page, except that any spaces must be replaced by  underscores ('_'), and case is not important.<br/>
+      Eg. <a href="/uniview/?block=ipa_extensions">http://r12a.github.io/uniview/?block=ipa_extensions</a></li>
               <li><strong>uniview/?codepoints=&lt;list-of-hex-codepoints&gt;</strong> A list of the characters will be displayed in the left panel. Any spaces must be replaced by
-        either underscores ('_') or '%20', and case is not important.<br/>
-        Eg. <a
-						href="/uniview/?codepoints=449%201234%2065">http://r12a.github.io/uniview/?codepoints=449%201234%2065</a></li>
+         underscores ('_'), and case is not important.<br/>
+      Eg. <a
+						href="/uniview/?codepoints=449%201234%2065">http://r12a.github.io/uniview/?codepoints=449_1234_65</a></li>
             </ul>
     <p>You should only use one of these query parameters in a single call to UniView.</p>
-  </section>
           <!--<div class="topic"> 
 
 				<h3 class="collapse">creating your own character description notes <span style="color:red;">[Updated]</span></h3>
@@ -543,7 +541,7 @@ img { border-radius: 4px; }
 					you can decide whether your file contains notes on characters from a single block or many blocks. It doesn't matter. </p>
 			</div>--></section>
 <section id="thanks">
-          <h2><a href="#thanks">Acknowledgements and thanks</a></h2>
+  <h2><a href="#thanks">Acknowledgements and thanks</a></h2>
           <p> François Yergeau co-developed the Unicode Code Converter utility, and translated it into French.</p>
           <p> Patrick Andries translated UniView into French, but that was many versions ago, and the French version is no longer available.</p>
 </section>
@@ -612,7 +610,7 @@ img { border-radius: 4px; }
 
 
 <div class="smallprint"> <span id="version">This version <span id="version-info"> 
-  <!-- #BeginDate format:IS1m -->2017-06-11  16:47<!-- #EndDate --> 
+  <!-- #BeginDate format:IS1m -->2017-08-30  15:28<!-- #EndDate --> 
   </span> GMT. &nbsp;&bull;&nbsp; Copyright <a href="mailto:r12a@w3.org">r12a@w3.org</a>. Licence <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC-By</a>.</span> </div>
   
 
