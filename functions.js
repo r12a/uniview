@@ -644,6 +644,14 @@ function displayUnorderedList ( string ) {
 
 function doN11n (form) {
 	var str = document.getElementById('picker').value
+	if (form == 'nfc') { document.getElementById('picker').value = str.normalize('NFC') }
+	else { document.getElementById('picker').value = str.normalize('NFD') }
+	alert( 'Edit buffer contents normalized to '+form.toUpperCase() )
+	}
+	
+	
+function doN11nlessold (form) {
+	var str = document.getElementById('picker').value
 	if (form == 'nfc') { document.getElementById('picker').value = nfc(str) }
 	else { document.getElementById('picker').value = nfd(str) }
 	alert( 'Edit buffer contents normalized to '+form.toUpperCase() )
