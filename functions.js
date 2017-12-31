@@ -2489,7 +2489,34 @@ function printProperties ( codepoint ) {
 			td = tr.appendChild( document.createElement( 'td' ));
 				td.className = 'astext';
 				td.appendChild( document.createTextNode( MsPadding + getCharFromInt(parseInt(cRecord[0],16)) ));
-			}
+		}
+
+
+	
+		if (scriptGroup.indexOf("Arabic") != -1 && cRecord[2] == "Lo" &&
+			cRecord[3] == "0" && cRecord[4] == "AL") {
+			let char = getCharFromInt(parseInt(cRecord[0],16));
+			let tatweel = "\u0640"
+			tr = tbody.appendChild( document.createElement( 'tr' ));
+			td = tr.appendChild( document.createElement( 'td' ));
+				td.appendChild( document.createTextNode( 'Arabic initial form' ));
+			td = tr.appendChild( document.createElement( 'td' ));
+			td.className = 'astext';
+				td.appendChild(document.createTextNode(`${tatweel}${char}`));
+			tr = tbody.appendChild( document.createElement( 'tr' ));
+			td = tr.appendChild( document.createElement( 'td' ));
+				td.appendChild( document.createTextNode( 'Arabic medial form' ));
+			td = tr.appendChild( document.createElement( 'td' ));
+			td.className = 'astext';
+				td.appendChild(document.createTextNode(`${tatweel}${char}${tatweel}`));
+			tr = tbody.appendChild( document.createElement( 'tr' ));
+			td = tr.appendChild( document.createElement( 'td' ));
+				td.appendChild( document.createTextNode( 'Arabic final form' ));
+			td = tr.appendChild( document.createElement( 'td' ));
+			td.className = 'astext';
+				td.appendChild(document.createTextNode(`${tatweel}${char}`));
+		}
+
 
 		// add decimal value
 		tr = tbody.appendChild( document.createElement( 'tr' ));
