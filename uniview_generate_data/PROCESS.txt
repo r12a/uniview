@@ -1,0 +1,65 @@
+Step 1
+Download the following from the Unicode site to the UCD directory.
+Blocks-xxx.txt
+DerivedAge-xxx.txt
+NamesList-xxx.txt
+UnicodeData-xxx.txt
+Make copies in the generatedata directory without the version info in the filename.
+
+Step 2
+Run: genScriptGroups.plx
+	Input: Blocks.txt
+	Output: scriptGroups.js and tempScriptGroups.php (not used)
+
+Step 2a
+Run: genDerivedAge.plx
+	Input: DerivedAge.txt
+	Output: age.php
+	
+Step 3
+                                     // Convert NameList.txt to utf-8, using TextWrangler/Word
+Run: genDescriptions.plx
+	Input: NameList.txt
+	Output: descriptions.js + subtitles.php + tempSubtRefs.php
+
+Remove the first entry in the array created in descriptions.js. 
+Search & replace all & to &amp;.
+
+Step 4
+Run: genUnicodeData.plx
+	Input UnicodeData.txt
+	Output: tempu.php
+
+		{{ If this is a beta release do the following:
+		Then for beta, copy old u.php to the directory and name it uold.php, and run doDiff.php
+		-> u_withdiffinfo.php
+		Then run doBetaGraphics.php  // need to add subtitles stuff !
+		-> u.php
+		}}
+
+
+Step 4a  (if just updating the graphics list, update graphicranges.php and just do this step and copy u.js to the main directory)
+Run:  doGraphics.php  // adds pointers to local graphics and to subtitles in subtitles.php
+	Input tempu.php + tempSubtRefs.php + age.php + graphicranges.php
+	Output: u.js
+
+
+Step 5
+Run: genNamesOnly.plx
+	Input UnicodeData.txt
+	Output: Names.php
+
+Step 6
+Run: genMenu.plx
+	Input: Blocks-xxx.txt
+	Output: menu.txt
+
+Reorder the menu items as needed, and copy paste to index.html.
+
+Step 7
+Copy the following files to the main directory:
+	descriptions.js
+	u.js
+	names.php
+	subtitles.js
+
