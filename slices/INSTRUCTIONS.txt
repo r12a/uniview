@@ -1,0 +1,145 @@
+
+open the pdf in Adobe Acrobat
+set the zoom to 75%
+prtn scr (cmd-shift-4) and open graphic in PhotoShop and copy
+open small.psd/smallnarrow.psd (depending on number of columns) and turn on slice tool 
+paste and position top right box with guide
+check for boxes that need stretching to fit glyph
+	to stretch, working upwards from the bottom, select slice select tool, click on box and pull to size
+	or move the glyph to fit in the box
+select file > save for web & devices
+click Save and check setting say
+	Format: Images Only
+	Settings: Default Settings
+	Slices: All User Slices
+click Save
+saves to workarea/small directory (creates an image directory automatically)
+copy the saved pictures from images directory to directory small
+run fname2hex10.py/fname2hex16.py (depending on width of columns) with hex number of first character as parameter
+	eg. $ python fname2hex10.py 2100
+create new folder under /rishida/c/ with exactly same name as the block
+	add a subfolder called large
+copy the useful images to the /rishida/c/<block-name>/ folder
+open /rishida/scripts/uniview/generate_data/graphicranges.php
+	add an entry for the new block and save
+open and run doGraphics.php
+copy the resulting u.php to the uniview directory
+check the result in uniview
+
+
+repeat for the larger images with the following differences
+	set zoom in acrobat to 450%
+	capture 4 rows x 10 cols at a time and paste into large.psd
+	use fname2hex10.py
+	copy the useful images to the /rishida/c/<block-name>/large folder
+
+
+for large matrices, use the smallbig.psd template
+
+	
+for setting up slices in a page
+	use 24x33 for small
+	use 190x190 for large
+	use guides and set snap to for guides and slices
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+PREVIOUS INSTRUCTIONS (PC)
+
+open the pdf in Adobe Acrobat
+set the zoom to 75%
+prtn scr
+paste into paint, select around the table and copy
+open small.psd
+paste and position top right box with guide
+check for boxes that need stretching to fit glyph
+	to stretch, select slice select tool, click on box and pull to size
+	or move the glyph to fit in the box
+	work upwards from the bottom
+select file > save for web & devices
+save 
+	ensure that Settings will produce a file like small_01.png
+	ensure that Slices is set to All User Slices
+	save to images directory
+copy the saved pictures to directory small
+run fname2hex.py with hex number of first character as parameter
+create new folder under /rishida/c/ with exactly same name as the block
+	add a subfolder called large
+copy the useful images to the /rishida/c/<block-name>/ folder
+open /rishida/scripts/uniview/generate_data/graphicranges.php
+	add an entry for the new block and save
+open and run doGraphics.php
+copy the resulting u.php to the uniview directory
+check the result in uniview
+
+
+repeat for the larger images with the following differences
+	set zoom in acrobat to 450%
+	capture 4 rows at a time and paste into large.psd
+	copy the useful images to the /rishida/c/<block-name>/large folder
+
+
+for large matrices, use the smallbig.psd template
+
+	
+for setting up slices in a page
+	use 24x33 for small
+	use 190x190 for large
+	use guides and set snap to for guides and slices
+	
+
+
+
+
+	OLD INSTRUCTIONS
+
+SCANNING FROM THE BOOK
+Get as many characters on the screen as possible with Zoom set to 450%
+Prnt Scrn
+Paste into Photoshop, Large.psd, aligning bottom and right of top left box to guides
+Slide new pictures into view in PDF and repeat, adding three more screen snaps, vertically
+	Slice tool set to fixed size, 190px square
+	Used slice tool to set slices
+Save to disk using Save for Web & devices
+	save user slices only
+
+Open Bridge and reorder correctly
+Do batch rename
+
+Run fname2hex.py after setting the initial coordinate in decimal
+Done.
+
+FOR SMALL
+Same basic process, except start with Zoom set to 75%, and only one snap needed
+Paste into Small.psd
+	Slices are 24x33 by default
+	Grid set to 45.5px, with 5 divisions
+Set guides to top and bottom division lines
+
+
+To create slices
+Set grid
+Set vertical guides with grid off
+Select slice tool
+Click Slices from Guides
+
+
+
+USING THE SLICES.HTML METHOD
+Create new image, and paste prnt scrn
+Crop to inside of table
+Make sure rulers visible
+Drag guides from rulers to prepare for slicing
+Open the slice tool
+Click on Slice from Guides
+Go to File/Save for Web & Devices
+
+
