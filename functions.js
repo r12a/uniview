@@ -924,7 +924,7 @@ function getCharType (codepoint) {
 		return 2;
 		}
 	else if (findScriptGroup(codepoint) != sNotAChar) { // surrogates
-		if ((codepoint > 13312 && codepoint < 19903) || (codepoint > 19968 && codepoint < 40891) ||           // CJK Ext A, CJK main
+		if ((codepoint > 13312 && codepoint < 19903) || (codepoint > 19968 && codepoint < 40959) ||           // CJK Ext A, CJK main
 			(codepoint > 131072 && codepoint < 173782) || (codepoint > 0x2A700 && codepoint < 0x2B734) ||     // CKL Ext B, C
 			(codepoint > 0x2B740 && codepoint < 0x2B81D) || (codepoint > 0x2B820 && codepoint < 0x2CEA1) ||   // CJK Ext D, E
 			(codepoint > 44032 && codepoint < 55203) ||   // hangul syllables
