@@ -3,15 +3,6 @@
 // all of the language specific text is in functions-text.js
 // © Richard Ishida
 
-// 100123	added information from derived age
-// 100124 	changed highlighting so that it now dims other stuff
-// 			substituted classes for direct manipulation of style
-//			stopped lists printing non-characters 
-//			& removed Remove unassigned characters from list command
-
-// To do: 
-//	fix showUnihan, so that it only sends one codepoint at a time
-
 // Global variables
 // note: several global variables are set in prefs.js
 
@@ -649,20 +640,6 @@ function doN11n (form) {
 	alert( 'Edit buffer contents normalized to '+form.toUpperCase() )
 	}
 	
-	
-function doN11nlessold (form) {
-	var str = document.getElementById('picker').value
-	if (form == 'nfc') { document.getElementById('picker').value = nfc(str) }
-	else { document.getElementById('picker').value = nfd(str) }
-	alert( 'Edit buffer contents normalized to '+form.toUpperCase() )
-	}
-	
-	
-function olddoN11n (form) {
-	var str = document.getElementById('picker').value;
-	var uri = encodeURI('../shared/code/normalization/getn11n.php?n='+form+'&str='+str);
-	httpRequest('GET', uri, true, getn11n);
-	}
 	
 	
 function drawPropertyList (newContent, resultdiv, counter) {
@@ -1548,90 +1525,6 @@ function convert2upper ( string, detail ) {
 	document.getElementById('charInfo').innerHTML = uppercase+lowercase+titlecase+singletons
 	}
 
-
-
-function oldconvert2upper ( string, detail ) { 
-	// output: ...
-	// string: a string of characters
-	// detail: if false, just outputs the converted character, otherwise '<source> -> <converted>'
-
-	//var firstChar = string.charCodeAt(0);
-	//var missingRecords = false;
-	codepoints = convertChar2Dec(string).split(' '); 
-	// check whether we have seen these codepoints before
-	//for (var i=0; i<codepoints.length; i++) {
-	//	if (! U[codepoints[i]]) {
-	//		missingRecords = true;
-	//		break;
-	//		}
-	//	}
-	var uppercase = '';
-	var lowercase = '';
-	var titlecase = '';
-	var singletons = '';
-	var notfound;
-	
-	// display results, but go via an ajax download if characters not yet seen
-	//if (missingRecords) { 
-	//	_newCharacterList = codepoints.join(':');
-	//	uri = 'getcharlist.php?list='+_newCharacterList; 
-	//	httpRequest('GET', uri, true, ajaxConvert2Upper);
-	//	}
-	//else { 
-		//alert('no ajax'); 
-		if (detail) {
-			for (var i=0; i<codepoints.length; i++) {
-				cRecord = U[codepoints[i]].split(';');
-				notfound = true;
-				if (cRecord[12]) {
-					uppercase += ' '+getCharFromInt(parseInt(cRecord[0],16))+'→'+getCharFromInt(parseInt(cRecord[12],16));
-					notfound = false;
-					}
-				if (cRecord[13]) {
-					lowercase += ' '+getCharFromInt(parseInt(cRecord[0],16))+'→'+getCharFromInt(parseInt(cRecord[13],16));
-					notfound = false;
-					}
-				if (cRecord[14]) {
-					titlecase += ' '+getCharFromInt(parseInt(cRecord[0],16))+'→'+getCharFromInt(parseInt(cRecord[14],16));
-					notfound = false;
-					}
-				if (notfound) { singletons += ' '+getCharFromInt(parseInt(cRecord[0],16)); }
-				}
-			}
-		else {
-			for (var i=0; i<codepoints.length; i++) {
-				cRecord = U[codepoints[i]].split(';');
-				notfound = true;
-				if (cRecord[12]) {
-					uppercase += getCharFromInt(parseInt(cRecord[12],16));
-					notfound = false;
-					}
-				else { uppercase += getCharFromInt(parseInt(cRecord[0],16)); }
-				if (cRecord[13]) {
-					lowercase += getCharFromInt(parseInt(cRecord[13],16));
-					notfound = false;
-					}
-				else { lowercase += getCharFromInt(parseInt(cRecord[0],16)); }
-				if (cRecord[14]) {
-					titlecase += getCharFromInt(parseInt(cRecord[14],16));
-					notfound = false;
-					}
-				else { titlecase += getCharFromInt(parseInt(cRecord[0],16)); }
-				if (notfound) { singletons += ' '+getCharFromInt(parseInt(cRecord[0],16)); }
-				}
-			//}
-			//alert(upperset);
-		if (uppercase=='') { uppercase = 'None found.'; }
-		if (lowercase=='') { lowercase = 'None found.'; }
-		if (titlecase=='') { titlecase = 'None found.'; }
-		if (singletons=='') { singletons = 'None found.'; }
-		uppercase = '<div class="caseconversion"><p>To upper:<br />'+uppercase+'</p>';
-		lowercase = '<p>To lower:<br />'+lowercase+'</p>';
-		titlecase = '<p>To titlecase:<br />'+titlecase+'</p>';
-		singletons = '<p>Characters without conversion:<br />'+singletons+'</p></div>';
-		document.getElementById('charInfo').innerHTML = uppercase+lowercase+titlecase+singletons;
-		}
-	}
 
 
 function expandList ( string ) { 
@@ -2895,8 +2788,7 @@ function convertChar2pEsc ( n ) {
 
 // close layer when click-out
 //document.onclick = mclose; 
-		
-//日本語	
+
 
 
 function addSpacesToPicker (sep) {
