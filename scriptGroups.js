@@ -253,6 +253,7 @@ var titles = new Array(
 "118784¶119039¶Byzantine Musical Symbols¶¶",
 "119040¶119295¶Musical Symbols¶¶",
 "119296¶119375¶Ancient Greek Musical Notation¶greek¶",
+"119520¶119551¶Mayan Numerals¶¶",
 "119552¶119647¶Tai Xuan Jing Symbols¶¶",
 "119648¶119679¶Counting Rod Numerals¶¶",
 "119808¶120831¶Mathematical Alphanumeric Symbols¶¶",
@@ -285,7 +286,7 @@ var titles = new Array(
 "1048576¶1114111¶Supplementary Private Use Area-B¶¶",
 "▲");
 
-
+119520
 var scriptGroups = []
 for (var i=0; i<titles.length; i++) {
 	scriptGroups[i+1] = titles[i].split('¶');
