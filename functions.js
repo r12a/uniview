@@ -1652,6 +1652,19 @@ function highlightIndexChars () {
 	}
 	
 	
+function unhighlightIndexChars () {
+	if (document.getElementById('chart')) {
+		charlist = document.querySelectorAll('#chart td.ch')
+		for (var i=0;i<charlist.length;i++) {
+			path = charlist[i].title.split(' ')
+			if (charInfoPointer(path[1])) {
+                charlist[i].classList.remove('notesAvailable')
+				}
+			}
+		}
+	}
+	
+	
 
 function charInfoPointer (codepoint) {
 	// find the name of the file in /block/, if one exists,
@@ -1824,10 +1837,12 @@ function toggleNotes (checkbox) {
 		_showNotes = false
 		localStorage.setItem('showNotes', false)
 		document.getElementById('notesIframe').src = 'blank.html'
+        unhighlightIndexChars()
 		}
 	else {
 		_showNotes = true
 		localStorage.setItem('showNotes', true)
+        highlightIndexChars()
 		}
 	}
 		
