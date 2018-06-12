@@ -3,12 +3,27 @@
 // all of the language specific text is in functions-text.js
 // © Richard Ishida
 
+// constants for U array record fields
+const HEX_NUM = 0 // hex number
+const CHAR_NAME = 1 // character name
+const GEN_CAT = 2 // general category
+const CAN_COMB_CL = 3 // canonical combining class
+const BIDI_CAT = 4 // bidi category
+const DECOMP_MAP = 5 // decomposition mapping
+const DEC_DIG_VALUE = 6 // decimal digit value
+const DIG_VALUE = 7 // digit value
+const NUMERIC_VALUE = 8 // numeric value
+const UNICODE_1_NAME = 10 // Unicode 1 name
+const ISO_COMMENT = 11 // ISO 10646 comment
+const UC_MAP = 12 // uppercase mapping
+const LC_MAP = 13 // lowercase mapping
+const TC_MAP = 14 // titlecase mapping
+const BETA = 15 // beta indicator
+const GRAPHIC_FIELD = 16; // where graphic information is found
+const SUBTITLE_FIELD = 17; // where subtitle reference is found
+const AGE_FIELD = 18; // where Unicode version is found
+
 // Global variables
-// note: several global variables are set in prefs.js
-
-//var U = new Array;
-//var desc = new Array;
-
 var _notesArray = []
 var _newNotesArray = false;
 var _currentFont = _defaultFont;
@@ -25,10 +40,8 @@ var _newCharacterList;
 var _newContent, _resultdiv, _counter;
 var _copy2Picker = false; // determines whether characters clicked on are copied to the character area
 var _border = '1px solid #eee';
-var GRAPHIC_FIELD = 16; // constant for field where graphic information is found
-var SUBTITLE_FIELD = 17; // constant for field where subtitle reference is found
-var AGE_FIELD = 18; // constant for field where Unicode version is found
-var CSHELP = '<img src="images/cshelp.png" class="cshelp" alt="Context-sensitive help" />';
+
+const CSHELP = '<img src="images/cshelp.png" class="cshelp" alt="Context-sensitive help" />';
 var _displayStyle = 'matrix'; // initial format of a unicode range, possible values are 'list' or 'matrix'
 var _showNumbers = true; // initial presence or absence of hex numbering around a matrix
 var _utf8 = false; // default way of showing characters
@@ -72,9 +85,10 @@ function adjacentChar (codepoint, direction) {
 	// codepoint: integer, the decimal Unicode scalar value of the character currently displayed
 	// direction: integer, either 1 or -1
 	
-	while (codepoint != 0 && codepoint != U.length) {
-		codepoint += direction;
-		if (U[codepoint]) { break; }
+	while (codepoint !== 0 && codepoint !== U.length) {
+		codepoint += direction
+        var charType = getCharType(codepoint)
+		if (charType === 2 || charType === 3) { break }
 		}
 	printProperties(codepoint);
 	}
@@ -84,85 +98,72 @@ function addLine (codepoint, newContent) {
 	// Displays one line in a list of characters in the left panel
 	// codepoint: the dec codepoint for the character to display
 	// newContent: the node to which to add this line (typically a new node)
-	
-	var cRecord = getDataFor(codepoint).split(';');
-	var uplus = '';
-	if (document.getElementById('uPlusToggle').checked) { uplus = 'U+' };
+    // calls to decodeunicode images have been removed
+    var img, span
+	var cRecord = getDataFor(codepoint).split(';')
+	var uplus = ''
+	if (document.getElementById('uPlusToggle').checked) { uplus = 'U+' }
 
-	var dugraphics = false;
-		
-	var div = newContent.appendChild( document.createElement( 'div' ));
-		// div.onclick = function(){ printProperties(codepoint) };
-		setOnclick( codepoint, div );
-		div.title = 'Hex: '+codepoint.toString(16).toUpperCase()+'; Dec: '+codepoint;
+    // set up the div for the line
+	var div = newContent.appendChild( document.createElement( 'div' ))
+		setOnclick( codepoint, div )
+		div.title = 'Hex: '+codepoint.toString(16).toUpperCase()+' Dec: '+codepoint
 		if (cRecord[1].indexOf('Unassigned') > -1) { 
-			div.className = 'empty'; 
-			//div.style.backgroundColor = unassignedChar;
+			div.className = 'empty'
 			}
-		else { div.className = 'ch'; }
-	
+		else { div.className = 'ch' }
+
+    // if the charType is 2, there is a graphic
+    // if 3, there is a character but no graphic
+    var charType = getCharType(codepoint)
+
+    // add character if listC1 is checked in options
 	if (document.getElementById('listC1').checked) { 
-		var charType = getCharType(codepoint);
 		if (charType > 1 && charType < 4) { 
-			if (document.getElementById('graphicsToggle').checked == false) {
-				var span = div.appendChild( document.createElement( 'span' ));
-					span.className = 'chSpan';
-					span.style.fontFamily = _currentFont;
-				span.appendChild( document.createTextNode( getCharFromInt(parseInt(cRecord[0],16)) ));
+			if (document.getElementById('graphicsToggle').checked === false || charType === 3) {
+				span = div.appendChild( document.createElement( 'span' ))
+				span.className = 'chSpan'
+				span.appendChild( document.createTextNode( getCharFromInt(parseInt(cRecord[0],16)) ))
 				}
 			else { 
-				var img = div.appendChild( document.createElement( 'img' ));
-				//scriptGroup = findScriptGroup(codepoint);
-				if (cRecord[GRAPHIC_FIELD] == 'm') {
-					scriptGroup = findScriptGroup(codepoint);
-					img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+cRecord[0]+'.png'; }
-				else { img.src = 'http://decodeunicode.org/data/glyph/26x26/'+cRecord[0]+'.gif'; dugraphics=true; }
-				//img.src = 'http://decodeunicode.org/data/glyph/26x26/'+cRecord[0]+'.gif';
-				}
+				img = div.appendChild( document.createElement( 'img' ))
+                scriptGroup = findScriptGroup(codepoint)
+                img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+cRecord[0]+'.png' 
+                }
 			}
 		}
+
 	if (document.getElementById('listN').checked) { 
-		div.appendChild( document.createTextNode( '\u00A0\u00A0\u200E'+uplus+cRecord[0] ));
+		div.appendChild( document.createTextNode( '\u00A0\u200E'+uplus+cRecord[0] ))
 		}
+        
 	if (document.getElementById('listC2').checked) { 
-		var charType = getCharType(codepoint);
 		if (charType > 1 && charType < 4) { 
-		div.appendChild( document.createTextNode( '\u00A0\u00A0' ));
-			if (document.getElementById('graphicsToggle').checked == false) {
-				var span = div.appendChild( document.createElement( 'span' ));
-					span.className = 'chSpan';
-					span.style.fontFamily = _currentFont;
-				span.appendChild( document.createTextNode( getCharFromInt(parseInt(cRecord[0],16)) ));
+			if (document.getElementById('graphicsToggle').checked === false || charType === 3) {
+				span = div.appendChild( document.createElement( 'span' ))
+				span.className = 'chSpan'
+				span.appendChild( document.createTextNode( getCharFromInt(parseInt(cRecord[0],16)) ))
 				}
 			else { 
-				var img = div.appendChild( document.createElement( 'img' ));
-				if (cRecord[GRAPHIC_FIELD] == 'm') {
-					scriptGroup = findScriptGroup(codepoint);
-					img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+cRecord[0]+'.png'; }
-				else { img.src = 'http://decodeunicode.org/data/glyph/26x26/'+cRecord[0]+'.gif';  }
-				//img.src = 'http://decodeunicode.org/data/glyph/26x26/'+cRecord[0]+'.gif';
-				}
+				img = div.appendChild( document.createElement( 'img' ))
+                scriptGroup = findScriptGroup(codepoint)
+                img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+cRecord[0]+'.png' 
+                }
 			}
 		}
-	if (document.getElementById('listNm').checked) { 
-		div.appendChild( document.createTextNode( '\u00A0 '+cRecord[1] ));
+
+    if (document.getElementById('listNm').checked) { 
+		div.appendChild( document.createTextNode( ' '+cRecord[1] ))
 		}
-	return dugraphics;
+    return false
 	}
 	
 
 function addtocharSelect ( codepoint ) {
-	// adds a character to the cut & paste field
+	// adds a character to the text area, regardless of whether the up arrow is highlighted
 	// codepoint: integer, the decimal Unicode codepoint to be added
-	//var field = document.getElementById( 'charSelect' );
-	//field.value = field.value + getCharFromInt(codepoint);
-	field = document.getElementById( 'charNum' );
-	if (field.value != '' && field.value.charCodeAt(field.value.length-1) != ' ') { field.value += ' '; }
-	var cp = codepoint.toString(16).toUpperCase();
-	if (cp.length == 1) { cp = '000'+cp; }
-	else if (cp.length == 2) { cp = '00'+cp; }
-	if (cp.length == 3) { cp = '0'+cp; }
-	field.value = field.value + cp;
+	var field = document.getElementById( 'picker' )
+	field.value += getCharFromInt(codepoint)
 	}
 
 
@@ -211,9 +212,9 @@ function addtoPicker (codepoint) {
 	
 function isMatrix () {
 	// returns true if the left panel contains a matrix, else false
-	nodeArray = document.getElementById('chart').getElementsByTagName("td");
-	if (nodeArray.length > 0) { return true; }
-	else { return false; }
+	nodeArray = document.getElementById('chart').getElementsByTagName("td")
+	if (nodeArray.length > 0) { return true }
+	else { return false }
 	}
 
 
@@ -289,25 +290,13 @@ function changeHeight ( height ) {
 	
 function clearHighlighting () {
 	// removes any highlighting from the left panel
-	var nodeArray = new Array;
-	var newclass;
-	
-	var leftpanel = document.getElementById('chart');
 
-	if ( (_lastOperation == "range" || _lastOperation == "customrange") 
-		&& !(document.getElementById('listMatrixToggle').checked) ) {
-		nodeArray = leftpanel.getElementsByTagName("td"); 
-		}
-	else { nodeArray = leftpanel.getElementsByTagName("div"); }
-		
+    var nodeArray = document.getElementById('chart').querySelectorAll('.ch')
 	// clear out any existing highlighting
 	for (var i=0; i < nodeArray.length; i++) { 
-		if (nodeArray[i].className.match(/ch/)) {  
-			nodeArray[i].className='ch'; 
-			}
+		nodeArray[i].classList.remove('dim','c1-1','c2-0','c2-1','c3-0','c3-1','c3-2','c4-0','c4-1','c5-0','c5-1','c5-2','c6-0','c6-1','c6-2','c6-3','c7-0','c8-0','c9-0','c10-0','c11-0')
 	    }
 	}
-
 
 function clearInputFields ( ) {
 	// clears the cut & paste and codepoint fields
@@ -435,9 +424,7 @@ function createList (formField) {
 	var HexURange = formField.split(':');
 	var start = parseInt( HexURange[0], 16 );
 	var end = parseInt( HexURange[1], 16 );
-	var rangeLength = end - start;
 	var subtitle; 
-	var dugraphics = false;
 	
 	var listDiv = document.getElementById( 'listOutput' );
 	var oldContent = document.getElementById('chart');
@@ -448,151 +435,140 @@ function createList (formField) {
 	
 	var prevSubtitle = '';
 	for (i=start; i<=end; i++) {
-		if (U[i]) {
-			var cRecord = getDataFor(i).split(';');
-			currSubtitle = cRecord[SUBTITLE_FIELD];
-			if ( currSubtitle != '' && currSubtitle != prevSubtitle ) {
-				subtitle = document.createElement('div');
-				subtitle.className = 'subcat';
-				subtitle.appendChild(document.createTextNode(st[cRecord[SUBTITLE_FIELD]]));
-				newContent.appendChild(subtitle);
-				prevSubtitle = currSubtitle;
+        var charType = getCharType(i)
+		if (charType > 1) {
+			var cRecord = getDataFor(i).split(';')
+			currSubtitle = cRecord[SUBTITLE_FIELD]
+			if ( currSubtitle !== '' && currSubtitle !== prevSubtitle ) {
+				subtitle = document.createElement('div')
+				subtitle.className = 'subcat'
+				subtitle.appendChild(document.createTextNode(st[cRecord[SUBTITLE_FIELD]]))
+				newContent.appendChild(subtitle)
+				prevSubtitle = currSubtitle
 				}
-			used = addLine( i, newContent );
-			if (used) { dugraphics = true; }
+			used = addLine( i, newContent )
 			}
 		} 
-	var removedNode = listDiv.replaceChild( newContent, oldContent );
-//	if (document.getElementById('graphicsToggle').checked == true) { document.getElementById('ack').style.display = 'block'; }
-//	else { document.getElementById('ack').style.display = 'none'; }
-	if (dugraphics) { document.getElementById('ack').style.display = 'block'; }
-	else { document.getElementById('ack').style.display = 'none'; }
+	var removedNode = listDiv.replaceChild( newContent, oldContent )
 	}
 
 
 function createMatrix ( formField ) { 
 	// output: a grid format list of characters in the left panel
 	// formField: a string of the form 'XXXX:YYYY' indicating a range of characters in hex notation
-	var table, tbody, tr, td, img;
-	var cRecord;
-	_tempList = false;
-	dugraphics = false; // will be set to true if decodeunicode graphics are used (to set acknowledgement)
+    // calls for decodeunicode images have been removed
+	var table, tbody, tr, td, img
+	var cRecord
+	_tempList = false
 
-	var listDiv = document.getElementById( 'listOutput' );
-	var oldtable = document.getElementById('chart');
+	var listDiv = document.getElementById( 'listOutput' )
+	var oldtable = document.getElementById('chart')
 
-	table = document.createElement( 'table' );
-		table.className = 'chartChar';
-		table.id = 'chart';
-//		table.setAttribute( 'border', '0' );
-	tbody = table.appendChild( document.createElement( 'tbody' ));
+	table = document.createElement( 'table' )
+		table.className = 'chartChar'
+		table.id = 'chart'
+	tbody = table.appendChild( document.createElement( 'tbody' ))
 
 	var cCell = 0;
-	var HexURange = formField.split(':');
-	var remainder = 0;
+	var HexURange = formField.split(':')
+	var remainder = 0
 
 	// adjust start and end points to multiples of 16
-	var start = parseInt(HexURange[0], 16);
-	var rangestart = start;
-	remainder = start%16; 
-	if (remainder > 0) { start -= remainder; } 
+	var start = parseInt(HexURange[0], 16)
+	var rangestart = start
+	remainder = start%16
+	if (remainder > 0) { start -= remainder } 
 
-	var end = parseInt(HexURange[1], 16);
-	var rangeend = end;
-	remainder = end%16; 
-	if (remainder > 0) { end += (15-remainder); } 
+	var end = parseInt(HexURange[1], 16)
+	var rangeend = end
+	remainder = end%16
+	if (remainder > 0) { end += (15-remainder) } 
 
 
 	// work out what the range is
-	var cols = Math.ceil((end-start+1)/16);
-	var character = '';
-	var totalCodes = cols*16;
-	var notFound = true;
-	var showNumbers = true; if (document.getElementById('hideNumbers').checked) { showNumbers = false; }
+	var cols = Math.ceil((end-start+1)/16)
+	var character = ''
+	var totalCodes = cols*16
+	var notFound = true
+	var showNumbers = true
+    if (document.getElementById('hideNumbers').checked) { showNumbers = false }
 
 	for (i=-1; i<16; i++) {
-		tr = tbody.appendChild( document.createElement( 'tr' ));
+		tr = tbody.appendChild( document.createElement( 'tr' ))
 		
 		// Create number column
-		td = tr.appendChild( document.createElement( 'td' ));
-			td.className = 'hexNum';
-//			td.setAttribute( 'noChar', 'y' );
+		td = tr.appendChild( document.createElement( 'td' ))
+			td.className = 'hexNum'
 		if (showNumbers && i>-1) {
-			td.appendChild( document.createTextNode( i.toString(16).toUpperCase() ));
+			td.appendChild( document.createTextNode( i.toString(16).toUpperCase() ))
 			}
-		else { td.appendChild( document.createTextNode( '\u00A0' )); }
+		else { td.appendChild( document.createTextNode( '\u00A0' )) }
 		
 		for (j=0; j<cols; j++) {
-			cCell = start+i+(j*16);
-			charType = getCharType(cCell);
+			cCell = start+i+(j*16)
+			charType = getCharType(cCell)
 				
-			// If first row, add numbers or blanks
-			if (i == -1) { 
-				td = tr.appendChild( document.createElement( 'td' ));
-				td.className = 'hexNum';
-//				td.setAttribute( 'noChar', 'y' );
+			// if first row, add numbers or blanks
+			if (i === -1) { 
+				td = tr.appendChild( document.createElement( 'td' ))
+				td.className = 'hexNum'
 				if (showNumbers) {
-					var numStr = (cCell+1).toString(16).toUpperCase();
-					td.appendChild( document.createTextNode( numStr.slice(0,numStr.length-1) ));
+					var numStr = (cCell+1).toString(16).toUpperCase()
+					td.appendChild( document.createTextNode( numStr.slice(0,numStr.length-1) ))
 					}
-				else { td.appendChild( document.createTextNode( '\u00A0' )); }
+				else { td.appendChild( document.createTextNode( '\u00A0' )) }
 				}
 				
-			//Otherwise, add character info
+			// otherwise, add character info
 			else {  
-				hexNum = cCell.toString(16).toUpperCase(); 
-				td = tr.appendChild( document.createElement( 'td' ));
-					td.title = 'Hex: '+cCell.toString(16).toUpperCase()+' Dec: '+cCell;
-					td.style.fontFamily = _currentFont;
-					setOnclick( cCell, td );
-					setMouseover( cCell, td );
-					setMouseout( td );
-					td.className = 'ch';
-				if (charType < 2) { // not a character or unassigned character
-					//td.style.backgroundColor = unassignedChar; 
-					td.className = 'empty'; 
-					}
-				if (charType > 1) { // character
-					if (document.getElementById('graphicsToggle').checked == false) {
-						td.appendChild( document.createTextNode( getCharFromInt(cCell) )); 
-						}
-					else { 
-						for (k=hexNum.length; k<4; k++) { hexNum = '0' + hexNum; } 
-						img = td.appendChild( document.createElement( 'img' ));
-						if (U[cCell]) { // check it's not CJK
-							cRecord = U[cCell].split(';');
-							if (cRecord[GRAPHIC_FIELD] == 'm') {
-								scriptGroup = findScriptGroup(cCell);
-							//scriptGroup = findScriptGroup(cCell); 
-							//if (localGraphics.indexOf(scriptGroup+',') > -1) {
-								img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+hexNum+'.png'; 
-								}
-							else { 
-								img.src = 'http://decodeunicode.org/data/glyph/26x26/'+hexNum+'.gif'; dugraphics = true; 
-								}
-							}
-						else { // this is a cjk character, so just do the graphic
-							img.src = 'http://decodeunicode.org/data/glyph/26x26/'+hexNum+'.gif'; dugraphics = true; 
-							}
-						}
-					}
-				if (cCell<rangestart || cCell>rangeend) { // ie. outside the custom range but in same column
+				hexNum = cCell.toString(16).toUpperCase()
+				td = tr.appendChild( document.createElement( 'td' ))
+					td.title = 'Hex: '+cCell.toString(16).toUpperCase()+' Dec: '+cCell
+					setOnclick( cCell, td )
+					setMouseover( cCell, td )
+					setMouseout( td )
+					td.className = 'ch'
+                
+                // not a character or unassigned character
+				if (charType < 2) {
+                    td.classList.add('empty')
+                    }
+                
+                // character has image and images required
+				if (charType === 2) {
+                    if (document.getElementById('graphicsToggle').checked === true) {
+                        while( hexNum.length < 4 ) hexNum = '0' + hexNum
+                        img = td.appendChild( document.createElement( 'img' ))
+                        cRecord = U[cCell].split(';')
+                        scriptGroup = findScriptGroup(cCell)
+                        img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+hexNum+'.png'
+                        }
+                    else {
+                        td.appendChild( document.createTextNode( getCharFromInt(cCell) ))
+                        td.classList.add('chSpan')
+                        }
+                    }
+            
+                // surrogates
+				if (charType === 4) {
+                    td.appendChild( document.createTextNode( 'X' ))              
+                    td.classList.add('empty')
+                    }
+              
+                // private use or no image char (eg. CJK)
+				if (charType === 5 || charType === 3) {
+                    td.appendChild( document.createTextNode( getCharFromInt(cCell) ))              
+                    td.classList.add('chSpan')
+                    }
+
+                if (cCell<rangestart || cCell>rangeend) { // ie. outside the custom range but in same column
 					td.className = 'outofrange';
-					//td.style.color = '#ccc';
 					}
 				}
 			}
 		}
 	var removedNode = listDiv.replaceChild( table, oldtable );
-	if (dugraphics) { document.getElementById('ack').style.display = 'block'; }
-	else { document.getElementById('ack').style.display = 'none'; }
 
-	//if (document.getElementById('generalCat').value != 'startup') {
-	//	highlightList( 2, document.getElementById('generalCat').value );
-	//	}
-	//if (document.getElementById('directionality').value != 'startup') {
-	//	highlightList( 4, document.getElementById('directionality').value );
-	//	}
 	if (document.getElementById('fontSize')) { document.getElementById('fontSize').value = '100%'; }
 	}
 
@@ -699,15 +675,13 @@ function drawSelection (range) {
 function findScriptGroup ( charNum ) { 
 	// output: returns the name of the script group in which charNum falls
 	// charNum: a decimal number representing the code point of the character in question
-	if (charNum < 128) { return 'Basic Latin'; }
-	var i=1;
-	while ( i<scriptGroups.length && charNum > scriptGroups[i][0] ) {
-		i++; 
-		}
-	if ( i == scriptGroups.length ) { return( sNotAChar ); }
-	if ( scriptGroups[i-1][1] >= charNum ) { return( scriptGroups[i-1][2]); }
-	if ( scriptGroups[i][0] == charNum ) { return( scriptGroups[i][2]); }
-	return( sNotAChar );
+	if (charNum < 128) { return 'Basic Latin' }
+	var i=1
+	while ( i<scriptGroups.length && charNum > scriptGroups[i][0] ) i++
+	if ( i === scriptGroups.length ) { return( sNotAChar ) }
+	if ( scriptGroups[i-1][1] >= charNum ) { return( scriptGroups[i-1][2]) }
+	if ( scriptGroups[i][0] == charNum ) { return( scriptGroups[i][2]) }
+	return( sNotAChar )
 	}
 	
 	
@@ -811,12 +785,11 @@ function findString ( searchString ) {
 		var re = new RegExp(searchString, "i");
 		found = false;
 		for (i=0; i<scriptGroups.length-1; i++) {
-			if (scriptGroups[i][0] != 131072 && scriptGroups[i][0] != 13312 && scriptGroups[i][0] != 44032 && 
-				scriptGroups[i][0] != 57344 && scriptGroups[i][0] != 983040 && scriptGroups[i][0] != 1048576) { 
+			if (scriptGroups[i][0] !== 131072 && scriptGroups[i][0] !== 13312 && scriptGroups[i][0] !== 44032 && 
+				scriptGroups[i][0] !== 57344 && scriptGroups[i][0] !== 983040 && scriptGroups[i][0] !== 1048576) { 
 				for (j=scriptGroups[i][0]; j<=scriptGroups[i][1]; j++) {
-				//if (isset(desc[j])) { print "."; }
 					if (U[j]) {
-						fields = U[j].split(';');
+						fields = U[j].split(';')
 						found = false;
 						
 						if (showName && fields[1].search(re, 0) > -1) {
@@ -838,37 +811,6 @@ function findString ( searchString ) {
 		showCodepoint(records, 'hex');
 		document.getElementById('searchResultCount').innerHTML = count+" records found";
 		document.getElementById('searchResultCount').style.display = block;	
-					
-/*	
-		// clear the current left panel
-		var listDiv = document.getElementById( 'listOutput' );
-		var oldContent = document.getElementById('chart');
-
-		var tempContent = document.createElement( 'div' );
-			tempContent.className = 'charList';
-			tempContent.setAttribute( 'id', 'chart' ); 
-		tempContent.appendChild( document.createTextNode( sSearching ))
-		var removedNode = listDiv.replaceChild( tempContent, oldContent );
-		oldContent = document.getElementById('chart');
-			
-		var newContent = document.createElement( 'div' );
-			newContent.className = 'charList';
-			newContent.id = 'chart';
-		var resultdiv = newContent.appendChild( document.createElement('div'));
-			resultdiv.style.color = 'brown';
-			resultdiv.style.fontSize = '80%';
-	
-		_lastOperation = "search";
-
-
-		_newContent = newContent; _resultdiv = resultdiv; _searchString = searchString;
-		uri = 'getsearchresult?search=/'+searchString+'/i';
-		if (showName) uri += '&showName=yes';
-		if (showOther) uri += '&showOther=yes';
-		if (showDescription) uri += '&showDescription=yes';
-		 //alert(uri);
-		httpRequest('GET', uri, true, ajaxGetSearchList);
-*/	
 		}
 	}
 
@@ -897,58 +839,45 @@ function getCharFromInt ( n ) {
 function getCharType (codepoint) {
 	// codepoint: the dec codepoint for the character to display
 	// return values: 0 not a character; 1 unassigned character in a block; 2 character listed in u.js; 3 character not listed in u.js; 4 surrogate; 5 private use
-	if ( U[codepoint] ) {
-		return 2;
-		}
-	else if (findScriptGroup(codepoint) != sNotAChar) { // surrogates
-		if ((codepoint > 13312 && codepoint < 19903) || (codepoint > 19968 && codepoint < 40959) ||           // CJK Ext A, CJK main
-			(codepoint > 131072 && codepoint < 173782) || (codepoint > 0x2A700 && codepoint < 0x2B734) ||     // CKL Ext B, C
-			(codepoint > 0x2B740 && codepoint < 0x2B81D) || (codepoint > 0x2B820 && codepoint < 0x2CEA1) || (codepoint > 0x2CEB0 && codepoint < 0x2EBE0) ||   // CJK Ext D, E, F
-			(codepoint > 44032 && codepoint < 55203) ||   // hangul syllables
-			(codepoint > 0x17000 && codepoint < 0x187FF)  // tangut
-			) { 
-			return 3;
-			}
-		else if ((codepoint > 57344 && codepoint < 63743) || (codepoint > 983040 && codepoint < 1048573) || 
-			(codepoint > 1048576 && codepoint < 1114109)) { // private use
-			return 5;
-			}
-		else if (codepoint > 55296 && codepoint < 57343) { // surrogates
-			return 4;
-			}
-		else { // unassigned character
-			return 1;
-			}
-		}
-	else { // unrecognized character
-		return 0;
-		}
+    if ((codepoint >= 0x3400 && codepoint <= 0x4DBF) || (codepoint >= 0x4E00 && codepoint <= 0x9FFF) ||           // CJK Ext A, CJK main
+        (codepoint >= 0x20000 && codepoint <= 0x2A6DF) || (codepoint >= 0x2A700 && codepoint <= 0x2B73F) ||     // CKL Ext B, C
+        (codepoint >= 0x2B740 && codepoint <= 0x2B81F) || (codepoint >= 0x2B820 && codepoint <= 0x2CEAF) || (codepoint >= 0x2CEB0 && codepoint <= 0x2EBE0) ||   // CJK Ext D, E, F
+        (codepoint >= 0xAC00 && codepoint <= 0xD7AF) ||   // hangul syllables
+        (codepoint >= 0x17000 && codepoint <= 0x187FF)  // tangut
+        ) { 
+        return 3;
+        }
+    else if ( U[codepoint] ) {
+        return 2;
+        }
+    else if ((codepoint >= 57344 && codepoint <= 63743) || (codepoint > 983040 && codepoint < 1048573) || 
+        (codepoint >= 1048576 && codepoint <= 1114109)) { // private use
+        return 5;
+        }
+    else if (codepoint >= 55296 && codepoint <= 57343) { // surrogates
+        return 4;
+        }
+    else if (findScriptGroup(codepoint) !== sNotAChar) return 1  // unassigned character in block
+    
+    else return 0  // unrecognized character
 	}
 
 
 function getDataFor (codepoint) {
 	// codepoint: the dec codepoint for the character to display
 	
-	var charType = getCharType(codepoint);
-	var hexcp = codepoint.toString(16).toUpperCase(); while (hexcp.length<4) {hexcp='0'+hexcp;}
+	var charType = getCharType(codepoint)
+	var hexcp = codepoint.toString(16).toUpperCase()
+    while (hexcp.length<4) hexcp='0'+hexcp
 	// return values: 0 not a character; 1 unassigned character in a block; 2 character listed in u.js; 3 character not listed in u.js; 4 surrogate; 5 private use
-	if ( charType == 2 ) {
-		return U[codepoint];
-		}
-	else if (charType < 2) {
-		return hexcp+";[Unassigned code point];;;;;;;;;;;;;;;;;";
-		}
-	else if (charType == 3) {
-		return hexcp+";["+ findScriptGroup( codepoint )+"];Lo;0;L;;;;;N;;;;;;;;;";
-		}
-	else if (charType == 5) {
-		return hexcp+";["+ findScriptGroup( codepoint )+"];Co;0;L;;;;;N;;;;;;;;;";
-		}
-	else if (charType > 4) {
-		return hexcp+";["+ findScriptGroup( codepoint )+"];;;;;;;;;;;;;;;;;";
-		}
-	else { alert("Error in getDataFor: Unexpected value for charType"); 
-		return hexcp+";[Error];;;;;;;;;;;;;;;;;";
+	if ( charType == 2 ) return U[codepoint]
+	else if (charType < 2) return hexcp+";[Unassigned code point];;;;;;;;;;;;;;;;;"
+	else if (charType == 3) return hexcp+";["+ findScriptGroup( codepoint )+"];Lo;0;L;;;;;N;;;;;;;;;"
+	else if (charType == 5) return hexcp+";["+ findScriptGroup( codepoint )+"];Co;0;L;;;;;N;;;;;;;;;"
+	else if (charType > 4) return hexcp+";["+ findScriptGroup( codepoint )+"];;;;;;;;;;;;;;;;;"
+	else { 
+        alert("Error in getDataFor: Unexpected value for charType")
+		return hexcp+";[Error];;;;;;;;;;;;;;;;;"
 		}
 	}
 		
@@ -978,43 +907,37 @@ function getRange ( str ) {
 
 	
 function highlightList ( field, searchString ) { 
-	// output: highlighting in the left panel of all characters that fall into the category selected
+	// Highlights in the left panel all characters that fall into the category in searchString
 	// field: integer, the field in the record to search for a match
 	// searchString: string, the specific setting to search for in the field
-	var nodeArray = new Array;
-	var titlepart;
-	var cRecord;
-	var newclass;
+	var nodeArray = new Array
+	var titlepart
+	var cRecord
+	var newclass
 	
 	// clear the search box
 	//document.getElementById('searchString').value = '';
 	
-	var leftpanel = document.getElementById('chart');
+	var leftpanel = document.getElementById('chart')
 
 	// get a list of characters
-	nodeArray = document.getElementById('chart').getElementsByTagName("div"); 
-	if (nodeArray.length == 0) { 
-		nodeArray = document.getElementById('chart').getElementsByTagName("td");
+	//nodeArray = document.getElementById('chart').getElementsByTagName("div"); 
+	//if (nodeArray.length == 0) { 
+	//	nodeArray = document.getElementById('chart').getElementsByTagName("td");
+	//	}
+	nodeArray = document.getElementById('chart').querySelectorAll('div.ch')
+	if (nodeArray.length === 0) { 
+		nodeArray = document.getElementById('chart').querySelectorAll('td.ch');
 		}
 
 	// clear out any existing highlighting
-	clearHighlighting();
+	clearHighlighting()
   	
 	// if you set searchstring to 'none' to clear highlighting, clear and quit
-	if (searchString == 'none' || searchString == 'startup') { 
-//		if (!(document.getElementById('listMatrixToggle').checked)) {
-//			for (var i=0; i < nodeArray.length; i++) {
-//				if ( nodeArray[i].className == 'empty' ) {
-//					nodeArray[i].style.backgroundColor = unassignedChar;
-//					nodeArray[i].style.border = '0'; 
-//					}
-//				}
-//		    }  
-		return; 
-		}  
+	if (searchString == 'none' || searchString == 'startup') return  
 
 	// if looking for combining class 0, don't use regex
-	if (searchString == '0') {
+	if (searchString === '0') {
 		for (var i=0; i < nodeArray.length; i++) {
 			titlepart = nodeArray[i].title.split(' ');
 			if (nodeArray[i].className.match(/ch/) && U[titlepart[3]]) {
@@ -1022,8 +945,6 @@ function highlightList ( field, searchString ) {
 				if ( cRecord[field] != 0 ) {
 					newclass = nodeArray[i].className+' dim';
 					nodeArray[i].className = newclass;
-//					nodeArray[i].style.backgroundColor = filterHighlight;
-//					nodeArray[i].style.border = '2px solid'+filterHighlight;
 					}
 				}
 	    	}
@@ -1031,19 +952,14 @@ function highlightList ( field, searchString ) {
 		}
 		
 	// otherwise search and highlight
-	searchStringRE = new RegExp(searchString);
-	for (var i=0; i < nodeArray.length; i++) {
-		titlepart = nodeArray[i].title.split(' ');
-		if (nodeArray[i].className.match(/ch/) && U[titlepart[3]]) {
-			cRecord = U[ titlepart[3] ].split( ';' );
+	searchStringRE = new RegExp(searchString)
+	for (var i=0; i<nodeArray.length; i++) {
+		titlepart = nodeArray[i].title.split(' ')
+		if (nodeArray[i].classList.contains('ch') && U[titlepart[3]]) {
+			cRecord = U[ titlepart[3] ].split( ';' )
 			if ( cRecord[field].search(searchStringRE) == -1 ) {
-				//nodeArray[i].style.backgroundColor = filterHighlight;
-				//nodeArray[i].style.border = '2px solid'+filterHighlight;
-				//if (nodeArray[i].nodeName == 'TD') { 
-					newclass = nodeArray[i].className+' dim';
-					//nodeArray[i].firstChild.className = 'opaque';
-					nodeArray[i].className = newclass;
-				//	}
+                newclass = nodeArray[i].className+' dim'
+				nodeArray[i].className = newclass;
 				}
 	    	}
 		}
@@ -1086,25 +1002,29 @@ function highlight2List () {
 
 	
 function listProperties ( searchString ) { 
-	// effect: outputs in the left panel a list of characters whose properties searchString
+	// effect: outputs in the left panel a list of characters whose properties match searchString
 	// searchString: a string of text to search for in the database
 
-	_tempList = true;
-	var counter = 0;
-	var i = 0;
-	var field;
-	document.getElementById('propertyResultCount').style.display = 'none';	
+	_tempList = true
+	var counter = 0
+	var i = 0
+	var field
+	document.getElementById('propertyResultCount').style.display = 'none'
 
 	// if searching in current range
 	if (document.getElementById('locallist').checked) { // if the Local checkbox is ticked
-		searchString = searchString.replace(/;/g,'');
+		searchString = searchString.replace(/;/g,'')
 		// work out which field to search in
-		var directionality = { L:'', R:'', EN:'', ES:'', ET:'', AN:'', CS:'', NSM:'', BN:'', WS:'', ON:'' }
-		if (searchString in directionality) { field = 4; }
-		else if (searchString == '0') { field = 3; }
-		else { field = 2; } 
+        var directionality = new Set(['L','R','EN','ES','ET','AN','CS','NSM','BN','WS','ON'])
+        if (directionality.has(searchString)) field = 4
+
+        
+		//var directionality = { L:'', R:'', EN:'', ES:'', ET:'', AN:'', CS:'', NSM:'', BN:'', WS:'', ON:'' }
+		//if (searchString in directionality) { field = 4 }
+		else if (searchString === '0') { field = 3 }
+		else { field = 2 } 
 		
-		highlightList(field, searchString);
+		highlightList(field, searchString)
 		}
 	else {
 		var listDiv = document.getElementById( 'listOutput' );
@@ -1136,15 +1056,15 @@ function listProperties ( searchString ) {
 		var re = new RegExp(searchString);
 		found = false;
 		for (i=0; i<scriptGroups.length-1; i++) { 
-			if (scriptGroups[i][0] != 131072 && scriptGroups[i][0] != 13312 && scriptGroups[i][0] != 44032 && scriptGroups[i][0] != 19968 && 
-				scriptGroups[i][0] != 57344 && scriptGroups[i][0] != 983040 && scriptGroups[i][0] != 1048576) {  
+			if (scriptGroups[i][0] !== 131072 && scriptGroups[i][0] !== 13312 && scriptGroups[i][0] !== 44032 && scriptGroups[i][0] !== 19968 && 
+				scriptGroups[i][0] !== 57344 && scriptGroups[i][0] !== 983040 && scriptGroups[i][0] !== 1048576) {  
 				for (j=scriptGroups[i][0]; j<scriptGroups[i][1]; j++) {
 					if (U[j]) {
-						found = false;
+						found = false
 						
 						if (U[j].search(re, 0) > -1) { 
-							records += j.toString(16)+' '; 
-							found = true; count++;
+							records += j.toString(16)+' '
+							found = true; count++
 							}
 						}
 					}
@@ -1385,67 +1305,38 @@ function showAge () {
 	// displays information for characters in the left panel about which version of Unicode 
 	// they made their their debut
 	
-	if (isMatrix()) { 
-		nodeArray = document.getElementById('chart').getElementsByTagName("td"); 
-		for (var i=0; i<nodeArray.length; i++) {
-			if (nodeArray[i].className.match(/ch/)) {
-				decCP = nodeArray[i].title.split(' ')[3];
-				fields = U[decCP].split(';');
-				switch (fields[AGE_FIELD]) {
-					case '1.0': c = 'c1-0'; break;
-					case '1.1': c = 'c1-1'; break;
-					case '2.0': c = 'c2-0'; break;
-					case '2.1': c = 'c2-1'; break;
-					case '3.0': c = 'c3-0'; break;
-					case '3.1': c = 'c3-1'; break;
-					case '3.2': c = 'c3-2'; break;
-					case '4.0': c = 'c4-0'; break;
-					case '4.1': c = 'c4-1'; break;
-					case '5.0': c = 'c5-0'; break;
-					case '5.1': c = 'c5-1'; break;
-					case '5.2': c = 'c5-2'; break;
-					case '6.0': c = 'c6-0'; break;
-					case '6.1': c = 'c6-1'; break;
-					case '6.2': c = 'c6-2'; break;
-					case '6.3': c = 'c6-3'; break;
-					case '7.0': c = 'c7-0'; break;
-					case '8.0': c = 'c8-0'; break;
-					}
-				nodeArray[i].className += ' '+c;
-				}
-			}
-		}
-	else { 
-		nodeArray = document.getElementById('listOutput').getElementsByTagName("div"); 
-		for (var i=0; i<nodeArray.length; i++) {
-			if (nodeArray[i].className.match(/\bch\b/)) {
-				decCP = nodeArray[i].title.split(' ')[3]; 
-				fields = U[decCP].split(';');
-				switch (fields[AGE_FIELD]) {
-					case '1.0': c = 'c1-0'; break;
-					case '1.1': c = 'c1-1'; break;
-					case '2.0': c = 'c2-0'; break;
-					case '2.1': c = 'c2-1'; break;
-					case '3.0': c = 'c3-0'; break;
-					case '3.1': c = 'c3-1'; break;
-					case '3.2': c = 'c3-2'; break;
-					case '4.0': c = 'c4-0'; break;
-					case '4.1': c = 'c4-1'; break;
-					case '5.0': c = 'c5-0'; break;
-					case '5.1': c = 'c5-1'; break;
-					case '5.2': c = 'c5-2'; break;
-					case '6.0': c = 'c6-0'; break;
-					case '6.1': c = 'c6-1'; break;
-					case '6.2': c = 'c6-2'; break;
-					case '6.3': c = 'c6-3'; break;
-					case '7.0': c = 'c7-0'; break;
-					case '8.0': c = 'c8-0'; break;
-					}
-				nodeArray[i].className += ' '+c;
-				}
-			}
-		}
-	
+    nodeArray = document.getElementById('chart').querySelectorAll('.ch')
+    for (var i=0; i<nodeArray.length; i++) {
+        if (! nodeArray[i].classList.contains('empty')) {
+            decCP = nodeArray[i].title.split(' ')[3]
+            if (! U[decCP]) continue
+            fields = U[decCP].split(';')
+            switch (fields[AGE_FIELD]) {
+                case '1.0': c = 'c1-0'; break;
+                case '1.1': c = 'c1-1'; break;
+                case '2.0': c = 'c2-0'; break;
+                case '2.1': c = 'c2-1'; break;
+                case '3.0': c = 'c3-0'; break;
+                case '3.1': c = 'c3-1'; break;
+                case '3.2': c = 'c3-2'; break;
+                case '4.0': c = 'c4-0'; break;
+                case '4.1': c = 'c4-1'; break;
+                case '5.0': c = 'c5-0'; break;
+                case '5.1': c = 'c5-1'; break;
+                case '5.2': c = 'c5-2'; break;
+                case '6.0': c = 'c6-0'; break;
+                case '6.1': c = 'c6-1'; break;
+                case '6.2': c = 'c6-2'; break;
+                case '6.3': c = 'c6-3'; break;
+                case '7.0': c = 'c7-0'; break;
+                case '8.0': c = 'c8-0'; break;
+                case '9.0': c = 'c9-0'; break;
+                case '10.0': c = 'c10-0'; break;
+                case '11.0': c = 'c11-0'; break;
+                }
+            nodeArray[i].classList.add(c)
+            }
+        }
 	}
 
 function showCharacterList ( string ) { 
@@ -1656,24 +1547,24 @@ function showList (property) {
 
 
 function showProperties (value) { 
-	if (document.getElementById('searchOther').checked != true) {  
-		alert('You need to select the checkbox next to Other (under the Search field) for this to work.'); 
+	if (document.getElementById('searchOther').checked !== true) {  
+		alert('You need to select the checkbox next to Other (under the Search field) for this to work.') 
 		}  
-	else if (document.getElementById('locallist').checked != true && value == ';0;') {  
-		alert('You can only search for Combining Class 0 locally.'); 
-		return false;
+	else if (document.getElementById('locallist').checked !== true && value == ';0;') {  
+		alert('You can only search for Combining Class 0 locally.')
+		return false
 		}  
 	else { 
-		if (document.getElementById('locallist').checked != true) { 
+		if (document.getElementById('locallist').checked !== true) { 
 			var result = confirm('You haven\'t selected the Local checkbox. This request may take a long time. Do you want to continue?'); 
-			if (! result) { return false; }
+			if (! result) { return false }
 			}
-		listProperties(value);  
+		listProperties(value)  
 		}
 	}
 
 
-function showRange() {
+function showRange () {
 	// clean up the range and check whether we have already downloaded the data
 	// if so, it call drawSelection to draw characters
 	// if not, calls ajax to download character data and then call drawSelection
@@ -1702,31 +1593,7 @@ function showRange() {
 
 	_lastOperation = "customrange";
 
-	// check whether we already downloaded this data
-	// note, only exact matches of ranges will avoid a downlaod
-	//var found = false;
-	//for (var i=0; i<_selections.length;i++) {
-	//	if (_selections[i] == range) { 
-	//		found = true; 
-	//		}
-	//	}
-	//if (found) {
-		drawSelection(range); 
-	//	}
-	//else { 
-		// adjust start and end points to multiples of 16 so matrix can show rest of column
-	//	var start = parseInt(rangeArray[0], 16);
-	//	remainder = start%16; 
-	//	if (remainder > 0) { start -= remainder; } 
-
-	//	var end = parseInt(rangeArray[1], 16);
-	//	remainder = end%16; 
-	//	if (remainder > 0) { end += (15-remainder); } 
-		
-	//	uri = 'getrange.php?start='+start.toString(16)+'&end='+end.toString(16);
-	//	httpRequest('GET', uri, true, ajaxDrawSelection);
-	//	_selections[_selections.length] = range;
-	//	}
+    drawSelection(range); 
 	}
 
 
@@ -1737,62 +1604,35 @@ function normaliseName (name) {
 	return name;
 	}
 
+
 function showSelection (range) {
 	// checks whether the range has already been shown,
-	// if it has, it calls drawSelection to draw characters
-	// if not, calls ajax to download character data and then call drawSelection
 	
 	//check the range is ok
-	if ( range == '' ) { return; }  
-	rangeArray = range.split(':');
-	size = parseInt(rangeArray[1], 16)-parseInt(rangeArray[0], 16);
+	if ( range == '' ) { return }  
+	rangeArray = range.split(':')
+	size = parseInt(rangeArray[1], 16)-parseInt(rangeArray[0], 16)
 	if (size > 2000) { 
-		result = confirm('This block contains '+size+' characters. Displaying it will take a long time. Do you want to continue?');  
-		if (!result) { return; }
+		result = confirm('This block contains '+size+' characters. Displaying it will take a long time. Do you want to continue?')
+		if (!result) { return }
 		}
 		
-	_lastOperation = 'range';
+	_lastOperation = 'range'
 	
 	// fill in the custom range field
-	document.getElementById('customRange1').value = rangeArray[0]+':'+rangeArray[1];
+	document.getElementById('customRange1').value = rangeArray[0]+':'+rangeArray[1]
 	
 	// add pointer to block info, if such exists
-	var infoptr = scriptInfoPointer(rangeArray[0]);
+	var infoptr = scriptInfoPointer(rangeArray[0])
 	if (infoptr) { 
-		document.getElementById('blockInfoPointer').innerHTML = '<div id="blockname" onclick="displayBlockData(\''+infoptr+'\');">'+scriptGroups[infoptr][3]+' <img style="vertical-align:bottom;" src="images/info.gif" alt="info"/></div> ';
+		document.getElementById('blockInfoPointer').innerHTML = '<div id="blockname" onclick="displayBlockData(\''+infoptr+'\');">'+scriptGroups[infoptr][3]+' <img style="vertical-align:bottom;" src="images/info.gif" alt="info"/></div> '
 		}
-	else { document.getElementById('blockInfoPointer').innerHTML = ''; }
+	else { document.getElementById('blockInfoPointer').innerHTML = '' }
 	
-	//	if (infoptr) { 
-	//	document.getElementById('blockInfoPointer').innerHTML = '<div id="blockinfoptr" onclick="displayBlockData(\''+infoptr+'\');">resources</div> '; 
-	//	document.getElementById('blockInfoPointer').innerHTML += 
-	//	'<div id="listcreator" onclick="analyse = window.open(\'/rishida/tools/analysestring?list=\'+encodeURIComponent(createAnnotatedList('+scriptGroups[infoptr][0]+','+scriptGroups[infoptr][1]+')), \'analyse\'); analyse.focus();"><img src="images/X.gif" alt=X/>character list</div> '; 
-	//	document.getElementById('blockInfoPointer').innerHTML += '<div id="blockname">'+scriptGroups[infoptr][2]+'</div> ';
-	//	}
-	//else { document.getElementById('blockInfoPointer').innerHTML = ''; }
-
-	//document.getElementById('blockInfoPointer').innerHTML = '<span style="font-size:18px">ℹ</span>: '+scriptGroups[infoptr][2]; }
-	//else { document.getElementById('blockInfoPointer').innerHTML = ''; }
-
-
-	// check whether we already downloaded this data, and draw it
-	//var found = false;
-	//for (var i=0; i<_selections.length;i++) {
-	//	if (_selections[i] == range) { 
-	//		found = true;
-	//		}
-	//	}
-	//if (found) { 
-		drawSelection(range); 
-		displayTags(listTags())
-		if (document.getElementById('showNotesToggle').checked) highlightIndexChars()
+    drawSelection(range)
+    displayTags(listTags())
+    if (document.getElementById('showNotesToggle').checked) highlightIndexChars()
 		
-	//	}
-	//else { 
-	//	uri = 'getrange.php?start='+rangeArray[0]+'&end='+rangeArray[1];
-	//	httpRequest('GET', uri, true, ajaxDrawSelection);
-	//	_selections[_selections.length] = range;
-	//	}
 	}
 
 
@@ -1804,7 +1644,8 @@ function highlightIndexChars () {
 			path = charlist[i].title.split(' ')
 			if (charInfoPointer(path[1])) {
 				//charlist[i].style.color = 'red'
-				charlist[i].style.border = '1px solid #FF7704'
+				//charlist[i].style.border = '1px solid #FF7704'
+                charlist[i].classList.add('notesAvailable')
 				}
 			}
 		}
@@ -1859,40 +1700,69 @@ function displayTags (list) {
 	out += ' • <a href="none" onclick="showProperties(\'(;Nd;|;Nl;|;No;)\'); return false;">number</a> '
 	out += ' • <a href="none" onclick="showProperties(\'(;Pc;|;Pd;|;Ps;|;Pe;|;Pi;|;Pf;|;Po;)\'); return false;">punctuation</a> '
 	out += ' • <a href="none" onclick="showProperties(\'(;Sm;|;Sc;|;Sk;|;So;)\'); return false;">symbol</a> '
+	out += ' • <a href="none" onclick="showProperties(\'none\'); return false;">X</a><br/>'
 	
 	if (list.length > 0) {
-		out += ' • <a href="none" onclick="highlightByTag(\''+list[0]+'\'); return false;">'+list[0]+'</a>'
-		for (var i=1;i<list.length;i++) {
-			out += ' • <a href="none" onclick="highlightByTag(\''+list[i]+'\'); return false;">'+list[i]+'</a> '
+		for (var i=0;i<list.length;i++) {
+			if (list[i] !== '') {
+                out += '<a href="none" onclick="highlightSubtitles(\''+list[i]+'\'); return false;">'+st[list[i]]+'</a> '
+                if (i<list.length-1) out += ' • '
+                }
 			}
 		}
+    
 	document.getElementById('tags').innerHTML = out
 	}
+
 
 function listTags () {
 	// get a list of tags for the displayed characters
 	
 	var out = []
 	var leftpanel = document.getElementById('chart')
-	var tagList = {}
+	var subtitleSet = new Set([])
 
 	nodes = leftpanel.querySelectorAll(".ch") 
 
-	// build a list of tags
+	// build a list of tags for subtitles
 	for (var i=0;i<nodes.length;i++) { 
 		var titlefields = nodes[i].title.split(' ')
 		var dec = titlefields[3]
-		if (T[dec]) {
-			var tags = T[dec].split(',')
-			for (var t=0;t<tags.length;t++) {
-				if (tagList[tags[t]]==null) tagList[tags[t]] = tags[t]
-				}
-			}
+        
+        // add links for each subtitle in the block
+        var cRecord = getDataFor(dec).split(';')
+		currSubtitle = cRecord[SUBTITLE_FIELD]
+        if (! subtitleSet.has(currSubtitle)) {
+            subtitleSet.add(currSubtitle)        
+            out.push(currSubtitle)
+            }
 	    }
-	for (tag in tagList) { out.push(tagList[tag]) }
 	out.sort()
 	return out
 	}
+
+
+function highlightSubtitles (subt) {
+    // when a user clicks on a link at the bottom of a matrix, this highlights a subsection
+    // subt, decimal pointer to st list
+    
+	nodes = document.getElementById('chart').querySelectorAll(".ch") 
+
+	// clear existing highlights
+	for (var i=0;i<nodes.length;i++) {
+        nodes[i].classList.remove('dim')
+        }
+
+	// build a list of tags for subtitles
+	for (var i=0;i<nodes.length;i++) { 
+		var titlefields = nodes[i].title.split(' ')
+		var dec = titlefields[3]
+        
+        // add links for each subtitle in the block
+        var cRecord = getDataFor(dec).split(';')
+        if (cRecord[SUBTITLE_FIELD] !== subt) nodes[i].classList.add('dim')
+	    }
+    }
 
 
 function showUnihan (codepoints, inputtype) {
@@ -1969,85 +1839,76 @@ function toggleSpan2Img (node, decchar) {
 	
 function toggleGraphic (graphic) { 
 	// switch characters to graphics and vice versa
-	var leftpanel = document.getElementById('chart');
-	var titlefields;
-	var dugraphics = false; // will be set to true if decodeunicode graphics are used (to set acknowledgement)
+    // this doesn't just redraw the matrix or list, because that would obliterate highlighting
+    // removes calls to decodeunicode images
+    
+	var leftpanel = document.getElementById('chart')
+	var titlefields, img, span, text, hexNum, charType
 	
 	// check whether we're dealing with a table or list
-	var tableRows = leftpanel.getElementsByTagName("tr");
-//	if (tableRows.length > 0) { // it's a table
+	var tableRows = leftpanel.getElementsByTagName("tr")
+    
 	if (isMatrix()) { 
-		var tds = leftpanel.getElementsByTagName('td'); 
-		for (var i=0; i<tds.length; i++) {
-			if (tds[i].className.match(/ch/)) { 
-				titlefields = tds[i].title.split(' ');
-				var hexNum = titlefields[1].toUpperCase(); 
-				for (var k=hexNum.length; k<4; k++) { hexNum = '0' + hexNum; } // padd with zeros
-				if (document.getElementById('graphicsToggle').checked == true) { // change text to img 
-					var img = document.createElement( 'img' );
-
-					cRecord = U[titlefields[3]].split(';');
-					if (cRecord[GRAPHIC_FIELD] == 'm') {
-						scriptGroup = findScriptGroup(parseInt(titlefields[3]));
-						img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+hexNum+'.png'; 
-						}
-					
-					//scriptGroup = findScriptGroup(parseInt(titlefields[3])); 
-					//if (localGraphics.indexOf(scriptGroup+',') > -1) { 
-						//img.src = 'graphics/'+scriptGroup+'/'+hexNum+'.png'; }
-					else { img.src = 'http://decodeunicode.org/data/glyph/26x26/'+hexNum+'.gif'; img.alt=getCharFromInt(titlefields[3]); dugraphics = true; }
-					 
-					var text = tds[i].firstChild;
-					tds[i].replaceChild(img, text);
+		var tds = leftpanel.querySelectorAll('td')
+		for (let i=0; i<tds.length; i++) {
+			if (tds[i].classList.contains('ch')) { 
+				titlefields = tds[i].title.split(' ')
+				hexNum = titlefields[1].toUpperCase()
+                while (hexNum.length < 4) hexNum = '0' + hexNum  // padd with zeros
+                charType = getCharType(parseInt(titlefields[3]))
+                
+                // change text to img
+				if (document.getElementById('graphicsToggle').checked === true && charType === 2 &&
+                    tds[i].classList.contains('chSpan')) { 
+					img = document.createElement( 'img' )
+				    scriptGroup = findScriptGroup(parseInt(titlefields[3]))
+				    img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+hexNum+'.png'
+					text = tds[i].firstChild
+					tds[i].replaceChild(img, text)
+                    tds[i].classList.remove('chSpan')
 					}
-				else { // change img to text  
-					var ch = document.createTextNode(getCharFromInt(titlefields[3]));
-					var img = tds[i].firstChild;
-					tds[i].replaceChild(ch, img);
+                
+                // change img to text
+				else if (! tds[i].classList.contains('empty')) {
+                    ch = getCharFromInt(titlefields[3])
+                    tds[i].textContent = ch
+                    tds[i].classList.add('chSpan')
 					}
 				}
 			}
-			//if (_utf8) { _utf8 = false; } else { _utf8 = true; }
 		}
-	else {
-		var divs = leftpanel.getElementsByTagName('div');
-		for (var i=0; i<divs.length; i++) {
-			if (divs[i].className.match(/ch/)) { 
-				titlefields = divs[i].title.split(' ');
-				var hexNum = titlefields[1].toUpperCase();
-				hexNum = hexNum.replace(/;/,'');
-				for (var k=hexNum.length; k<4; k++) { hexNum = '0' + hexNum; } // padd with zeros
-				if (document.getElementById('graphicsToggle').checked == true) { // change span to img 
-					var img = document.createElement( 'img' );
-					cRecord = U[titlefields[3]].split(';');
-					if (cRecord[GRAPHIC_FIELD] == 'm') {
-						scriptGroup = findScriptGroup(parseInt(titlefields[3]));
-						img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+hexNum+'.png'; 
-						}
 
-					//scriptGroup = findScriptGroup(parseInt(titlefields[3])); 
-					//if (localGraphics.indexOf(scriptGroup+',') > -1) { 
-						//img.src = 'graphics/'+scriptGroup+'/'+hexNum+'.png'; }
-					else { img.src = 'http://decodeunicode.org/data/glyph/26x26/'+hexNum+'.gif'; dugraphics = true; }
-					var span = divs[i].getElementsByTagName('span')[0];
-					divs[i].replaceChild(img, span);
+	else { // this is a list
+		var divs = leftpanel.getElementsByTagName('div')
+		for (let i=0; i<divs.length; i++) {
+			if (divs[i].classList.contains('ch')) { 
+				titlefields = divs[i].title.split(' ')
+				hexNum = titlefields[1].toUpperCase()
+                while (hexNum.length < 4) hexNum = '0' + hexNum  // padd with zeros
+                charType = getCharType(parseInt(titlefields[3]))
+//               cRecord = U[titlefields[3]].split(';')
+ 
+                // change span to img
+				if (document.getElementById('graphicsToggle').checked == true && charType === 2) {
+					img = document.createElement( 'img' )
+				    scriptGroup = findScriptGroup(parseInt(titlefields[3]))
+				    img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+hexNum+'.png' 
+					span = divs[i].getElementsByTagName('span')[0]
+					divs[i].replaceChild(img, span)
 					}
-				else { // change img to span  
-					var ch = document.createTextNode(getCharFromInt(titlefields[3]));
-					var span = document.createElement('span'); //<span style="font-family: 'Arial Unicode MS',sans-serif;" class="chSpan">आ</span>
-					span.className = 'chSpan';
-					span.style.fontFamily = _currentFont;
-					span.appendChild(ch);
-					var img = divs[i].getElementsByTagName('img')[0];
-					divs[i].replaceChild(span, img);
+                
+                // change img to span
+				else {   
+					var ch = document.createTextNode(getCharFromInt(titlefields[3]))
+					span = document.createElement('span') 
+					span.className = 'chSpan'
+					span.appendChild(ch)
+					img = divs[i].firstChild
+					divs[i].replaceChild(span, img)
 					}
 				}
 			}
-			//if (_utf8) { _utf8 = false; } else { _utf8 = true; }
 		}
-	// display acknowledgement for decodeunicode graphics
-	if (dugraphics) { document.getElementById('ack').style.display = 'block'; }
-	else { document.getElementById('ack').style.display = 'none'; }
 
 	// change the large character on the right, if there is one
 	if (document.getElementById('largeChar')) {
@@ -2081,108 +1942,84 @@ function toggleNumbers () {
 
 
 function printProperties ( codepoint ) { 
-//	if (U[codepoint]) {
-//		drawProperties(codepoint);
-//		}
-//	else {
-//		_newCodepoint = codepoint.toString(16).toUpperCase();
-//		uri = 'getchar.php?start='+_newCodepoint+'&end='+_newCodepoint; 
-//		httpRequest('GET', uri, true, ajaxDrawProperties);
-//		}
-//	}
-	
-//function drawProperties (codepoint) {
-	// output: a description of a single character in the right panel, plus notes if an appropriate file has been loaded
+	// displays a description of a single character in the right panel, plus notes if appropriate
 	// codepoint: a decimal integer representing the Unicode scalar value of the character to be displayed
-	var MsPadding = '';  // Will be set to a space if this is a non-spacing mark
-	var description = false;
-	var div, span, img, table, tbody, tr, td, button;
+    // removes calls to decodeunicode images
+    
+	var MsPadding = ''  // Will be set to a space if this is a non-spacing mark
+	var description = false
+	var div, span, img, table, tbody, tr, td, button
 
-	var listDiv = document.getElementById( 'charOutput' );
-	var oldContent = document.getElementById('charInfo');
-	listDiv.style.display = 'block';
+	var listDiv = document.getElementById( 'charOutput' )
+	var oldContent = document.getElementById('charInfo')
+	listDiv.style.display = 'block'
 
-	var newContent = document.createElement( 'div' );
-			newContent.className = 'charInfo';
-			newContent.setAttribute( 'id', 'charInfo' );
-//		resultString += 'onDblClick="' + 'parent.keyboard.displayHighlight(document.selection.createRange().text)"';
+	var newContent = document.createElement( 'div' )
+			newContent.className = 'charInfo'
+			newContent.setAttribute( 'id', 'charInfo' )
 
-	charData = getDataFor(codepoint);
-	charType = getCharType( codepoint );
-	scriptGroup = findScriptGroup(codepoint);
+	charData = getDataFor(codepoint)
+	charType = getCharType( codepoint )
+	scriptGroup = findScriptGroup(codepoint)
 	
-		// set up navigational graphics
+    // set up navigational graphics
 	div = newContent.appendChild( document.createElement( 'div' ))
 	span = div.appendChild(document.createElement('span'))
 		span.id = 'charNavigation';
 		if (_copy2Picker) span.style.backgroundColor = '#EDE4D0'
 		else span.style.backgroundColor = '#a52a2a'
-	button = span.appendChild( document.createElement( 'button' ));
-		button.onclick = function () { listDiv.style.display = 'none'; };
-		button.appendChild(document.createTextNode('Close'));
-		button.className = 'clearButtonTop'; 
-	button = span.appendChild( document.createElement( 'button' ));
-		button.onclick = function () { adjacentChar( codepoint, -1 ); };
-		button.appendChild(document.createTextNode('Previous'));
-		button.title = sPrevChar;
-		button.className = 'moveForwardBack'; 
-	button = span.appendChild( document.createElement( 'button' ));
-		button.onclick = function () { adjacentChar( codepoint, 1 ); };
-		button.appendChild(document.createTextNode('Next'));
-		button.title = sPrevChar;
-		button.className = 'moveForwardBack'; 
+	button = span.appendChild( document.createElement( 'button' ))
+		button.onclick = function () { listDiv.style.display = 'none' };
+		button.appendChild(document.createTextNode('Close'))
+		button.className = 'clearButtonTop'
+	button = span.appendChild( document.createElement( 'button' ))
+		button.onclick = function () { adjacentChar( codepoint, -1 ) }
+		button.appendChild(document.createTextNode('Previous'))
+		button.title = sPrevChar
+		button.className = 'moveForwardBack';
+	button = span.appendChild( document.createElement( 'button' ))
+		button.onclick = function () { adjacentChar( codepoint, 1 ) }
+		button.appendChild(document.createTextNode('Next'))
+		button.title = sPrevChar
+		button.className = 'moveForwardBack' 
+
 
 	if (charType == 2 || charType == 3 || charType == 5) { 
-		cRecord = charData.split(';');
-		if (cRecord[3] > 0) { MsPadding = '\u00A0'; }  // ie. this is a combining character
+		cRecord = charData.split(';')
+		if (cRecord[3] > 0) { MsPadding = '\u00A0' }  // ie. this is a combining character
 
-		//img = div.appendChild( document.createElement( 'img' ));
-		//	img.onclick = function () { adjacentChar( codepoint, -1 ) };
-		//	img.src = 'images/undo.gif';
-		//	img.className = 'icon';
-		//	img.alt = sPrevChar;
-		//	img.title = sPrevChar;
-		//img = div.appendChild( document.createElement( 'img' ));
-		//	img.onclick = function () { adjacentChar( codepoint, 1 ) };
-		//	img.src = 'images/go.gif';
-		//	imgclassName = 'icon';
-		//	img.alt = sNextChar;
-		//	img.title = sNextChar;
-			
 		// draw the large character
-		div = newContent.appendChild( document.createElement( 'div' ));
-			div.className = 'largeCharDiv';
-		if (document.getElementById('graphicsToggle').checked == false) { 
-			span = div.appendChild( document.createElement( 'span' ));
-				span.setAttribute( 'id', 'largeChar' );
-				span.title = parseInt(cRecord[0], 16);
-				span.className = 'largeChar' ;
-				span.style.fontFamily = _currentFont;
-				span.appendChild( document.createTextNode( MsPadding + getCharFromInt(parseInt(cRecord[0],16)) ));
+		div = newContent.appendChild( document.createElement( 'div' ))
+        div.className = 'largeCharDiv'
+        
+         // add img, if available and graphic toggle set
+		if (document.getElementById('graphicsToggle').checked === true && charType === 2) {
+			img = div.appendChild( document.createElement( 'img' ))
+            img.setAttribute( 'id', 'largeChar' )
+            img.title = parseInt(cRecord[0], 16)
+            img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/large/'+cRecord[0]+'.png'; 
+            }       
+        // otherwise add text
+		else { 
+			span = div.appendChild( document.createElement( 'span' ))
+            span.setAttribute( 'id', 'largeChar' )
+            span.title = parseInt(cRecord[0], 16)
+            span.className = 'largeChar'
+            span.appendChild( document.createTextNode( MsPadding + getCharFromInt(parseInt(cRecord[0],16)) ))
 			}
-		else {
-			img = div.appendChild( document.createElement( 'img' ));
-				img.setAttribute( 'id', 'largeChar' );
-				img.title = parseInt(cRecord[0], 16); 
-				
-				if (cRecord[GRAPHIC_FIELD] == 'm') {
-					img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/large/'+cRecord[0]+'.png'; 
-					}
-
-				//if (localGraphics.indexOf(scriptGroup+',') > -1) { 
-					//img.src = 'graphics/'+scriptGroup+'/large/'+cRecord[0]+'.png'; }
-				else { img.src = 'http://decodeunicode.org/data/glyph/196x196/'+cRecord[0]+'.gif'; }
-				//img.setAttribute( 'src', 'http://decodeunicode.org/data/glyph/196x196/'+cRecord[0]+'.gif');
-			}
-		
+        
 		
 		// character no. & name
-		var uplus = 'U+';
-		//if (document.getElementById('uPlusToggle').checked) { uplus = 'U+' };
-		div = newContent.appendChild( document.createElement( 'div' ));
-			div.style.marginTop = '10px';
-		div.appendChild( document.createTextNode( uplus+cRecord[0]+' \u00A0 '+cRecord[1] ));
-		
+        span = document.createElement('span')
+        span.appendChild( document.createTextNode('U+'+cRecord[HEX_NUM]))
+        span.style.marginRight = '.75em'
+        
+		div = newContent.appendChild( document.createElement( 'div' ))
+        div.style.marginTop = '10px'
+        div.appendChild(span)
+		div.appendChild( document.createTextNode( ' '+cRecord[CHAR_NAME] ))
+
+
 		// add warning if this character is new or changed in a beta version
 		if (cRecord[15]) {
 			div = newContent.appendChild( document.createElement( 'div' ));
@@ -2200,141 +2037,138 @@ function printProperties ( codepoint ) {
 			}
 		
 		// fill out properties table		
-		table = newContent.appendChild( document.createElement( 'table' ));
-			table.className = 'propsTable';
-			table.width = '90%';
-			table.style.clear = 'both';
-		tbody = table.appendChild( document.createElement( 'tbody' ));
+		table = newContent.appendChild( document.createElement( 'table' ))
+        table.className = 'propsTable'
+        table.width = '90%'
+        table.style.clear = 'both'
+		tbody = table.appendChild( document.createElement( 'tbody' ))
 			
-		tr = tbody.appendChild( document.createElement( 'tr' ));
-		td = tr.appendChild( document.createElement( 'td' ));
-			td.appendChild( document.createTextNode( sGeneralCat ));
-		td = tr.appendChild( document.createElement( 'td' ));
-			td.appendChild( document.createTextNode( cRecord[2] + ' - ' + generalProp[ cRecord[2] ] ));
+		tr = tbody.appendChild( document.createElement( 'tr' ))
+		td = tr.appendChild( document.createElement( 'td' ))
+        td.appendChild( document.createTextNode( sGeneralCat ))
+		td = tr.appendChild( document.createElement( 'td' ))
+        td.appendChild( document.createTextNode( cRecord[GEN_CAT]+' - '+generalProp[ cRecord[GEN_CAT] ] ))
 
-		tr = tbody.appendChild( document.createElement( 'tr' ));
-		td = tr.appendChild( document.createElement( 'td' ));
-			td.appendChild( document.createTextNode( sCanonCombClass ));
-		td = tr.appendChild( document.createElement( 'td' ));
-			td.appendChild( document.createTextNode( cRecord[3] + ' - ' + combClass[ cRecord[3] ] ));
+		tr = tbody.appendChild( document.createElement( 'tr' ))
+		td = tr.appendChild( document.createElement( 'td' ))
+			td.appendChild( document.createTextNode( sCanonCombClass ))
+		td = tr.appendChild( document.createElement( 'td' ))
+			td.appendChild( document.createTextNode( cRecord[CAN_COMB_CL]+' - '+combClass[ cRecord[CAN_COMB_CL] ] ))
 
-		tr = tbody.appendChild( document.createElement( 'tr' ));
-		td = tr.appendChild( document.createElement( 'td' ));
-			td.appendChild( document.createTextNode( sBidiCat ));
-		td = tr.appendChild( document.createElement( 'td' ));
-			string = cRecord[4] + ' - ' + bidiProp[ cRecord[4] ];
-			if (cRecord[9] == 'Y' ) { string += sMirrored };
-			td.appendChild( document.createTextNode( string ));
+		tr = tbody.appendChild( document.createElement( 'tr' ))
+		td = tr.appendChild( document.createElement( 'td' ))
+			td.appendChild( document.createTextNode( sBidiCat ))
+		td = tr.appendChild( document.createElement( 'td' ))
+			string = cRecord[BIDI_CAT] + ' - ' + bidiProp[ cRecord[BIDI_CAT] ]
+			if (cRecord[9] == 'Y' ) { string += sMirrored }
+			td.appendChild( document.createTextNode( string ))
 
-		if (cRecord[5]) {
-			tr = tbody.appendChild( document.createElement( 'tr' ));
-			td = tr.appendChild( document.createElement( 'td' ));
-				td.appendChild( document.createTextNode( sCharDecompMap ));
-			td = tr.appendChild( document.createElement( 'td' ));
-				td.appendChild( document.createTextNode( cRecord[5] +  ' \u00A0\u00A0 '));
-				cps = cRecord[5].split(' '); 
-				dresult = '';
-				for (n=0; n<cps.length; n++) {
-					if (cps[n].charAt(0) != '[') {
-						dresult += getCharFromInt(parseInt(cps[n],16))+'';
-						}
-					}
-				iespan = document.createElement('span');
-				iespan.setAttribute('class', 'ie');
-				iespan.appendChild( document.createTextNode( dresult ));
-				td.appendChild( iespan );
-//				td.appendChild( document.createTextNode( cRecord[5] + ' \u00A0\u00A0 <span class="ie">' + dresult + '</span>' ));
-//				td.appendChild( document.createTextNode( cRecord[5] ));
+		if (cRecord[DECOMP_MAP]) {
+			tr = tbody.appendChild( document.createElement( 'tr' ))
+			td = tr.appendChild( document.createElement( 'td' ))
+            td.appendChild( document.createTextNode( sCharDecompMap ))
+			td = tr.appendChild( document.createElement( 'td' ))
+            td.appendChild( document.createTextNode( cRecord[DECOMP_MAP] +  ' \u00A0\u00A0 '))
+            cps = cRecord[DECOMP_MAP].split(' ')
+            dresult = ''
+            for (n=0; n<cps.length; n++) {
+                if (cps[n].charAt(0) != '[') {
+                    dresult += getCharFromInt(parseInt(cps[n],16))+''
+                    }
+                }
+            iespan = document.createElement('span')
+            iespan.setAttribute('class', 'ie')
+            iespan.appendChild( document.createTextNode( dresult ))
+            td.appendChild( iespan )
 			}
 
-		if (cRecord[6]) {
-			tr = tbody.appendChild( document.createElement( 'tr' ));
-			td = tr.appendChild( document.createElement( 'td' ));
-				td.appendChild( document.createTextNode( sDecDigitValue ));
-			td = tr.appendChild( document.createElement( 'td' ));
-				td.appendChild( document.createTextNode( cRecord[6] ));
+		if (cRecord[DEC_DIG_VALUE]) {
+			tr = tbody.appendChild( document.createElement( 'tr' ))
+			td = tr.appendChild( document.createElement( 'td' ))
+				td.appendChild( document.createTextNode( sDecDigitValue ))
+			td = tr.appendChild( document.createElement( 'td' ))
+				td.appendChild( document.createTextNode( cRecord[DEC_DIG_VALUE] ))
 			}
 
-		if (cRecord[7]) {
-			tr = tbody.appendChild( document.createElement( 'tr' ));
-			td = tr.appendChild( document.createElement( 'td' ));
-				td.appendChild( document.createTextNode( sDigitValue ));
-			td = tr.appendChild( document.createElement( 'td' ));
-				td.appendChild( document.createTextNode( cRecord[7] ));
+		if (cRecord[DIG_VALUE]) {
+			tr = tbody.appendChild( document.createElement( 'tr' ))
+			td = tr.appendChild( document.createElement( 'td' ))
+				td.appendChild( document.createTextNode( sDigitValue ))
+			td = tr.appendChild( document.createElement( 'td' ))
+				td.appendChild( document.createTextNode( cRecord[DIG_VALUE] ))
 			}
 
-		if (cRecord[8]) {
-			tr = tbody.appendChild( document.createElement( 'tr' ));
-			td = tr.appendChild( document.createElement( 'td' ));
-				td.appendChild( document.createTextNode( sNumValue ));
-			td = tr.appendChild( document.createElement( 'td' ));
-				td.appendChild( document.createTextNode( cRecord[8] ));
+		if (cRecord[NUMERIC_VALUE]) {
+			tr = tbody.appendChild( document.createElement( 'tr' ))
+			td = tr.appendChild( document.createElement( 'td' ))
+				td.appendChild( document.createTextNode( sNumValue ))
+			td = tr.appendChild( document.createElement( 'td' ))
+				td.appendChild( document.createTextNode( cRecord[NUMERIC_VALUE] ))
 			}
 
-		if (cRecord[10]) {
-			tr = tbody.appendChild( document.createElement( 'tr' ));
-			td = tr.appendChild( document.createElement( 'td' ));
-				td.appendChild( document.createTextNode( sUnicode1Name ));
-			td = tr.appendChild( document.createElement( 'td' ));
-				td.appendChild( document.createTextNode( cRecord[10] ));
+		if (cRecord[UNICODE_1_NAME]) {
+			tr = tbody.appendChild( document.createElement( 'tr' ))
+			td = tr.appendChild( document.createElement( 'td' ))
+				td.appendChild( document.createTextNode( sUnicode1Name ))
+			td = tr.appendChild( document.createElement( 'td' ))
+				td.appendChild( document.createTextNode( cRecord[UNICODE_1_NAME] ))
 			}
 
-		if (cRecord[11]) {
-			tr = tbody.appendChild( document.createElement( 'tr' ));
-			td = tr.appendChild( document.createElement( 'td' ));
-				td.appendChild( document.createTextNode( s10646Comment ));
-			td = tr.appendChild( document.createElement( 'td' ));
-				td.appendChild( document.createTextNode( cRecord[11] ));
+		if (cRecord[ISO_COMMENT]) {
+			tr = tbody.appendChild( document.createElement( 'tr' ))
+			td = tr.appendChild( document.createElement( 'td' ))
+				td.appendChild( document.createTextNode( s10646Comment ))
+			td = tr.appendChild( document.createElement( 'td' ))
+				td.appendChild( document.createTextNode( cRecord[ISO_COMMENT] ))
 			}
 
-		if (cRecord[12]) {
-			tr = tbody.appendChild( document.createElement( 'tr' ));
-			td = tr.appendChild( document.createElement( 'td' ));
-				td.appendChild( document.createTextNode( sUppercaseMap ));
-			td = tr.appendChild( document.createElement( 'td' ));
-				dresult = getCharFromInt(parseInt(cRecord[12],16))+'';
-				td.appendChild( document.createTextNode( cRecord[12] +' \u00A0\u00A0 ' ));
-				iespan = document.createElement('span');
-				iespan.setAttribute('class', 'ie');
-				iespan.appendChild( document.createTextNode( dresult ));
-				td.appendChild( iespan );
+		if (cRecord[UC_MAP]) {
+			tr = tbody.appendChild( document.createElement( 'tr' ))
+			td = tr.appendChild( document.createElement( 'td' ))
+				td.appendChild( document.createTextNode( sUppercaseMap ))
+			td = tr.appendChild( document.createElement( 'td' ))
+				dresult = getCharFromInt(parseInt(cRecord[UC_MAP],16))+''
+				td.appendChild( document.createTextNode( cRecord[UC_MAP] +' \u00A0\u00A0 ' ))
+				iespan = document.createElement('span')
+				iespan.setAttribute('class', 'ie')
+				iespan.appendChild( document.createTextNode( dresult ))
+				td.appendChild( iespan )
 			}
 
-		if (cRecord[13]) {
-			tr = tbody.appendChild( document.createElement( 'tr' ));
-			td = tr.appendChild( document.createElement( 'td' ));
-				td.appendChild( document.createTextNode( sLowercaseMap ));
-			td = tr.appendChild( document.createElement( 'td' ));
-				dresult = getCharFromInt(parseInt(cRecord[13],16))+'';
-				td.appendChild( document.createTextNode( cRecord[13] +' \u00A0\u00A0 ' ));
-				iespan = document.createElement('span');
-				iespan.setAttribute('class', 'ie');
-				iespan.appendChild( document.createTextNode( dresult ));
-				td.appendChild( iespan );
+		if (cRecord[LC_MAP]) {
+			tr = tbody.appendChild( document.createElement( 'tr' ))
+			td = tr.appendChild( document.createElement( 'td' ))
+				td.appendChild( document.createTextNode( sLowercaseMap ))
+			td = tr.appendChild( document.createElement( 'td' ))
+				dresult = getCharFromInt(parseInt(cRecord[LC_MAP],16))+''
+				td.appendChild( document.createTextNode( cRecord[LC_MAP] +' \u00A0\u00A0 ' ))
+				iespan = document.createElement('span')
+				iespan.setAttribute('class', 'ie')
+				iespan.appendChild( document.createTextNode( dresult ))
+				td.appendChild( iespan )
 			}
 
-		if (cRecord[14]) {
-			tr = tbody.appendChild( document.createElement( 'tr' ));
-			td = tr.appendChild( document.createElement( 'td' ));
-				td.appendChild( document.createTextNode( sTitlecaseMap ));
-			td = tr.appendChild( document.createElement( 'td' ));
-				dresult = getCharFromInt(parseInt(cRecord[14],16));
-//				dresult = cRecord[14]+' \u00A0\u00A0'+getCharFromInt(parseInt(cRecord[0],16))+' → '+getCharFromInt(parseInt(cRecord[14],16))+'';
-				td.appendChild( document.createTextNode( cRecord[14] +' \u00A0\u00A0 ' ));
-				iespan = document.createElement('span');
-				iespan.setAttribute('class', 'ie');
-				iespan.appendChild( document.createTextNode( dresult ));
+		if (cRecord[TC_MAP]) {
+			tr = tbody.appendChild( document.createElement( 'tr' ))
+			td = tr.appendChild( document.createElement( 'td' ))
+				td.appendChild( document.createTextNode( sTitlecaseMap ))
+			td = tr.appendChild( document.createElement( 'td' ))
+				dresult = getCharFromInt(parseInt(cRecord[TC_MAP],16))
+				td.appendChild( document.createTextNode( cRecord[TC_MAP] +' \u00A0\u00A0 ' ))
+				iespan = document.createElement('span')
+				iespan.setAttribute('class', 'ie')
+				iespan.appendChild( document.createTextNode( dresult ))
 				td.appendChild( iespan );
 			}
 		
 		// add derived age
-		tr = tbody.appendChild( document.createElement( 'tr' ));
-		td = tr.appendChild( document.createElement( 'td' ));
-			td.appendChild( document.createTextNode( 'Unicode version:' ));
-			td.setAttribute('style', 'padding-bottom:15px;');
-		td = tr.appendChild( document.createElement( 'td' ));
-			td.appendChild( document.createTextNode( cRecord[AGE_FIELD] ));
-			td.setAttribute('style', 'padding-bottom:15px;');
+		tr = tbody.appendChild( document.createElement( 'tr' ))
+		td = tr.appendChild( document.createElement( 'td' ))
+			td.appendChild( document.createTextNode( 'Unicode version:' ))
+			td.setAttribute('style', 'padding-bottom:15px;')
+		td = tr.appendChild( document.createElement( 'td' ))
+			td.appendChild( document.createTextNode( cRecord[AGE_FIELD] ))
+			td.setAttribute('style', 'padding-bottom:15px;')
 
 
 		//add link to UniHan db
@@ -2344,191 +2178,167 @@ function printProperties ( codepoint ) {
 		if (scriptGroup == 'CJK Unified Ideographs Extension A') { pageNum = Math.floor(((codepoint-13312)/56.25)+2); blockstart = '3400'; approx = ', approx [6Mb file!]' }
 		if (scriptGroup == 'CJK Unified Ideographs Extension B') { pageNum = Math.floor(((codepoint-0x20000)/58.67)+2); blockstart = '20000'; approx = ', approx [40Mb file!]' }
 		if (scriptGroup == 'CJK Unified Ideographs Extension C') { pageNum = Math.floor(((codepoint-0x2A700)/78.26)+2); blockstart = '2A700'; approx = ', approx' }
-		if (scriptGroup == 'CJK Unified Ideographs Extension D') { pageNum = Math.floor(((codepoint-0x2B740)/80)+2); blockstart = '2B740'; }
-		if (scriptGroup == 'CJK Unified Ideographs Extension E') { pageNum = Math.floor(((codepoint-0x2B820)/80)+2); blockstart = '2B820'; }
-		if (scriptGroup == 'Hangul Syllables') { pageNum = Math.floor(((codepoint-0xAC00)/256)+2); blockstart = 'AC00'; }
-		//if (codepoint > 0x4DFF && codepoint < 0x9FBC || codepoint > 13312 && codepoint < 19903) {
+		if (scriptGroup == 'CJK Unified Ideographs Extension D') { pageNum = Math.floor(((codepoint-0x2B740)/80)+2); blockstart = '2B740' }
+		if (scriptGroup == 'CJK Unified Ideographs Extension E') { pageNum = Math.floor(((codepoint-0x2B820)/80)+2); blockstart = '2B820' }
+		if (scriptGroup == 'CJK Unified Ideographs Extension F') { pageNum = Math.floor(((codepoint-0x2CEB0)/80)+2); blockstart = '2CEB0' }
+		if (scriptGroup == 'Hangul Syllables') { pageNum = Math.floor(((codepoint-0xAC00)/256)+2); blockstart = 'AC00' }
 			
 		// add link to Unihan db
 		if (pageNum > 0 && scriptGroup != 'Hangul Syllables') {
-			p = newContent.appendChild( document.createElement( 'p' ));
-				p.style.marginTop = "18px";
-			p.appendChild( document.createTextNode( 'View data in ' ));
-			a = p.appendChild( document.createElement( 'a' ));
-			a.appendChild( document.createTextNode( 'UniHan database' ));
-			a.setAttribute( 'href', 'http://www.unicode.org/cgi-bin/GetUnihanData.pl?codepoint='+cRecord[0]+'&useutf8=true' );
-			a.setAttribute( 'target', 'unihan' );
-			//a.onclick = function () { unihan.focus(); };
+			p = newContent.appendChild( document.createElement( 'p' ))
+            p.style.marginTop = "18px"
+			p.appendChild( document.createTextNode( 'View data in ' ))
+			a = p.appendChild( document.createElement( 'a' ))
+			a.appendChild( document.createTextNode( 'UniHan database' ))
+			a.setAttribute( 'href', 'http://www.unicode.org/cgi-bin/GetUnihanData.pl?codepoint='+cRecord[0]+'&useutf8=true' )
+			a.setAttribute( 'target', 'unihan' )
 			}
 		
 		// add pointer to PDF code chart page
 		if (pageNum > 0 && scriptGroup) {
-			p = newContent.appendChild( document.createElement( 'p' ));
-			p.appendChild( document.createTextNode( 'View in ' ));
-			a = p.appendChild( document.createElement( 'a' ));
-			a.appendChild( document.createTextNode( 'PDF code charts' ));
-			//var pageNum = Math.floor(((codepoint-0x4E00)/40)+2)
-			a.setAttribute( 'href', 'http://www.unicode.org/charts/PDF/U'+blockstart+'.pdf#page='+pageNum );
-			a.setAttribute( 'target', 'unihan' );
-			p.appendChild( document.createTextNode( ' (page '+pageNum+approx+')' ));
+			p = newContent.appendChild( document.createElement( 'p' ))
+			p.appendChild( document.createTextNode( 'View in ' ))
+			a = p.appendChild( document.createElement( 'a' ))
+			a.appendChild( document.createTextNode( 'PDF code charts' ))
+			a.setAttribute( 'href', 'http://www.unicode.org/charts/PDF/U'+blockstart+'.pdf#page='+pageNum )
+			a.setAttribute( 'target', 'unihan' )
+			p.appendChild( document.createTextNode( ' (page '+pageNum+approx+')' ))
 			}
 			
 		
 		// add character if in graphics mode
 		if (document.getElementById('graphicsToggle').checked == true) { 
-			tr = tbody.appendChild( document.createElement( 'tr' ));
-			td = tr.appendChild( document.createElement( 'td' ));
-				td.appendChild( document.createTextNode( 'As text:' ));
-			td = tr.appendChild( document.createElement( 'td' ));
-				td.className = 'astext';
-				td.appendChild( document.createTextNode( MsPadding + getCharFromInt(parseInt(cRecord[0],16)) ));
+			tr = tbody.appendChild( document.createElement( 'tr' ))
+            td = tr.appendChild( document.createElement( 'td' ))
+            td.appendChild( document.createTextNode( 'As text:' ))
+            td = tr.appendChild( document.createElement( 'td' ))
+            td.className = 'astext'
+            td.appendChild( document.createTextNode( MsPadding + getCharFromInt(parseInt(cRecord[0],16)) ))
 			}
 
 		// add decimal value
-		tr = tbody.appendChild( document.createElement( 'tr' ));
-		td = tr.appendChild( document.createElement( 'td' ));
-			td.appendChild( document.createTextNode( 'Decimal:' ));
-		td = tr.appendChild( document.createElement( 'td' ));
-			td.appendChild( document.createTextNode( codepoint ));
+		tr = tbody.appendChild( document.createElement( 'tr' ))
+		td = tr.appendChild( document.createElement( 'td' ))
+        td.appendChild( document.createTextNode( 'Decimal:' ))
+		td = tr.appendChild( document.createElement( 'td' ))
+        td.appendChild( document.createTextNode( codepoint ))
 
 		// add NCR value
-		tr = tbody.appendChild( document.createElement( 'tr' ));
-		td = tr.appendChild( document.createElement( 'td' ));
-			td.appendChild( document.createTextNode( 'HTML escape:' ));
-		td = tr.appendChild( document.createElement( 'td' ));
-			td.appendChild( document.createTextNode( '&#x'+cRecord[0]+';' ));
+		tr = tbody.appendChild( document.createElement( 'tr' ))
+		td = tr.appendChild( document.createElement( 'td' ))
+        td.appendChild( document.createTextNode( 'HTML escape:' ))
+		td = tr.appendChild( document.createElement( 'td' ))
+        td.appendChild( document.createTextNode( '&#x'+cRecord[0]+';' ))
 
 		// add URL encoded value
-		tr = tbody.appendChild( document.createElement( 'tr' ));
-		td = tr.appendChild( document.createElement( 'td' ));
-			td.appendChild( document.createTextNode( 'URL escape:' ));
-		td = tr.appendChild( document.createElement( 'td' ));
-			td.appendChild( document.createTextNode( convertChar2pEsc(codepoint) ));
+		tr = tbody.appendChild( document.createElement( 'tr' ))
+		td = tr.appendChild( document.createElement( 'td' ))
+        td.appendChild( document.createTextNode( 'URL escape:' ))
+		td = tr.appendChild( document.createElement( 'td' ))
+        td.appendChild( document.createTextNode( convertChar2pEsc(codepoint) ))
 
 		// add link to Conversion tool
-		tr = tbody.appendChild( document.createElement( 'tr' ));
-		td = tr.appendChild( document.createElement( 'td' ));
-			td.setAttribute( 'colspan', '2');
-			td.innerHTML = '<a href="../app-conversion?q='+getCharFromInt(parseInt(cRecord[0],16))+'" target="conversion">More alternative forms</a>';
+		tr = tbody.appendChild( document.createElement( 'tr' ))
+		td = tr.appendChild( document.createElement( 'td' ))
+        td.setAttribute( 'colspan', '2')
+        td.innerHTML = '<a href="../app-conversion?q='+getCharFromInt(parseInt(cRecord[0],16))+'" target="conversion">More alternative forms</a>'
 
 
-		//add link to Conversion tool
-		//p = newContent.appendChild( document.createElement( 'p' ));
-		//	p.style.marginTop = "0px";
-		//p.appendChild( document.createTextNode( 'Use the ' ));
-		//a = p.appendChild( document.createElement( 'a' ));
-		//a.appendChild( document.createTextNode( 'Conversion tool' ));
-		//a.setAttribute( 'href', '/rishida/tools/conversion?origin=codepoint&codepoints='+cRecord[0] );
-		//a.setAttribute( 'target', 'conversion' );
-		
-			
-			
 			
 		//add link to CLDR
-		p = newContent.appendChild( document.createElement( 'p' ));
-			p.style.marginTop = "18px";
-		p.appendChild( document.createTextNode( 'More properties at ' ));
-		a = p.appendChild( document.createElement( 'a' ));
-		a.appendChild( document.createTextNode( 'CLDR\'s Property demo' ));
-		a.setAttribute( 'href', 'http://unicode.org/cldr/utility/character.jsp?a='+cRecord[0] );
-		a.setAttribute( 'target', 'cldr' );
+		p = newContent.appendChild( document.createElement( 'p' ))
+        p.style.marginTop = "18px"
+		p.appendChild( document.createTextNode( 'More properties at ' ))
+		a = p.appendChild( document.createElement( 'a' ))
+		a.appendChild( document.createTextNode( 'CLDR\'s Property demo' ))
+		a.setAttribute( 'href', 'http://unicode.org/cldr/utility/character.jsp?a='+cRecord[0] )
+		a.setAttribute( 'target', 'cldr' )
 		
 		//add link to decodeUnicode
-		p = newContent.appendChild( document.createElement( 'p' ));
-			p.style.marginTop = "0px";
-		p.appendChild( document.createTextNode( 'Descriptions at ' ));
-		a = p.appendChild( document.createElement( 'a' ));
-		a.appendChild( document.createTextNode( 'decodeUnicode' ));
-		a.setAttribute( 'href', 'http://www.decodeunicode.org/U+'+cRecord[0] );
-		a.setAttribute( 'target', 'decodeunicode' );
+		p = newContent.appendChild( document.createElement( 'p' ))
+        p.style.marginTop = "0px"
+		p.appendChild( document.createTextNode( 'Descriptions at ' ))
+		a = p.appendChild( document.createElement( 'a' ))
+		a.appendChild( document.createTextNode( 'decodeUnicode' ))
+		a.setAttribute( 'href', 'http://www.decodeunicode.org/U+'+cRecord[0] )
+		a.setAttribute( 'target', 'decodeunicode' )
 		
 		//add link to FileFormat
-		p = newContent.appendChild( document.createElement( 'p' ));
-			p.style.marginTop = "0px";
-		p.appendChild( document.createTextNode( 'Java data at ' ));
-		a = p.appendChild( document.createElement( 'a' ));
-		a.appendChild( document.createTextNode( 'FileFormat' ));
-		a.setAttribute( 'href', 'http://www.fileformat.info/info/unicode/char/'+cRecord[0] );
-		a.setAttribute( 'target', 'fileformat' );
+		p = newContent.appendChild( document.createElement( 'p' ))
+        p.style.marginTop = "0px"
+		p.appendChild( document.createTextNode( 'Java data at ' ))
+		a = p.appendChild( document.createElement( 'a' ))
+		a.appendChild( document.createTextNode( 'FileFormat' ))
+		a.setAttribute( 'href', 'http://www.fileformat.info/info/unicode/char/'+cRecord[0] )
+		a.setAttribute( 'target', 'fileformat' )
 		
 
 		
 		
 
 		//find script group
-		_charScriptGroup = scriptGroup;
-		p = newContent.appendChild( document.createElement( 'p' ));
-			p.style.marginTop = "18px";
-		strong = p.appendChild( document.createElement( 'strong' ));
-		strong.appendChild( document.createTextNode( sScriptGroup ));
-		a = p.appendChild( document.createElement( 'a' ));
-			a.href = '#';
-			a.onclick = function () { showSelection( getRange(_charScriptGroup) ); return false; };
-		a.appendChild( document.createTextNode( _charScriptGroup ));
+		_charScriptGroup = scriptGroup
+		p = newContent.appendChild( document.createElement( 'p' ))
+        p.style.marginTop = "18px"
+		strong = p.appendChild( document.createElement( 'strong' ))
+		strong.appendChild( document.createTextNode( sScriptGroup ))
+		a = p.appendChild( document.createElement( 'a' ))
+        a.href = '#'
+        a.onclick = function () { showSelection( getRange(_charScriptGroup) ); return false; }
+		a.appendChild( document.createTextNode( _charScriptGroup ))
 		
 		
 		// display script group
-		p = newContent.appendChild( document.createElement( 'p' ));
-		p.style.marginTop = "18px";
-		strong = p.appendChild( document.createElement( 'strong' ));
-		strong.appendChild( document.createTextNode( 'Script group: ' ));
-		span = p.appendChild( document.createElement( 'span') );
-			span.className = 'subcat';
-		span.appendChild( document.createTextNode( st[cRecord[SUBTITLE_FIELD]] ));
+		p = newContent.appendChild( document.createElement( 'p' ))
+		p.style.marginTop = "18px"
+		strong = p.appendChild( document.createElement( 'strong' ))
+		strong.appendChild( document.createTextNode( 'Script group: ' ))
+		span = p.appendChild( document.createElement( 'span') )
+        span.className = 'subcat';
+		span.appendChild( document.createTextNode( st[cRecord[SUBTITLE_FIELD]] ))
 
-
-		// find the descriptions
-		//p = newContent.appendChild( document.createElement( 'p' ));
-		//	p.style.marginTop = "18px";
-		//strong = p.appendChild( document.createElement( 'strong' ));
-		//strong.appendChild( document.createTextNode( sDescription ));
-		//p.appendChild( document.createElement( 'br' ));
-		//span = p.appendChild( document.createElement( 'span') );
-		//	span.className = 'subcat';
-		//span.appendChild( document.createTextNode( st[cRecord[SUBTITLE_FIELD]] ));
 
 		// return block name if this character listed as contained in block doc
-		var blockfile = charInfoPointer(cRecord[0]);
+		var blockfile = charInfoPointer(cRecord[HEX_NUM])
 		
 		
 		// display Description heading
-		if (desc[eval('0x'+cRecord[0])] || blockfile) { 
-			p = newContent.appendChild( document.createElement( 'p' ));
-				p.style.marginTop = "18px";
-			strong = p.appendChild( document.createElement( 'strong' ));
-			strong.appendChild( document.createTextNode( sDescription ));
+		if (desc[eval('0x'+cRecord[HEX_NUM])] || blockfile) { 
+			p = newContent.appendChild( document.createElement( 'p' ))
+            p.style.marginTop = "18px"
+			strong = p.appendChild( document.createElement( 'strong' ))
+			strong.appendChild( document.createTextNode( sDescription ))
 
 			// display any Unicode descriptions
-			if (desc[eval('0x'+cRecord[0])]) {
-				dRecord = desc[eval('0x'+cRecord[0])].split('¶');
-				//p.appendChild( document.createElement( 'br' ));
-				description = true;
+			if (desc[eval('0x'+cRecord[HEX_NUM])]) {
+				dRecord = desc[eval('0x'+cRecord[HEX_NUM])].split('¶')
+				description = true
 				for (var j=0; j < dRecord.length; j++ ) {
-					p.appendChild( document.createTextNode( dRecord[j] ));
-					p.appendChild( document.createElement( 'br' ));
+					p.appendChild( document.createTextNode( dRecord[j] ))
+					p.appendChild( document.createElement( 'br' ))
 					}
 				}
 
 			// display notes if there are any, and if required
-			if (blockfile && _showNotes) {  
-				p.appendChild( document.createElement( 'br' ));
-				span = p.appendChild( document.createElement('span') );
+			if (blockfile && document.getElementById('showNotesToggle').checked) {  
+				p.appendChild( document.createElement( 'br' ))
+				span = p.appendChild( document.createElement('span') )
 				span.className = 'notesexpl'
-				a = span.appendChild( document.createElement('a'));
-					a.href = '../scripts/'+blockfile+'/block#char'+cRecord[0];
-					a.target = 'blockdata';
-				a.appendChild( document.createTextNode('Open the notes in a separate page.'));
-				span.style.fontSize = '80%';
+				a = span.appendChild( document.createElement('a'))
+				a.href = '../scripts/'+blockfile+'/block#char'+cRecord[HEX_NUM]
+				a.target = 'blockdata'
+				a.appendChild( document.createTextNode('Open the notes in a separate page.'))
+				span.style.fontSize = '80%'
 
-				document.getElementById('notesIframe').src = '../scripts/'+blockfile+'/block?char='+cRecord[0]
+				document.getElementById('notesIframe').src = '../scripts/'+blockfile+'/block?char='+cRecord[HEX_NUM]
 				}
 			// if _showNotes isn't on, just mention that there are some notes
 			else if (blockfile) {  
-				p.appendChild( document.createElement( 'br' ));
-				span = p.appendChild( document.createElement('span') );
+				p.appendChild( document.createElement( 'br' ))
+				span = p.appendChild( document.createElement('span') )
 				span.className = 'notesexpl'
-				span.appendChild( document.createTextNode( 'Notes are available for this character.' ));
-				span.style.fontSize = '80%';
+				span.appendChild( document.createTextNode( 'Notes are available for this character.' ))
+				span.style.fontSize = '80%'
 
 				document.getElementById('notesIframe').src = 'blank'
 				}
@@ -2540,69 +2350,38 @@ function printProperties ( codepoint ) {
 		
 		
 	else { // this is either  an unassigned character or a surrogate character
-		var group = findScriptGroup(codepoint);
+		var group = findScriptGroup(codepoint)
 		
 		// character no. & name
-		div = newContent.appendChild( document.createElement( 'div' ));
-			div.style.marginTop = '10px';
-		var hexcpvalue = codepoint.toString(16).toUpperCase();
+		div = newContent.appendChild( document.createElement( 'div' ))
+        div.style.marginTop = '10px'
+		var hexcpvalue = codepoint.toString(16).toUpperCase()
 		while (hexcpvalue.length < 4) { hexcpvalue = '0'+hexcpvalue; }
-		div.appendChild( document.createTextNode( 'U+' + hexcpvalue + ' ' +
-				'Unassigned character.' ));
-		//div.appendChild( document.createTextNode( codepoint.toString(16).toUpperCase() +
-		//		sNoDescAvail ));
+		div.appendChild( document.createTextNode( 'U+'+hexcpvalue+' '+'Unassigned character.' ))
 		
 		//find script group
-		p = newContent.appendChild( document.createElement( 'p' ));
-			p.style.marginTop = "18px";
-		strong = p.appendChild( document.createElement( 'strong' ));
-		strong.appendChild( document.createTextNode( sScriptGroup ));
-		a = p.appendChild( document.createElement( 'a' ));
-			a.href = '#';
-			a.onclick = function () { showSelection( getRange(scriptGroup) ); return false; };
-		a.appendChild( document.createTextNode( scriptGroup ));
+		p = newContent.appendChild( document.createElement( 'p' ))
+        p.style.marginTop = "18px"
+		strong = p.appendChild( document.createElement( 'strong' ))
+		strong.appendChild( document.createTextNode( sScriptGroup ))
+		a = p.appendChild( document.createElement( 'a' ))
+        a.href = '#'
+        a.onclick = function () { showSelection( getRange(scriptGroup) ); return false; }
+		a.appendChild( document.createTextNode( scriptGroup ))
 		}
 		
 		
-	var removedNode = listDiv.replaceChild( newContent, oldContent );
+	var removedNode = listDiv.replaceChild( newContent, oldContent )
 
-	
-	// get results from character database
-	//if (document.getElementById('showDB').checked && (charType == 2 || charType == 3 || charType == 5)) {
-	//	p = newContent.appendChild( document.createElement( 'p' ));
-	//	p.style.marginTop = "18px";
-	//	strong = p.appendChild( document.createElement( 'strong' ));
-	//	strong.appendChild( document.createTextNode( 'DB notes:' ));
-		// add edit button only if local
-	//	if (_local) { 
-	//		span = p.appendChild( document.createElement( 'span' )); 
-			
-	//		span.appendChild( document.createTextNode( ' [edit]' ));
-	//		edituri = 'editDB.php?operation=get&codepoint='+cRecord[0]+'&suppliedname='+cRecord[1];
-	//		span.onclick = function () { dbedit = window.open(edituri, 'dbedit'); dbedit.focus(); };
-	//		span.style.cursor = 'pointer';
-	//		span.style.color = 'teal';
-	//		span.style.fontSize = '80%';
-	//		}
 		
-	//	div = newContent.appendChild( document.createElement( 'div' ));
-	//	div.id = 'dboutput';
-		
-		// get the data, if any, and print (use the relayDBdata line for uploaded files)
-	//	if (_local) { url = "getDBdata.php?codepoint=" + cRecord[0]; }
-	//	else { url = "getonlineDBdata.php?codepoint=" + cRecord[0]; }
-	//	httpRequest('GET', url, true, printDBInfo);
-	//	}
-	
-	div = newContent.appendChild( document.createElement( 'div' ));
-		div.id = 'charNavigation';
-		if (_copy2Picker) div.style.backgroundColor = '#EDE4D0'
-		else div.style.backgroundColor = '#a52a2a'
-	button = div.appendChild( document.createElement( 'button' ));
-		button.onclick = function () { listDiv.style.display = 'none'; };
-		button.appendChild(document.createTextNode('Close'));
-		button.className = 'clearButtonBottom'; 
-		
+	div = newContent.appendChild( document.createElement( 'div' ))
+    div.id = 'charNavigation'
+    if (_copy2Picker) div.style.backgroundColor = '#EDE4D0'
+    else div.style.backgroundColor = '#a52a2a'
+	button = div.appendChild( document.createElement( 'button' ))
+    button.onclick = function () { listDiv.style.display = 'none'; }
+    button.appendChild(document.createTextNode('Close'))
+    button.className = 'clearButtonBottom'
 	}	
 
 
@@ -2727,7 +2506,7 @@ function charInfoPointer (codepoint) {
 		} 
 	if ( i == scriptGroups.length ) { return ''; }
 	else { 
-		if (foundInList(charNum, scriptGroups[i][4])) {	return( scriptGroups[i][3] ); }
+		if (foundInList(charNum, scriptGroups[i][4])) {	return( scriptGroups[i][5] ); }
 		else { return '' }
 		}
 	}
@@ -2738,10 +2517,10 @@ function displayBlockData (block) {
 	// block: string from 4th field of scriptGroups record for block in question, identifies 
 	// the object to be used, eg. myanmar
 	
-	var blockname = scriptGroups[block][3];
+	var blockname = scriptGroups[block][3]
 	
-	info = window.open('../scripts/links?script='+blockname, 'info'); info.focus();
-
+	info = window.open('../scripts/links?iso='+blockname, 'info')
+    info.focus()
 	}
 
 
@@ -2814,4 +2593,34 @@ function countPickerChars () {
 	var cpArray = cpList.split(' ')
 	return cpArray.length;
 	}
+
+function convertPicker2Hex () {
+    // converts the characters in the text area to a sequence of hex codepoint values
+    
+    var chars = [...document.getElementById('picker').value]
+    var out = ''
+    for (let i=0;i<chars.length;i++) {
+        var temp = chars[i].codePointAt(0).toString(16).toUpperCase()
+        while (temp.length < 4) temp = '0'+temp
+        out += temp+' '
+        }
+    document.getElementById('picker').value = out.trim()
+    }
+
+function convertPicker2Chars () {
+    // converts a sequence of hex codepoint values in the text area to characters
+    
+    var str = document.getElementById('picker').value
+    str = str.replace(/\&|\#|x|;|U|\+|\\|u/g,' ')
+    str = str.replace(/\s+/g,' ')
+    str = str.trim()
+    
+    var chars = str.split(' ')
+    var out = ''
+    for (let i=0;i<chars.length;i++) {
+        var temp = chars[i].codePointAt(0).toString(16).toUpperCase()
+        out += String.fromCodePoint(parseInt(chars[i],16))
+        }
+    document.getElementById('picker').value = out.trim()
+    }
 

@@ -10,16 +10,11 @@
 <!-- &copy; Copyright 2001-2018 Richard Ishida [ishida@w3.org].  All rights reserved.  -->
 <script src="u.js"></script>
 <script src="descriptions.js"></script>
-<script src="local.js"></script>
-<script src="graphicranges.js"></script>
 <script src="../shared/code/scriptGroups.js"></script>
 <script src="subtitles.js"></script>
 <script src="function-text.js"></script>
 <script src="propNames.js"></script>
-<script src="tags.js"></script>
 <script src="functions.js"></script>
-<script src="../shared/code/normalization/js/n11n.js"></script>
-<script src="../shared/code/normalization/js/n11ndata.js"></script>
 <style>
 .dim {
 	background-color: #F9F5DE;
@@ -39,7 +34,7 @@
 <body>
 <header>
 <div id="header-boilerplate"><div id="site-navigation"> <img id="bp_picture" class="compact" alt=" " src="../shared/images/world.gif"></div><div id="boilerplate"><div id="line" class="midlength">&nbsp;</div></div>
-<div id="topbar"><a href="/">r12a</a> &gt;&gt; apps  &gt;&gt; UniView 11.0.0</div><div id="sitelinks" class="noprint"><a href="http://rishida.net/blog/">blog</a>&nbsp; <a href="../doclist">docs</a>&nbsp; <a href="../maplist">maps</a>&nbsp; <a href="../applist">apps</a>&nbsp; <a href="../photos">photos</a>&nbsp;&nbsp;</div></div>
+<div id="topbar"><a href="/">r12a</a> &gt;&gt; apps  &gt;&gt; UniView 11</div><div id="sitelinks" class="noprint"><a href="http://rishida.net/blog/">blog</a>&nbsp; <a href="../doclist">docs</a>&nbsp; <a href="../maplist">maps</a>&nbsp; <a href="../applist">apps</a>&nbsp; <a href="../photos">photos</a>&nbsp;&nbsp;</div></div>
 </header>
 
 <div role="main">
@@ -63,7 +58,7 @@
           <td><form action="none" onsubmit="showSelection(document.getElementById('block').value);  return false;">
               <select name="block" onchange="showSelection(this.value)" id="block" style="font-size: 100%;">
                 <!--select name="block" id="block"-->
-                <option value="0020:00FF" selected="selected">Select a block (* indicates new in 10.0)</option>
+                <option value="0020:00FF" selected="selected">Select a block (* indicates new in 11.0)</option>
                 <optgroup label="European scripts">
                 <option value="0530:058F">Armenian</option>
                 <option value="FB13:FB17" class="pb">Armenian ligatures</option>
@@ -842,15 +837,38 @@
       &nbsp;Local</span>
     </form>
   </div>
+  
   <div title="If you have highlighted characters using Search or Show Properties, this creates a list including only the un-highlighted items." onclick="highlight2List(); return false;">Make list from highlights &nbsp; <img src="images/apply.gif" alt="Apply"  title="List results below" style="border:0; margin:0; padding:0;  vertical-align: top;" /></div>
   
   <div title="If you have highlighted characters using Search or Show Properties, this creates a list including only the highlighted items." onclick="nonHighlight2List(); return false;">Make list from non-highlighted items &nbsp; <img src="images/apply.gif" alt="Apply"  title="List results below" style="border:0; margin:0; padding:0;  vertical-align: top;" /></div>
   
 <div id="propertyResultCount" style="display: none; float:right; font-size: 80%; vertical-align:top;">Search results found: 0</div>
   <div class="helpButton" onclick="help = window.open('help', 'help'); help.focus(); return false;">Help <img src="images/help.png" alt="" style="vertical-align:top;"/></div>
+  
 <div title="Show in which version of Unicode each character was introduced. Unmarked characters were introduced before version 2.">Show age &nbsp;
     <input src="images/apply.gif" alt="Apply"  title="Apply." type="image"  style="border:0; margin:0; padding:0;  vertical-align: top;" onclick="showAge(); return false;" />
-    &nbsp;<img src="images/clearpicker.png" alt="Clear." title="Clear the age-related information." style="margin-left: 10px;" onclick="clearHighlighting();" /> 
+    &nbsp;<img src="images/clearpicker.png" alt="Clear." title="Clear the age-related information." style="margin-left: 10px;" onclick="clearHighlighting();" /> <br/>
+    
+    <span class="ageKey" style="background-color:white; color:black;">1.1</span>
+    <span class="ageKey" style="background-color:#d5d5d5;; color:black;">2.0</span>
+    <span class="ageKey" style="background-color:#aaa; color:white;">2.1</span>
+    <span class="ageKey" style="background-color:#008000; color:white;">3.0</span>
+    <span class="ageKey" style="background-color:#77b277; color:black;">3.1</span>
+    <span class="ageKey" style="background-color:#bbd8bb; color:black;">3.2</span>
+    <span class="ageKey" style="background-color:#bf80ff; color:white;">4.0</span>
+    <span class="ageKey" style="background-color:#dfbfff; color:black;">4.1</span>
+    <span class="ageKey" style="background-color:#f14043; color:white;">5.0</span>
+    <span class="ageKey" style="background-color:#f89fa1; color:black;">5.1</span>
+    <span class="ageKey" style="background-color:#fce2e2; color:black;">5.2</span>
+    <span class="ageKey" style="background-color:#ff00ff; color:white;">6.0</span>
+    <span class="ageKey" style="background-color:#ff80ff; color:black;">6.1</span>
+    <span class="ageKey" style="background-color:#ffbfff; color:black;">6.2</span>
+    <span class="ageKey" style="background-color:#ffbfff; color:black;">6.3</span>
+    <span class="ageKey" style="background-color:#c99969; color:white;">7.0</span>
+    <span class="ageKey" style="background-color:#e58152; color:white;">8.0</span>
+    <span class="ageKey" style="background-color:#6174F7; color:white;">9.0</span>
+    <span class="ageKey" style="background-color:#F68509; color:white;">10.0</span>
+    <span class="ageKey" style="background-color:#EBF404; color:black;">11.0</span>
     </div>
 </div>
 <!-- listpanel -->
@@ -982,9 +1000,11 @@
           <img src="images/removespace.png" alt="Select" title="Remove all spaces from the text area." onclick="document.getElementById('picker').value = document.getElementById('picker').value.replace(/\s/g,'')" />
           <img src="images/addcomma.png" alt="Select" title="Separate the characters in the edit buffer with commas." onclick="addSpacesToPicker(',');"/>
           <img src="images/expand.png" alt="Expand" title="Expand ranges of characters in the Copy &amp; Paste box. For example, 'a-zA-Z'." onclick="if (document.getElementById('picker').value== '') { alert('Add characters to the text area.'); } else { document.getElementById('picker').value = expandList(document.getElementById('picker').value); }"/>
-          <img src="images/count.png" alt="Count" title="Count the characters in the text area." onclick="if (document.getElementById('picker').value== '') { alert('None.'); } else { alert(countPickerChars()); }"/><br/>
+          <img src="images/count.png" alt="Count" title="Count the characters in the text area." onclick="if (document.getElementById('picker').value== '') { alert('None.'); } else { alert(countPickerChars()); }"/>
+          <img src="images/convertPicker2Hex.png" alt="Convert to hex" title="Convert characters to hex values." onclick="convertPicker2Hex()"/>
+          <img src="images/convertPicker2Char.png" alt="Convert to characters" title="Convert hex values to characters." onclick="convertPicker2Chars()"/><br/>
           <img src="images/han.gif" alt="UniHan" onclick="showUnihan(document.getElementById('picker').value, 'char');" title="Look up characters in the Copy &amp; Paste box in the UniHan database." style="margin-left: 5px;"/>
-          <img src="images/convert.png" alt="Convert" title="Send characters in the Copy &amp; Paste box to the Unicode Character Converter tool."	onclick="converter = window.open('../r12a.github.io/apps/conversion?q='+encodeURIComponent(document.getElementById('picker').value), 'converter'); converter.focus();" />
+          <img src="images/convert.png" alt="Convert" title="Send characters in the Copy &amp; Paste box to the Unicode Character Converter tool."	onclick="converter = window.open('../app-conversion?q='+encodeURIComponent(document.getElementById('picker').value), 'converter'); converter.focus();" />
           <img src="images/case-simple.png" alt="Convert" title="Show upper/lower/title case alternatives for all characters in the copy/paste box."	onclick="convert2upper(document.getElementById('picker').value, false);  return false;" style="margin-left:10px;" />
           <img src="images/case-detail.png" alt="Convert" title="Show upper/lower/title case alternatives with correspondences for all characters in the copy/paste box."	onclick="convert2upper(document.getElementById('picker').value, true); return false;" />
           <img src="images/nfc.png" alt="NFC" title="Convert text in the Copy &amp; Paste box to NFC." onclick="doN11n('nfc'); document.getElementById('picker').focus();" style="margin-left:10px;" />
@@ -1021,7 +1041,9 @@
       The <img src="images/clicktopanel.png" alt=" " style="height: 1.5em; width: 1.5em;" /> button changes the effect of clicking on a character in a list or table. By default, or when the icon is greyed out,  detailed information for that character is displayed to the right of this box. <br>
       Alternatively, the highlighted <img src="images/clicktocparea.png" alt=" " style="height: 1.5em; width: 1.5em;" /> button makes UniView add the characters to the <strong><span class="onscreen">text area</span></strong>  instead. Click the icon to toggle back and forth.<br>
       <br>
-      By default, characters are shown as graphics. If you have the necessary font you can speed up display by unchecking <span class="onscreen">Use graphics</span> above. <br />
+      By default, <strong>characters are shown as images</strong>. If you have the necessary font you can speed up display by unchecking <span class="onscreen">Use graphics</span> above. <br>
+<br>
+No images are available for the characters in the very large <strong>Han, Hangul or Tangut</strong> blocks. I recommend installing the free <a href="http://www.babelstone.co.uk/Fonts/Han.html">Babelstone Han</a> and <a href="http://www.babelstone.co.uk/Fonts/Yinchuan.html">Tangut Yinchuan</a> fonts to get good coverage.<br />
       <br />
       UniView can do much more. Check out the <span onclick="help = window.open('help', 'help'); help.focus(); return false;" style="color:teal; text-decoration:none; cursor:pointer;" class="link"><strong>User Guide</strong></span>. <br>
     </span></p>
@@ -1044,7 +1066,9 @@
           <br/>
       <strong>You can also</strong> paste characters  directly into the <strong><span class="onscreen">text area</span></strong>   and hit the 
       <input src="images/apply.gif" alt="Apply"  title="List results below" type="image" style="border:0; margin:0; padding:0;  vertical-align: top;" />
-      icon below it to discover what they are. The results appear to the left.<br/>
+      icon below it to discover what they are. The results appear to the left.<br>
+<br>
+<strong>Notes are available</strong> for many characters. Click on <samp class="onscreen">Show notes</samp>, and you will see them when you display character information here. <br/>
       <br/>
       The app covers Unicode version 11.0.0. For more information about Unicode 11.0, see the <a href="http://www.unicode.org/versions/Unicode11.0.0/">Unicode 11.0.0 page</a>.<br/></span></p>
   </div>
@@ -1053,6 +1077,14 @@
 </div>
 <div id="notescontainer">hello there</div>
 <br style="clear:both"/>
+
+
+<div class="smallprint"><span id="version">
+See <a href="https://github.com/r12a/uniview/commits/gh-pages">recent changes</a>.
+Make a <a href="https://github.com/r12a/uniview/issues/new">comment</a>. 
+Licence <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC-By</a> © <a href="mailto:r12a@w3.org">r12a</a> 
+</span>
+</div>
 
 <div id="temptest">
 
