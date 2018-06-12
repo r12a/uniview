@@ -63,3 +63,6 @@ Copy the following files to the main directory:
 	names.php
 	subtitles.js
 
+Step 8
+Run make_name_list.html
+Copy the resulting file all-names.js to /shared/code/
