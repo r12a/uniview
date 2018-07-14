@@ -1169,7 +1169,8 @@ function output2CharArea () {
 			for (var i=0; i<17; i++) {
 				// get a list of characters
 				cCell = tableCells[j+(i*cols)]; //testint = j+(i*cols);
-				if (cCell.className.match(/ch/) && !cCell.className.match(/dim/)) {
+				//if (cCell.className.match(/ch/) && !cCell.className.match(/dim/)) {
+				if (cCell.classList.contains('ch') && !cCell.classList.contains('dim') && !cCell.classList.contains('empty')) {
 					var titlefields = cCell.title.split(' ');
 //					str += getCharFromInt(titlefields[3]);
 					addtoPicker(titlefields[3]);
