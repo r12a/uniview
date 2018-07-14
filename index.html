@@ -993,24 +993,28 @@
           <div style="float:left;"><img id="clickto" src="images/clicktopanel.png" alt="Clear." title="Toggle to determine what happens if you click on characters in a list or table: copy to the text area, or display details to the right." onclick="togglePanelDestination();"/></div>
           
           <div><input id="makeListFromTA" name="image3" type="image" title="Create a list from the characters in the Copy &amp; Paste box." src="images/apply2.gif" alt="List"/>
+          <img src="images/tochar.gif" alt="Add characters" title="Add characters in a list or table to the Copy &amp; Paste box." onclick="output2CharArea();"  style="margin-left:3px; float:left;" />
           
-          <img src="images/selectall.png" alt="Select" title="Select all text in the Copy &amp; Paste box." onclick="document.getElementById('picker').focus();document.getElementById('picker').select()" style="margin-left: 5px;" />
-          <img src="images/tochar.png" alt="Add characters" title="Add characters in a list or table to the Copy &amp; Paste box." onclick="output2CharArea();"  style="margin-left:3px;" />
-          <img src="images/addspace.png" alt="Select" title="Separate the characters in the edit buffer with spaces." onclick="addSpacesToPicker(' ');"  style="margin-left: 10px;" />
+          <div style="text-align: right;">
+          <img src="images/selectall.png" alt="Select" title="Select all text in the Copy &amp; Paste box." onclick="document.getElementById('picker').focus();document.getElementById('picker').select()" />
+          <img src="images/addspace.png" alt="Select" title="Separate the characters in the edit buffer with spaces." onclick="addSpacesToPicker(' ');" />
           <img src="images/removespace.png" alt="Select" title="Remove all spaces from the text area." onclick="document.getElementById('picker').value = document.getElementById('picker').value.replace(/\s/g,'')" />
           <img src="images/addcomma.png" alt="Select" title="Separate the characters in the edit buffer with commas." onclick="addSpacesToPicker(',');"/>
-          <img src="images/expand.png" alt="Expand" title="Expand ranges of characters in the Copy &amp; Paste box. For example, 'a-zA-Z'." onclick="if (document.getElementById('picker').value== '') { alert('Add characters to the text area.'); } else { document.getElementById('picker').value = expandList(document.getElementById('picker').value); }"/>
           <img src="images/count.png" alt="Count" title="Count the characters in the text area." onclick="if (document.getElementById('picker').value== '') { alert('None.'); } else { alert(countPickerChars()); }"/>
-          <img src="images/convertPicker2Hex.png" alt="Convert to hex" title="Convert characters to hex values." onclick="convertPicker2Hex()"/>
-          <img src="images/convertPicker2Char.png" alt="Convert to characters" title="Convert hex values to characters." onclick="convertPicker2Chars()"/><br/>
-          <img src="images/han.gif" alt="UniHan" onclick="showUnihan(document.getElementById('picker').value, 'char');" title="Look up characters in the Copy &amp; Paste box in the UniHan database." style="margin-left: 5px;"/>
+           <img src="images/case-simple.png" alt="Convert" title="Show upper/lower/title case alternatives for all characters in the copy/paste box."	onclick="convert2upper(document.getElementById('picker').value, false);  return false;" />
+          <img src="images/nfc.png" alt="NFC" title="Convert text in the Copy &amp; Paste box to NFC." onclick="doN11n('nfc'); document.getElementById('picker').focus();" />
+         <img src="images/convertPicker2Hex.png" alt="Convert to hex" title="Convert characters to hex values." onclick="convertPicker2Hex()"/>
+          <br/>
+             <img src="images/clearpicker.png" alt="Clear" title="Clear the  Copy &amp; Paste box." onClick="document.getElementById('picker').value = ''; document.getElementById('picker').focus(); return false;" />
+         <img src="images/analyse.png" alt="Expand" title="Expand ranges of characters in the Copy &amp; Paste box. For example, 'a-zA-Z'." onclick="analysis = window.open('../app-analysestring?chars='+encodeURIComponent(document.getElementById('picker').value), 'analysis'); analysis.focus();"/>
+         <img src="images/han.gif" alt="UniHan" onclick="showUnihan(document.getElementById('picker').value, 'char');" title="Look up characters in the Copy &amp; Paste box in the UniHan database."/>
           <img src="images/convert.png" alt="Convert" title="Send characters in the Copy &amp; Paste box to the Unicode Character Converter tool."	onclick="converter = window.open('../app-conversion?q='+encodeURIComponent(document.getElementById('picker').value), 'converter'); converter.focus();" />
-          <img src="images/case-simple.png" alt="Convert" title="Show upper/lower/title case alternatives for all characters in the copy/paste box."	onclick="convert2upper(document.getElementById('picker').value, false);  return false;" style="margin-left:10px;" />
-          <img src="images/case-detail.png" alt="Convert" title="Show upper/lower/title case alternatives with correspondences for all characters in the copy/paste box."	onclick="convert2upper(document.getElementById('picker').value, true); return false;" />
-          <img src="images/nfc.png" alt="NFC" title="Convert text in the Copy &amp; Paste box to NFC." onclick="doN11n('nfc'); document.getElementById('picker').focus();" style="margin-left:10px;" />
+           <img src="images/expand.png" alt="Expand" title="Expand ranges of characters in the Copy &amp; Paste box. For example, 'a-zA-Z'." onclick="if (document.getElementById('picker').value== '') { alert('Add characters to the text area.'); } else { document.getElementById('picker').value = expandList(document.getElementById('picker').value); }"/>
+         <img src="images/case-detail.png" alt="Convert" title="Show upper/lower/title case alternatives with correspondences for all characters in the copy/paste box."	onclick="convert2upper(document.getElementById('picker').value, true); return false;" />
           <img src="images/nfd.png" alt="NFD" title="Convert text in the Copy &amp; Paste box to NFD." onclick="doN11n('nfd'); document.getElementById('picker').focus();" />
-          <img src="images/clearpicker.png" alt="Clear" style="margin-left: 15px;" title="Clear the  Copy &amp; Paste box." onClick="document.getElementById('picker').value = ''; document.getElementById('picker').focus(); return false;" /></div>
-        </form>
+            <img src="images/convertPicker2Char.png" alt="Convert to characters" title="Convert hex values to characters." onclick="convertPicker2Chars()"/>
+        </div>
+       </form>
   </div>
 </div><!-- cparea -->
 </div><!-- end dialogue -->
