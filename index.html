@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 
 
-<title>UniView 11.0.0</title>
+<title>UniView 12beta</title>
 <link rel="stylesheet" href="uniview-style.css"/>
 
 <!-- &copy; Copyright 2001-2018 Richard Ishida [ishida@w3.org].  All rights reserved.  -->
@@ -34,7 +34,7 @@
 <body>
 <header>
 <div id="header-boilerplate"><div id="site-navigation"> <img id="bp_picture" class="compact" alt=" " src="../shared/images/world.gif"></div><div id="boilerplate"><div id="line" class="midlength">&nbsp;</div></div>
-<div id="topbar"><a href="/">r12a</a> &gt;&gt; apps  &gt;&gt; UniView 11</div><div id="sitelinks" class="noprint"><a href="http://rishida.net/blog/">blog</a>&nbsp; <a href="../doclist">docs</a>&nbsp; <a href="../maplist">maps</a>&nbsp; <a href="../applist">apps</a>&nbsp; <a href="../photos">photos</a>&nbsp;&nbsp;</div></div>
+<div id="topbar"><a href="/">r12a</a> &gt;&gt; apps  &gt;&gt; UniView 12beta</div><div id="sitelinks" class="noprint"><a href="http://rishida.net/blog/">blog</a>&nbsp; <a href="../doclist">docs</a>&nbsp; <a href="../maplist">maps</a>&nbsp; <a href="../applist">apps</a>&nbsp; <a href="../photos">photos</a>&nbsp;&nbsp;</div></div>
 </header>
 
 <div role="main">
@@ -58,12 +58,12 @@
           <td><form action="none" onsubmit="showSelection(document.getElementById('block').value);  return false;">
               <select name="block" onchange="showSelection(this.value)" id="block" style="font-size: 100%;">
                 <!--select name="block" id="block"-->
-                <option value="0020:00FF" selected="selected">Select a block (* indicates new in 11.0)</option>
+                <option value="0020:00FF" selected="selected">Select a block (* indicates new in 12beta)</option>
                 <optgroup label="European scripts">
                 <option value="0530:058F">Armenian</option>
                 <option value="FB13:FB17" class="pb">Armenian ligatures</option>
                 <option value="10530:1056F">Caucasian Albanian</option>
-               <option value="10800:1083F">Cypriot Syllabary</option>
+                <option value="10800:1083F">Cypriot Syllabary</option>
                 <option value="0400:04FF">Cyrillic</option>
                 <option value="0500:052F">Cyrillic Supplement</option>
                 <option value="2DE0:2DFF">Cyrillic Extended-A</option>
@@ -71,7 +71,7 @@
                 <option value="1C80:1C8F">Cyrillic Extended-C</option>
                 <option value="10500:1052F">Elbasan</option>
                 <option value="10A0:10FF">Georgian</option>
-<option value="1C90:1CBF">Georgian Extended *</option>
+                <option value="1C90:1CBF">Georgian Extended</option>
                 <option value="2D00:2D2F">Georgian Supplement</option>
                 <option value="2C00:2C5F">Glagolitic</option>
                 <option value="1E000:1E02F">Glagolitic Supplement</option>
@@ -96,8 +96,8 @@
                 <option value="10080:100FF">Linear B Ideograms</option>
                  <option value="10100:1013F">Aegean Numbers</option>
                  <option value="1680:169F">Ogham</option>
- 				<option value="10C80:10CFF">Old Hungarian</option>
-               <option value="10300:1032F">Old Italic</option>
+                <option value="10C80:10CFF">Old Hungarian</option>
+                <option value="10300:1032F">Old Italic</option>
                 <option value="10350:1037F">Old Permic</option>
                 <option value="101D0:101FF">Phaistos Disc</option>
                 <option value="16A0:16FF">Runic</option>
@@ -123,13 +123,14 @@
                 <option value="2C80:2CFF">Coptic</option>
                 <option value="03E2:03EF" class="pb">Coptic in Greek block</option>
                  <option value="102E0:102FF">Coptic Epact Numbers</option>
-	            <option value="13000:1342F">Egyptian Hieroglyphs</option>
+                <option value="13000:1342F">Egyptian Hieroglyphs</option>
+                <option value="13430:1343F">Egyptian Hieroglyph Format Controls *</option>
                 <option value="1200:137F">Ethiopic</option>
                 <option value="1380:139F">Ethiopic Supplement</option>
                 <option value="2D80:2DDF">Ethiopic Extended</option>
                 <option value="AB00:AB2F">Ethiopic Extended-A</option>
- <option value="16E40:16E9F">Medefaidrin *</option>
-               <option value="1E800:1E8DF">Mende Kikakui</option>
+                <option value="16E40:16E9F">Medefaidrin</option>
+                <option value="1E800:1E8DF">Mende Kikakui</option>
                 <option value="109A0:109FF">Meroitic Cursive</option>
                 <option value="10980:1099F">Meroitic Hieroglyphs</option>
                 <option value="07C0:07FF">N'Ko</option>
@@ -137,9 +138,9 @@
                 <option value="2D30:2D7F">Tifinagh</option>
                 <option value="A500:A63F">Vai</option>
                 </optgroup>
-                <optgroup label="Middle Eastern Scripts">
- 				<option value="14400:1467F">Anatolian Hieroglyphs</option>
-               <option value="0600:06FF">Arabic</option>
+                <optgroup label="West Asian Scripts">
+                <option value="14400:1467F">Anatolian Hieroglyphs</option>
+                <option value="0600:06FF">Arabic</option>
                 <option value="0750:077F">Arabic Supplement</option>
                 <option value="08A0:08FF">Arabic Extended-A</option>
                 <option value="FB50:FDFF">Arabic Presentation Forms-A</option>
@@ -147,10 +148,11 @@
                 <option value="10B00:10B3F">Avestan</option>
                 <option value="102A0:102DF">Carian</option>
                 <option value="12000:123FF">Cuneiform</option>
-				 <option value="12480:1254F">Early Dynastic Cuneiform</option>
-               <option value="12400:1247F">Cuneiform Numbers and Punctuation</option>
-				<option value="108E0:108FF">Hatran</option>
-               <option value="0590:05FF">Hebrew</option>
+                <option value="10FE0:10FFF">Elymaic *</option>
+                <option value="12480:1254F">Early Dynastic Cuneiform</option>
+                <option value="12400:1247F">Cuneiform Numbers and Punctuation</option>
+                <option value="108E0:108FF">Hatran</option>
+                <option value="0590:05FF">Hebrew</option>
                 <option value="FB1D:FB4F" class="pb">Hebrew Presentation Forms</option>
                 <option value="10840:1085F">Imperial Aramaic</option>
                 <option value="10B60:10B7F">Inscriptional Pahlavi</option>
@@ -175,26 +177,26 @@
                 <option value="11C70:11CBF">Marchen</option>
                 <option value="1800:18AF">Mongolian</option>
                 <option value="11660:1167F">Mongolian Supplement</option>
-<option value="10F00:10F2F">Old Sogdian *</option>
+                <option value="10F00:10F2F">Old Sogdian</option>
                 <option value="10C00:10C4F">Old Turkic</option>
                 <option value="A840:A87F">Phags-pa</option>
-<option value="10F30:10F6F">Sogdian *</option>
+                <option value="10F30:10F6F">Sogdian</option>
                 <option value="11A50:11AAF">Soyombo</option>
                 <option value="0F00:0FFF">Tibetan</option>
                 <option value="11A00:11A4F">Zanabazar Square</option>
                 </optgroup>
                 <optgroup label="South Asian Scripts">
-				<option value="11700:1173F">Ahom</option>
-               <option value="0980:09FF">Bengali</option>
+                <option value="11700:1173F">Ahom</option>
+                <option value="0980:09FF">Bengali</option>
                 <option value="11C00:11C6F">Bhaiksuki</option>
                 <option value="11000:1107F">Brahmi</option>
                 <option value="11100:1114F">Chakma</option>
                 <option value="0900:097F">Devanagari</option>
                 <option value="A8E0:A8FF">Devanagari Extended</option>
-<option value="11800:1184F">Dogra *</option>
+                <option value="11800:1184F">Dogra</option>
                 <option value="11300:1137F">Grantha</option>
                 <option value="0A80:0AFF">Gujarati</option>
-<option value="11D60:11DAF">Gunjala Gondi *</option>
+                <option value="11D60:11DAF">Gunjala Gondi</option>
                 <option value="0A00:0A7F">Gurmukhi</option>
                 <option value="11080:110CF">Kaithi</option>
                 <option value="0C80:0CFF">Kannada</option>
@@ -210,7 +212,8 @@
                 <option value="AAE0:AAEF">Meetei Mayek Extensions</option>
                 <option value="11600:1165F">Modi</option>
                 <option value="16A40:16A6F">Mro</option>
-				<option value="11280:112AF">Multani</option>
+                <option value="11280:112AF">Multani</option>
+                <option value="119A0:119FF">Nandinagari *</option>
                 <option value="11400:1147F">Newa</option>
                 <option value="1C50:1C7F">Ol Chiki</option>
                 <option value="0B00:0B7F">Oriya</option>
@@ -223,15 +226,17 @@
                 <option value="A800:A82F">Syloti Nagri</option>
                 <option value="11680:116CF">Takri</option>
                 <option value="0B80:0BFF">Tamil</option>
+                <option value="11FC0:11FFF">Tamil Supplement *</option>
                 <option value="0C00:0C7F">Telugu</option>
                 <option value="0780:07BF">Thaana</option>
                 <option value="11480:114DF">Tirhuta</option>
                 <option value="1CD0:1CFF">Vedic Extensions</option>
+                <option value="1E2C0:1E2FF">Wancho *</option>
                 <option value="118A0:118FF">Warang Citi</option>
                 </optgroup>
                 <optgroup label="Southeast Asian Scripts">
                 <option value="AA00:AA5F">Cham</option>
-<option value="10D00:10D3F">Hanifi Rohingya *</option>
+                <option value="10D00:10D3F">Hanifi Rohingya</option>
                 <option value="A900:A92F">Kayah Li</option>
                 <option value="1780:17FF">Khmer</option>
                 <option value="19E0:19FF">Khmer Symbols</option>
@@ -254,7 +259,7 @@
                 <option value="1740:175F">Buhid</option>
                 <option value="1720:173F">Hanunoo</option>
                 <option value="A980:A9DF">Javanese</option>
-<option value="11EE0:11EFF">Makasar *</option>
+                <option value="11EE0:11EFF">Makasar</option>
                 <option value="A930:A95F">Rejang</option>
                 <option value="1B80:1BBF">Sundanese</option>
                 <option value="1CC0:1CCF">Sundanese Supplement</option>
@@ -269,7 +274,7 @@
                 <option value="20000:2A6DF">CJK Unified Ideographs Extension B (big!)</option>
                 <option value="2A700:2B73F">CJK Unified Ideographs Extension C (big!)</option>
                 <option value="2B740:2B81F">CJK Unified Ideographs Extension D</option>
-				<option value="2B820:2CEA1">CJK Unified Ideographs Extension E (big!)</option>
+                <option value="2B820:2CEA1">CJK Unified Ideographs Extension E (big!)</option>
                 <option value="2CEB0:2EBE0">CJK Unified Ideographs Extension F (big!)</option>
                 <option value="F900:FAFF">CJK Compatibility Ideographs</option>
                 <option value="2F800:2FA1F">CJK Compatibility Ideographs Supplement</option>
@@ -287,6 +292,7 @@
                 <option value="3040:309F">Hiragana</option>
                 <option value="1B100:1B12F">Kana Extended-A</option>
                 <option value="1B000:1B0FF">Kana Supplement</option>
+                <option value="1B130:1B16F">Small Kana Extension *</option>
                 <option value="30A0:30FF">Katakana</option>
                 <option value="31F0:31FF">Katakana Phonetic Extensions</option>
                 <option value="FF65:FF9F" class="pb">Halfwidth Katakana</option>
@@ -301,11 +307,12 @@
                 </optgroup>
                 <optgroup label="American Scripts">
                 <option value="13A0:13FF">Cherokee</option>
-				<option value="AB70:ABBF">Cherokee Supplement</option>
+                <option value="AB70:ABBF">Cherokee Supplement</option>
                 <option value="10400:1044F">Deseret</option>
-<option value="1D2E0:1D2FF">Mayan Numerals *</option>
-                 <option value="104B0:104FF">Osage</option>
-               <option value="1400:167F">Unified Canadian Aboriginal Syllabics</option>
+                <option value="1D2E0:1D2FF">Mayan Numerals</option>
+                <option value="1E100:1E14F">Nyiakeng Puachue Hmong *</option>
+                <option value="104B0:104FF">Osage</option>
+                <option value="1400:167F">Unified Canadian Aboriginal Syllabics</option>
                 <option value="18B0:18FF">UCAS Extended</option>
                 </optgroup>
                 <optgroup label="Other">
@@ -314,21 +321,21 @@
                 </optgroup>
                 <optgroup label="Notational Systems">
                   <option value="2800:28FF">Braille Patterns</option>
-               <option value="1D100:1D1FF">Musical Symbols</option>
+                <option value="1D100:1D1FF">Musical Symbols</option>
                 <option value="2669:266F" class="pb">More Musical Symbols</option>
                 <option value="1D200:1D24F">Ancient Greek Musical Notation</option>
                 <option value="1D000:1D0FF">Byzantine Musical Symbols</option>
-               <option value="1BC00:1BC9F">Duployan</option>
+                <option value="1BC00:1BC9F">Duployan</option>
                 <option value="1BCA0:1BCAF">Shorthand Format Controls</option>
-  				<option value="1D800:1DAAF">Sutton SignWriting</option>
-              </optgroup>
+                <option value="1D800:1DAAF">Sutton SignWriting</option>
+                </optgroup>
                 <optgroup label="Punctuation">
                 <option value="2000:206F">General Punctuation</option>
                 <option value="0021:007F" class="pb">ASCII Punctuation</option>
                 <option value="00A1:00BF" class="pb">Latin-1 Punctuation</option>
                 <option value="2E00:2E7F">Supplemental Punctuation</option>
                 <option value="3000:303F">CJK Symbols and Punctuation</option>
-              </optgroup>
+                </optgroup>
                 <optgroup label="Compatibility punctuation">
                 <option value="FE50:FE6F">Small Form Variants</option>
                 <option value="FE30:FE4F">CJK Compatibility Forms</option>
@@ -356,7 +363,8 @@
                 <option value="1D360:1D37F">Counting Rod Numerals</option>
                 <option value="12400:1247F">Cuneiform Numbers and Punctuation</option>
                 <option value="FF10:FF19" class="pb">Fullwidth ASCII Digits</option>
-<option value="1EC70:1ECBF">Indic Siyaq Numbers *</option>
+                <option value="1EC70:1ECBF">Indic Siyaq Numbers</option>
+                <option value="1ED00:1ED4F">Ottoman Siyaq Numbers *</option>
                 <option value="2150:218F">Number Forms</option>
                 <option value="10E60:10E7F">Rumi Numeral Symbols</option>
                 <option value="2070:209F">Superscripts and Subscripts</option>
@@ -388,13 +396,14 @@
                 <option value="1F600:1F64F">Emoticons</option>
                 <option value="2600:26FF">Miscellaneous Symbols</option>
                 <option value="1F300:1F5FF">Miscellaneous Symbols And Pictographs</option>
- 				<option value="1F900:1F9FF">Supplemental Symbols &amp; Pictographs</option>
+                <option value="1F900:1F9FF">Supplemental Symbols &amp; Pictographs</option>
+                <option value="1FA70:1FAFF">Symbols and Pictographs Extended-A *</option>
                 <option value="1F680:1F6FF">Transport And Map Symbols</option>
-              </optgroup>
+                </optgroup>
                 <optgroup label="Game Symbols">
                 <option value="2654:265F" class="pb">Chess</option>
- <option value="1FA00:1FA6F">Chess Symbols *</option>
-               <option value="1F030:1F09F">Domino Tiles</option>
+                <option value="1FA00:1FA6F">Chess Symbols</option>
+                <option value="1F030:1F09F">Domino Tiles</option>
                 <option value="26C0:26C3" class="pb">Draughts</option>
                 <option value="2616:2617" class="pb">Japanese Chess</option>
                 <option value="1F000:1F02F">Mahjong Tiles</option>
@@ -405,7 +414,7 @@
                 <option value="1F700:1F77F">Alchemical Symbols</option>
                 <option value="10190:101CF">Ancient Symbols</option>
                 <option value="20A0:20CF">Currency Symbols</option>
-               <option value="4DC0:4DFF">Yijing Hexagram Symbols</option>
+                <option value="4DC0:4DFF">Yijing Hexagram Symbols</option>
                 <option value="268A:268F" class="pb">Yijing Mono and Digrams</option>
                 <option value="2630:2637" class="pb">Yijing Trigrams</option>
                 <option value="1D300:1D35F">Tai Xuan Jing Symbols</option>
@@ -527,7 +536,7 @@
                 <option value="10B80:10BAF">Psalter Pahlavi</option>
                 <option value="0800:083F">Samaritan</option>
                 <option value="0700:074F">Syriac</option>
-<option value="0860:086F">Syriac Supplement *</option>
+<option value="0860:086F">Syriac Supplement</option>
                 <option value="10380:1039F">Ugaritic</option>
                 <option value="10AC0:10AFF">Manichaean</option>
                 <option value="11C70:11CBF">Marchen</option>
@@ -535,9 +544,9 @@
                 <option value="11660:1167F">Mongolian Supplement</option>
                 <option value="10C00:10C4F">Old Turkic</option>
                 <option value="A840:A87F">Phags-pa</option>
-<option value="11A50:11AAF">Soyombo *</option>
+<option value="11A50:11AAF">Soyombo</option>
                 <option value="0F00:0FFF">Tibetan</option>
-<option value="11A00:11A4F">Zanabazar Square *</option>
+<option value="11A00:11A4F">Zanabazar Square</option>
 				<option value="11700:1173F">Ahom</option>
                <option value="0980:09FF">Bengali</option>
                 <option value="11C00:11C6F">Bhaiksuki</option>
@@ -557,7 +566,7 @@
                 <option value="1900:194F">Limbu</option>
                 <option value="11150:1117F">Mahajani</option>
                 <option value="0D00:0D7F">Malayalam</option>
-<option value="11D00:11D5F">Masaram Gondi *</option>
+<option value="11D00:11D5F">Masaram Gondi</option>
                 <option value="ABC0:ABFF">Meetei Mayek</option>
                 <option value="AAE0:AAEF">Meetei Mayek Extensions</option>
                 <option value="11600:1165F">Modi</option>
@@ -614,7 +623,7 @@
                 <option value="2A700:2B73F">CJK Unified Ideographs Extension C (big!)</option>
                 <option value="2B740:2B81F">CJK Unified Ideographs Extension D</option>
 				<option value="2B820:2CEA1">CJK Unified Ideographs Extension E (big!)</option>
-<option value="2CEB0:2EBE0">CJK Unified Ideographs Extension F *(big!)</option>
+<option value="2CEB0:2EBE0">CJK Unified Ideographs Extension F(big!)</option>
                 <option value="F900:FAFF">CJK Compatibility Ideographs</option>
                 <option value="2F800:2FA1F">CJK Compatibility Ideographs Supplement</option>
                 <option value="2F00:2FDF">Kangxi Radicals</option>
@@ -629,7 +638,7 @@
                 <option value="3130:318F">Hangul Compatibility Jamo</option>
                 <option value="FFA0:FFDC" class="pb">Halfwidth Jamo</option>
                 <option value="3040:309F">Hiragana</option>
-<option value="1B100:1B12F">Kana Extended-A *</option>
+<option value="1B100:1B12F">Kana Extended-A</option>
                 <option value="1B000:1B0FF">Kana Supplement</option>
                 <option value="30A0:30FF">Katakana</option>
                 <option value="31F0:31FF">Katakana Phonetic Extensions</option>
@@ -637,7 +646,7 @@
                 <option value="3190:319F">Kanbun</option>
                 <option value="A4D0:A4FF">Lisu</option>
                 <option value="16F00:16F9F">Miao</option>
-<option value="1B170:1B2FF">Nushu *</option>
+<option value="1B170:1B2FF">Nushu</option>
                 <option value="17000:187FF">Tangut</option>
                 <option value="18800:18AFF">Tangut Components</option>
                 <option value="A000:A48F">Yi Syllables</option>
@@ -703,7 +712,7 @@
                 <option value="1F780:1F7FF">Geometric Shapes Extended</option>
                 <option value="2500:257F">Box Drawing</option>
                 <option value="2580:259F">Block Elements</option>
-                  <option value="2700:27BF">Dingbats</option>
+                <option value="2700:27BF">Dingbats</option>
                 <option value="1F650:1F67F">Ornamental Dingbats</option>
                 <option value="1F600:1F64F">Emoticons</option>
                 <option value="2600:26FF">Miscellaneous Symbols</option>
@@ -728,6 +737,15 @@
                 <option value="E0000:E007F">Tags</option>
                 <option value="FE00:FE0F">Variation Selectors</option>
                 <option value="E0100:E01EF">Variation Selectors Supplement</option>
+                <option value="10FE0:10FFF">Elymaic *</option>
+                <option value="13430:1343F">Egyptian Hieroglyph Format Controls *</option>
+                <option value="119A0:119FF">Nandinagari *</option>
+                <option value="11FC0:11FFF">Tamil Supplement *</option>
+                <option value="1E2C0:1E2FF">Wancho *</option>
+                <option value="1B130:1B16F">Small Kana Extension *</option>
+                <option value="1E100:1E14F">Nyiakeng Puachue Hmong *</option>
+                <option value="1ED00:1ED4F">Ottoman Siyaq Numbers *</option>
+                <option value="1FA70:1FAFF">Symbols and Pictographs Extended-A *</option>
 </datalist>               
                
               <!--span id="searchParameters" style="display: none; font-size:80%; margin-left:10px; margin-bottom: 5px; "> <span title="Search character names.">
@@ -1074,7 +1092,7 @@ No images are available for the characters in the very large <strong>Han, Hangul
 <br>
 <strong>Notes are available</strong> for many characters. Click on <samp class="onscreen">Show notes</samp>, and you will see them when you display character information here. <br/>
       <br/>
-      The app covers Unicode version 11.0.0. For more information about Unicode 11.0, see the <a href="http://www.unicode.org/versions/Unicode11.0.0/">Unicode 11.0.0 page</a>.<br/></span></p>
+      The app covers Unicode version 12beta. For more information about Unicode 12beta, see the <a href="http://www.unicode.org/versions/beta-12.0.0.html">Unicode 12beta page</a>.<br/></span></p>
   </div>
 </div>
 <iframe id="notesIframe" src="blank.html"></iframe>
