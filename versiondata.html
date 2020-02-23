@@ -82,13 +82,18 @@ img { border-radius: 4px; }
 <section id="v13">
 <h2>Changes in version 13</h2>
 <p>Changes to the database and representative shapes for Unicode 13.0.0 were integrated into UniView.</p>
-<p>The user interface was changed. The principle differences are as follows:</p>
+<p>The user interface was changed. The principal differences are as follows:</p>
 <ol>
 <li>The block finder was moved to the top of the Lookup tab. This now works with all major browsers (although slightly differently in some cases), and provides a much faster way of finding a block name in the long list of Unicode blocks. It also makes it possible to find a block if you don't know the beginning of the name (eg. Pahlavi), and can show similar names together.</li>
-<li>The new version removes the need to set a toggle when clicking on a character in a list or table. A single click will always open the details panel. A double-click will always copy the character to the text area.</li>
+<li>When you click on a character in a table, the mechanism to determine whether it opens a right-hand panel or adds the character to the text area has changed. Look for the following icons: <img src="images/sendToPanel.png" alt="Send to panel"> and <img src="images/sendToText.png" alt="Send to text.">. A double-click will still copy the character to the text area.</li>
 <li>The search-related buttons appear above the text entry field, and work more intuitively. This also reduces problems with tooltips obscuring what you're doing.</li>
 <li>Various controls can now be selected by clicking on the label, rather than needing to click on the checkbox only.</li>
 <li>The help button was moved to a tab position.</li>
+</ol>
+<p>Two new controls are available:</p>
+<ol>
+<li><img src="images/convert.png" alt="Convert"> converts any escapes in the text area to ordinary characters. If it encounters digits, such as '1234', it assumes that these are hex numbers representing characters. This is particularly handy if you want to drag and drop code point values from the detail panel into the text area: just click on this icon to convert them to characters. (The icon <img src="images/openConvert.png" alt="Open window with escapes."> does the opposite, and opens the <a href="https://r12a.github.io/app-conversion/">Converter app</a> in a new window and shows escapes for the characters in the text area.)</li>
+<li><img src="images/rotate.png" alt="Rotate"> enables you to convert a row of characters into a column. First add spaces where you want the line-breaks to appear (for which you may be able to use <img src="images/addspace.png" alt="Add space.">), then click on this icon.</li>
 </ol>
 <p>Some inroads were made into simplifying the underlying markup, positioning using flexbox, etc.</p>
 <p>This page was split out of the help file.</p>
@@ -595,7 +600,7 @@ img { border-radius: 4px; }
 
 
 <div class="smallprint"> <span id="version">This version <span id="version-info"> 
-  <!-- #BeginDate format:IS1m -->2020-01-19  11:23<!-- #EndDate --> 
+  <!-- #BeginDate format:IS1m -->2020-02-23  10:13<!-- #EndDate --> 
   </span> GMT. &nbsp;&bull;&nbsp; Copyright <a href="mailto:r12a@w3.org">r12a@w3.org</a>. Licence <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC-By</a>.</span> </div>
   
 
