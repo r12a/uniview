@@ -380,24 +380,23 @@ function convertChar2Dec ( textString ) {
 
 
 function convertCP2Char ( textString ) {
-  var outputString = '';
-  textString = textString.replace(/^\s+/, '');
-  if (textString.length == 0) { return ""; }
-  	textString = textString.replace(/\s+/g, ' ');
-  var listArray = textString.split(' ');
-  for ( var i = 0; i < listArray.length; i++ ) {
-    var n = parseInt(listArray[i], 16);
-    if (n <= 0xFFFF) {
-      outputString += String.fromCharCode(n);
-    } else if (n <= 0x10FFFF) {
-      n -= 0x10000
-      outputString += String.fromCharCode(0xD800 | (n >> 10)) + String.fromCharCode(0xDC00 | (n & 0x3FF));
-    } else {
-      outputString += 'convertCP2Char error: Code point out of range: '+dec2hex(n);
-    }
-  }
-  return( outputString );
-}
+	var outputString = ''
+	textString = textString.replace(/^\s+/, '')
+	if (textString.length == 0) return ""
+
+	textString = textString.replace(/\s+/g, ' ')
+	var listArray = textString.split(' ')
+	for ( var i = 0; i < listArray.length; i++ ) {
+		var n = parseInt(listArray[i], 16)
+		if (n <= 0xFFFF) outputString += String.fromCharCode(n)
+		else if (n <= 0x10FFFF) {
+			n -= 0x10000
+			outputString += String.fromCharCode(0xD800 | (n >> 10)) + String.fromCharCode(0xDC00 | (n & 0x3FF))
+			} 
+		else outputString += 'convertCP2Char error: Code point out of range: '+dec2hex(n)
+		}
+	return( outputString )
+	}
 
 
 function convertDec2CP ( textString ) {
@@ -1335,6 +1334,7 @@ function showAge () {
                 case '10.0': c = 'c10-0'; break;
                 case '11.0': c = 'c11-0'; break;
                 case '12.0': c = 'c12-0'; break;
+                case '13.0': c = 'c13-0'; break;
                 }
             nodeArray[i].classList.add(c)
             }
@@ -1474,6 +1474,30 @@ function originalshowName ( codepoint, node ) {
 function dec2hex ( textString ) {
  return (textString+0).toString(16).toUpperCase();
 }
+
+
+function convertTextArea (str) {
+// Convert escapes to characters in str (used for text area)
+// Treats bare numbers as hex values - doesn't handle dec numbers
+	str = convertUnicode2Char(str)
+	str = convert0x2Char(str)
+	str = convertuBracket2Char(str)
+	str = convertuBrSequence2Char(str)
+	str = convertxBracket2Char(str)
+	str = convertx002Char(str)
+	str = convertHexNCR2Char(str)
+	str = convertDecNCR2Char(str)
+	str = convertU0000002Char(str)
+	str = convertU00002Char(str)
+	str = convertCSS2Char(str, false)
+	str = convertpEnc2Char(str)
+	str = convertGreenNumbers2Char(str, 'hex')
+
+	return str
+	
+	}
+
+
 
 function cleanHexCPs (codepoints) {
 	// takes text containing hex codepoint values and extracts the codepoints into a 
@@ -2640,4 +2664,48 @@ function convertPicker2Chars () {
         }
     document.getElementById('picker').value = out.trim()
     }
+
+
+function rotatePickerContent () {
+	// takes the content of the text area and turns it into a list, one item per line
+	// if there is a space, it segments on spaces, otherwise each character
+	
+	var text = document.getElementById('picker').value
+	var itemArray = []
+	if (text.includes(' ')) itemArray = text.split(' ')
+	else itemArray = [...text]
+	
+	out = ''
+	for (let i=0;i<itemArray.length;i++) out += itemArray[i]+'\n'
+	
+	document.getElementById('picker').value = out
+	}
+
+
+
+
+
+function togglePanelDestination () {
+	var buttons
+	if(_copy2Picker) { 
+		document.getElementById('clickDirection').innerHTML='<img src="images/sendToPanel.png" alt="🢂" title="Add character information to the right panel.">'
+		document.getElementById('clickDirection').style.marginTop='4em'
+		if (document.getElementById('charNavigation')) {
+			document.getElementById('charNavigation').style.backgroundColor='#a52a2a'
+			buttons = document.getElementById('charNavigation').querySelectorAll('button')
+			for (var i=0;i<buttons.length;i++)  buttons[i].style.color = 'white'
+			}
+		_copy2Picker=false
+		} 
+	else{ 
+		document.getElementById('clickDirection').innerHTML='<img src="images/sendToText.png" alt="🢅" title="Send characters to the text area.">'
+		document.getElementById('clickDirection').style.marginTop='0'
+		if (document.getElementById('charNavigation')) {
+			document.getElementById('charNavigation').style.backgroundColor='#EDE4D0'
+			buttons = document.getElementById('charNavigation').querySelectorAll('button')
+			for (i=0;i<buttons.length;i++)  buttons[i].style.color = '#666'
+			}
+		_copy2Picker=true
+		}
+	}
 

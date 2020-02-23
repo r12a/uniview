@@ -1,37 +1,59 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="en-gb" xml:lang="en-gb" xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en-gb">
+<head>
+<meta charset="utf-8"/>
+<title>UniView Help &amp; User Guide</title>
+<meta name="description" content="User guide and help for the UniView Unicode viewing tool."/>
 
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<title>UniView Version History</title>
-		<meta name="description" content="User guide and help for the UniView Unicode viewing tool."/>
+<link rel="stylesheet" href="../shared/style/docs.css" />
 
-<link rel="stylesheet" href="/style/docs.css" type="text/css" />
-
-<script type="text/javascript" src="/code/toc_section.js"></script>
-<script type="text/javascript" src="/code/boilerplate.js"></script>
+<script src="../shared/code/toc_2020.js"></script>
+<script src="../shared/code/boilerplate.js"></script>
 <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-		<style type="text/css" media="all">
-h3 a:link { color: gray; text-decoration: none; }
-h3 a:visited { color: gray; text-decoration: none; }
-div.sidenote p { margin-top: 0; }
-h3 { font-size: 100%; color: teal; }
-div.topic p { margin-left: 12%; }
-.onscreen { color: brown; }
-.new { color: red; }
-.version { color: brown; font-weight: bold; }
-.new1 {color: red; }
-		</style>
+<style>
+h3 a:link {
+	color: gray;
+	text-decoration: none;
+	}
+h3 a:visited {
+	color: gray;
+	text-decoration: none;
+	}
+div.sidenote p {
+	margin-top: 0;
+	}
+h3 {
+	font-size: 100%;
+	color: teal;
+	}
+div.topic p {
+	margin-left: 12%;
+	}
+.onscreen {
+	color: brown;
+	}
+.new {
+	color: red;
+	}
+.version {
+	color: brown;
+	font-weight: bold;
+	}
+.new1 {
+	color: red;
+	}
+.toc2:before { content:'• '; }
+img { border-radius: 4px; }
+</style>
 </head>
 
 <body>
 <header>
 <div id="header-boilerplate"></div>
-<script>document.getElementById('header-boilerplate').innerHTML = bp_header('/images/world.gif','docs');</script>
+<script>document.getElementById('header-boilerplate').innerHTML = bp_header('../shared/images/world.gif','docs');</script>
 </header>
 
-<h1>UniView version history</h1>
-
+<h1>UniView change log</h1>
 <aside class="sidebar">
 <nav>
   <h2 class="notoc flush"><a id="tochead">On this page</a></h2>
@@ -41,45 +63,142 @@ div.topic p { margin-left: 12%; }
     <p><a href="/uniview/">UniView</a></p>
   </div>
   </nav>
-  </aside>
+</aside>
 
 
-<p id="status">Updated Thu 31 Jul 2014 &bull; tags <a href="http://rishida.net/blog/index.php?tag=uniview" title="Show all blog posts tagged with 'uniview'">uniview</a>, <a href="http://rishida.net/blog/?tag=apps" title="Show all blog posts tagged with 'apps'">apps</a></p>
+<p id="status">Updated Wed 7 Nov 2018 &bull; tags <a href="http://r12a.github.io/blog/index.php?tag=uniview" title="Show all blog posts tagged with 'uniview'">uniview</a>, <a href="http://r12a.github.io/blog/?tag=apps" title="Show all blog posts tagged with 'apps'">apps</a></p>
 
 
-		<div class="section"> 
-			<p> UniView is an HTML-based application for working with Unicode characters. You can look up  or find characters (using graphics or fonts) and related information, view whole character blocks or custom ranges, select characters to paste into your document, paste in and discover unknown characters, search for characters using regular expressions, do hex/dec/ncr conversions, highlight character types, etc. etc. It supports Unicode 7.0 and is
-			  written with Web Standards to work on a variety of browsers.</p>
-			<p>This page lists the version history for UniView.</p>
-<!--<p>If you select the icon <img border="0" src="images/gotowin.gif" width="17" height="15" /> the results will be displayed in a separate window.&nbsp; This is to allow   
-you to keep your place while briefly looking something up.</p>-->
-		</div>
-		<div class="section"> 
+<section>
+  <p> UniView is a Web-based application for working with Unicode characters. No need to install anything – just open in a browser. You can look up  or find characters (using graphics or fonts) and related information, view whole character blocks or custom ranges, select characters to paste into your document, paste in and discover unknown characters, search for characters using regular expressions, do hex/dec/ncr conversions, highlight character types, etc. etc. <strong>It supports Unicode 13.0</strong> and is
+    written with Web Standards to work on a variety of browsers.</p>
+<p>See the detailed <a href="help">help</a> page.</p>
+<p>You can find the source code <a href="https://github.com/r12a/uniview">on github</a>, and a <a href="https://github.com/r12a/uniview/commits/gh-pages">list of recent changes</a>. If you spot a bug, <a href="https://github.com/r12a/uniview/issues">please raise a github issue</a>.</p>
+</section>
 
-		  <h2><a id="versions" name="versions" tabindex="3" href="#versions">Change history</a></h2>
-          <div class="section2">
-            <h3>Changes in version 7.0.0</h3>
-            <p>This version updates the app per the changes during  beta phase of the specification, so that it now reflects the finalised Unicode 7.0.0.</p>
-            <p>The initial in-app help information displayed for new users was significantly updated, and the help tab now links directly to the help page.</p>
-            <p>A more significant improvement was the addition of links to character descriptions (on the right) where such details exist. This finally reintegrates the information that was previously pulled in from a database.  Links are only provided where additional data actually exists. </p>
-            <p>Rather than pull the data into the page, the link opens a new window containing the appropriate information. This has advantages for comparing data, but it was also the best solution I could find without using PHP (which is no longer available on the server I use). It also makes it easier to edit the character notes, so the amount of such detail should grow faster. In fact, some additional pages of notes were added along with this upgrade.</p>
-            <p>A pop-up window containing resource information used to appear when you used the query to show a block. This no longer happens.</p>
-          </div>
-          <div class="section2">
-            <h3>Changes in version 7beta</h3>
-	          <p>This version adds the 2,834 new characters  encoded in the Unicode 7.0.0 beta, including characters for 23 new scripts. It also simplified the user interface, and eliminated most of the bugs introduced in the quick port to JavaScript that was the previous version.</p>
-	          <p>Some features that were available in version 6.1.0a are still not available, but they are minor.</p>
-	          <p>Significant changes to the UI include the removal of the 'popout' box, and the merging of the search input box with that of the other features listed under <span class="onscreen">Find</span>. </p>
-            <p>In addition, the buttons that used to appear when you select a Unicode block have changed. Now the block name appears near the top right of the page with a <img src="/rishida/uniview/images/info.gif" alt="I icon"/> icon. Clicking on the icon takes you to a page listing resources for that block, rather than listing the resources in the lower right part of UniView's interface.</p>
-	          <p>UniView no longer uses a database to display additional notes about characters. Instead, the information is being added to HTML files. When one of these files contains information for a particular block, you'll see a link to it from the detailed information for a particular character. At some future point, I may pull the information for that character into UniView, as before, but for the time being clicking on the <span class="onscreen">Character notes</span> link opens the page in a separate window. Initially such a link is only available for Tibetan, but I will add more from time to time.</p>
-          </div>
-          <div class="section2">
-	        <h3>Changes in version 6.1.0b</h3>
+
+
+        
+<section id="v13">
+<h2>Changes in version 13</h2>
+<p>Changes to the database and representative shapes for Unicode 13.0.0 were integrated into UniView.</p>
+<p>The user interface was changed. The principle differences are as follows:</p>
+<ol>
+<li>The block finder was moved to the top of the Lookup tab. This now works with all major browsers (although slightly differently in some cases), and provides a much faster way of finding a block name in the long list of Unicode blocks. It also makes it possible to find a block if you don't know the beginning of the name (eg. Pahlavi), and can show similar names together.</li>
+<li>The new version removes the need to set a toggle when clicking on a character in a list or table. A single click will always open the details panel. A double-click will always copy the character to the text area.</li>
+<li>The search-related buttons appear above the text entry field, and work more intuitively. This also reduces problems with tooltips obscuring what you're doing.</li>
+<li>Various controls can now be selected by clicking on the label, rather than needing to click on the checkbox only.</li>
+<li>The help button was moved to a tab position.</li>
+</ol>
+<p>Some inroads were made into simplifying the underlying markup, positioning using flexbox, etc.</p>
+<p>This page was split out of the help file.</p>
+</section>
+
+
+
+
+
+<section id="v12">
+<h2>Changes in version 12beta/12</h2>
+<p>Changes to the database and representative shapes for Unicode 12.0.0 were integrated into UniView.</p>
+</section>
+
+
+
+
+
+<section id="v1100">
+<h2>Changes in version 11</h2>
+  <p>Changes to the database and images for Unicode 11.0.0 were integrated into UniView.</p>
+<p>New and changed features:</p>
+<ul>
+<li>Double-clicking on a character in a matrix or list on the left now adds that character to the text area.</li>
+<li><img src="images/convertPicker2Char.png" alt="convert Picker to Char" /> (just below the text area) converts all the characters in the text area to space-separated hexadecimal values. <img src="images/convertPicker2Hex.png" alt="convert Picker to Hex" /> Does the inverse: it converts a set of space-separated hex codes to characters. In fact, it can also accept a range of escapes as input, and they don't need to be space-separated.</li>
+<li>The list of grey links below a matrix or list now has an X to clear the highlighting. The ad hoc set of links has been replaced by a list of the subtitles in the Unicode charts. Clicking on one of these links shows the characters in that subdivision. Unlike the adhoc links that existed before, this is implemented for all Unicode blocks.</li>
+<li>Han, Hangul and Tangut characters are now handled in the same way as characters from any other block (apart from the fact that there are no images). This fixes a longstanding problem with UniView, and is a major change.</li>
+<li>The control that shows Unicode version information (under Filter) now works for all Unicode versions up to 11, and produces a faster and easier to read effect.</li>
+<li>UniView no longer relies on any graphics from decodeUnicode. Han, Hangul and Tangut characters are now always displayed as text (and users are advised to download the free fonts from Babelstone to show the characters.) A bug that was preventing the display of images for several blocks was fixed. Images should now display for all Unicode characters, except for Han, Hangul and Tangut.</li>
+</ul>
+<p>Other improvements:</p>
+<ul>
+<li>The default font size, when displaying characters as text, has been set to more closely match the size of the characters when images are used.</li>
+<li>Double spaces between hex numbers and character names have been replaced by a single character, to produce better results when copy-pasting into another document.</li>
+<li>The link to the converter tool (just below the text area) has been fixed.</li>
+<li>The highlighting used to indicate characters with notes was made a little more subtle.</li>
+<li>A significant number of changes were made to the underlying code. These should make UniView faster, and reduce the size.</li>
+<li>Links to the github repo and issue list were added to the bottom of the page.</li>
+<li>Links to script information pages were replaced with ISO script codes, and updated to point to pages for all script blocks.</li>
+<li>Information about available notes was updated.</li>
+</ul>
+</section>
+<section id="v1000">
+<h2>Changes in version 10.0.0</h2>
+  <p>Changes to the database and representative shapes for Unicode 10.0.0 were integrated into UniView.</p>
+</section>
+<section id="v900">
+  <h2>Changes in version 9.0.0</h2>
+   <p>Changes to the database and representative shapes made during the beta phase have now been integrated into UniView.</p>
+   <p>In addition, a quick filter facility was added just below the character list panel. This allows you to filter the characters according to some basic properties, and in some cases there are additional tags available, based on the words in the the character descriptions or block subsection titles. Such additional tagging is far from exhaustive or perfect, they are just intended to provide some additional help for finding certain characters.</p>
+   <p>(Since the highlight function is used for this, don't forget that, if you happen to highlight a useful subset of characters and want to work with just those, you can use the <span class="onscreen">Make list from highlights</span> command, or click on the <img border="0" src="images/tochar.png" align="bottom" alt="upwards pointing arrow" /> icon  to move those characters into the text area.) </p>
+</section>
+
+<section id="v900beta">
+  <h2>Changes in version 9.0.0beta</h2>
+   <p>UniView now supports the characters introduced for the beta version of Unicode 9. Any changes made during the beta period will be added when Unicode 9 is officially released. (Images are not available for the Tangut additions, but the character information is available.)</p>
+   <p>It also brings in notes for individual characters where those notes exist, if <span class="onscreen">Show notes</span> is selected. These notes are not authoritative, but are provided in case they prove useful.</p>
+   <p>A new icon was added below the text area to add commas between each character in the text area.</p>
+   <p>Links to the help page that used to appear on mousing over a control have been removed. Instead there is a noticeable, blue link to the help page, and the help page has been reorganised and made easier to find information using image maps.  The reorganisation puts more emphasis on learning by exploration, rather than learning by reading.</p>
+   <p>Various tweaks were made to the user interface.</p>
+ </section>
+
+<section id="v800a">
+  <h2>Changes in version 8.0.0a</h2>
+      <p>Han and hangul characters now have a link <span class="onscreen">View in PDF code charts (pageXX)</span>. For Han blocks, this will open the PDF file for that block at the page that lists this character on Firefox and Chrome. (For Safari and Edge you will need to scroll to the page indicated.) The PDF is useful if there is no picture or font glyph for that character, but also allows you to see the variant forms of the character.</p>
+    <p>For some Han blocks, the number of characters per page in the PDF file varies slightly. In this case you will see the text <span class="onscreen">approx</span>; you may have to look at a page adjacent to the one you are taken to for these characters.</p>
+<p>Note that some of the PDF files are quite large. If the file size exceeds 3Mb, a warning is included.</p>
+<p>This version also fixed bugs in the display of some of the Han block information.</p>
+</section>
+
+<section id="v800">
+  <h2>Changes in version 8.0.0</h2>
+  <p>This version adds   1,945 new non-ideographic characters  encoded in  Unicode 8.0.0&nbsp;(including 6 new scripts).</p>
+  <p>I also finally fixed the <span class="onscreen">Show Age</span> filter, and brought it up to date.</p>
+  <p>The github site now holds images for all 28,000+ Unicode codepoints other than Han ideographs and Hangul syllables (in two sizes). </p>
+</section>
+<section>
+  <section id="v700">
+    <h2>Changes in version 7.0.0</h2>
+    <p>This version updates the app per the changes during  beta phase of the specification, so that it now reflects the finalised Unicode 7.0.0.</p>
+    <p>The initial in-app help information displayed for new users was significantly updated, and the help tab now links directly to the help page.</p>
+    <p>A more significant improvement was the addition of links to character descriptions (on the right) where such details exist. This finally reintegrates the information that was previously pulled in from a database.  Links are only provided where additional data actually exists. </p>
+    <p>Rather than pull the data into the page, the link opens a new window containing the appropriate information. This has advantages for comparing data, but it was also the best solution I could find without using PHP (which is no longer available on the server I use). It also makes it easier to edit the character notes, so the amount of such detail should grow faster. In fact, some additional pages of notes were added along with this upgrade.</p>
+    <p>A pop-up window containing resource information used to appear when you used the query to show a block. This no longer happens.</p>
+  </section>
+  <section id="v7beta">
+    <h2>Changes in version 7beta</h2>
+    <p>This version adds the 2,834 new characters  encoded in the Unicode 7.0.0 beta, including characters for 23 new scripts. It also simplified the user interface, and eliminated most of the bugs introduced in the quick port to JavaScript that was the previous version.</p>
+    <p>Some features that were available in version 6.1.0a are still not available, but they are minor.</p>
+    <p>Significant changes to the UI include the removal of the 'popout' box, and the merging of the search input box with that of the other features listed under <span class="onscreen">Find</span>. </p>
+    <p>In addition, the buttons that used to appear when you select a Unicode block have changed. Now the block name appears near the top right of the page with a <img src="images/info.gif" alt="I icon"/> icon. Clicking on the icon takes you to a page listing resources for that block, rather than listing the resources in the lower right part of UniView's interface.</p>
+    <p>UniView no longer uses a database to display additional notes about characters. Instead, the information is being added to HTML files. When one of these files contains information for a particular block, you'll see a link to it from the detailed information for a particular character. At some future point, I may pull the information for that character into UniView, as before, but for the time being clicking on the <span class="onscreen">Character notes</span> link opens the page in a separate window. Initially such a link is only available for Tibetan, but I will add more from time to time.</p>
+  </section>
+  
+  
+  
+  
+  
+          <section>
+	        <h2>Changes in version 6.1.0b</h2>
 	        <p>This was an attempt to continue to provide most of the functionality after my site was hacked and the W3C disallowed PHP on the server I use. The main features were converted to work using JavaScript. This version was buggy and incomplete.</p>
 	        <p>The location of UniView was changed from rishida.net/scripts/uniview/ to rishida.net/uniview/.</p>
-	      </div>
-	      <div class="section2">
-		    <h3>Changes in version 6.1.0a</h3>
+	      </section>
+		  
+		  
+		  
+		  
+		  
+	      <section>
+		    <h2>Changes in version 6.1.0a</h2>
 			  <p>This version adds a couple of buttons that appear when you ask UniView to display a block. </p>
 			  <p>Clicking on <span class="onscreen">Show annotated list</span> generates a list of all characters in the block, with annotations. </p>
 		    <p>Clicking on <span class="onscreen">Show script links</span> displays a list of links to key sources of information about the script of the block, links to relevant articles and apps on the rishida.net site, and related fonts and input methods. This provides a very quick way of finding this information. One particularly useful link (to a Scriptsource.org page) allows you to find the proposals for all additions to Unicode related to the relevant script. These proposals are a mine of useful information about the individual characters in a block.</p>
@@ -90,9 +209,14 @@ you to keep your place while briefly looking something up.</p>-->
                 <p>The search box at the top left was constrained to appear closer to the other controls when the window is stretched wide.</p></li>
               </ul>
 			  <p>Various bugs were also fixed.</p>
-		  </div>
-			<div class="section2">
-			  <h3>Changes in version 6.1.0</h3>
+		  </section>
+		  
+		  
+		  
+		  
+		  
+			<section>
+			  <h2>Changes in version 6.1.0</h2>
 			  <p>The major change in this update is the update of the data to support Unicode version 6.1.0.</p>
 			  <p>Another significant change enables you to display information in a separate window, rather than overwriting the information currently displayed. This can be done by typing/pasting/dragging a set of characters or character code values into the <span class="onscreen">Popout</span> area and selecting the <img border="0" src="images/apply.gif" align="bottom" alt=" " /> icon alongside the <span class="onscreen">Characters</span> or <span class="onscreen">Edit buffer</span> input fields (depending on what you put in the popout window).</p>
 			  <p>Two new icons were added to the <span class="onscreen">Edit buffer</span> area:</p>
@@ -101,9 +225,14 @@ you to keep your place while briefly looking something up.</p>-->
 			  <p>Where  character information displayed in the lower right panel has a case or decomposition mapping, UniView now displays the characters involved, rather than just giving the hex value(s), eg. Uppercase mapping:	0043    C. You will need a font on your system to see the characters displayed in this way, but whether or not you have a font, this provides a quick and easy way to copy the case-changed character (rather than having to copy the hex value and convert it first).</p>
 			  <p>There is also a new line, slightly further down, when UniView is in graphic mode. This line starts with 'As text:', and shows the character using whatever default font you have on your system. Of course, if you don't have a font that includes that character you won't see it. This has been added to make it easier to copy and paste a character into text.</p>
 			  <p>Fix some small bugs, such as problems with search when U+29DC   INCOMPLETE INFINITY is returned.</p>
-		  </div>
-			<div class="section2">
-			  <h3>Changes in version 6.0.0a</h3>
+		  </section>
+		  
+		  
+		  
+		  
+		  
+			<section>
+			  <h2>Changes in version 6.0.0a</h2>
 			  <p>The majority of changes in this update relate to the user interface. They include the following:</p>
               <ul>
               <li>Many controls have been grouped under three tabs: Look up, Filter, and Options. Various previously dispersed controls were gathered together under the Filter and Options tabs. Many of the controls have been slightly renamed.</li>
@@ -121,18 +250,27 @@ you to keep your place while briefly looking something up.</p>-->
                 <li>The control to send characters to the Unicode Conversion tool <img src="images/convert.png" alt="the icon with overlapping boxes" /> was fixed and now puts the character content of the  field in the green box of the Converter Tool. If you need to convert hex or decimal code point  values, do that in the converter.</li>
                 <li>The Show Age feature now works with lists, not just tables.</li>
               </ul>
-		  </div>
-			<div class="section2">
-		    <h3>Changes in version 6.0.0</h3>
+		  </section>
+		  
+		  
+		 
+		  
+		  
+			<section>
+		    <h2>Changes in version 6.0.0</h2>
 				<p>The major change in this update is the update of the data to support Unicode version 6.0.0..</p>
 				<p>Three new icons were added to the text area:</p>
 				<p><img src="images/analysestring.png" alt="Analyse" /> Clicking on this will send all characters in the text area box to the String Analyser tool. This tool provides detailed information about all the characters on a single page.</p>
 				<p><img src="images/expand.png" alt="Analyse" /> When you click on this icon any hyphen separated lists in the text area box are expanded. For example, if you have A-Z in the text box, it will be replaced with ABCDEFGHIJKLMNOPQRSTUVWXYZ.  You can expand multiple ranges at the same time. For example, A-Za-z0-9 will expand to include all intervening characters for the three ranges specified.</p>
 				<p><img src="images/count.png" alt="Analyse" /> When you click on this icon, it simply reports the number of characters in the text area box.</p>
 				<p>There were also some changes to the source code. For example, the location of the graphics was changed.</p>
-			</div>
-			<div class="section2">
-				<h3>Changes in version 5.2.0b</h3>
+			</section>
+			
+			
+			
+			
+			<section>
+				<h2>Changes in version 5.2.0b</h2>
 				<p>The major change in this update is the addition of a new <a href="lite">UniView lite</a> interface for the tool that makes it easier to use UniView in restricted screen sizes, such as on mobile devices. The lite interface offers a subset of the functionality provided in the full version, rearranges the user interface and sets up some different defaults (eg. list view is the default, rather than the matrix view). However, the underlying code is the same - only the initial markup and the CSS are different.</p>
 				<p>Another significant change is that when you click on a character in a list or matrix   that character is either added to the text area or detailed information for that character is displayed, but not now both at the same time. You switch between the two possibilities by clicking on the <img src="images/pickeroff-long.png" title="Toggle to copy characters to the character area or not"  /> icon. When the background is white (default) details are shown for the character. When the background is orange <img src="images/pickeron-long.png"  title="Toggle to copy characters to the character area or not"  /> the character will be added to the text area (like a character map or picker).</p>
 				<p>Information from my character database is now shown by default when you are shown detailed information for a character. The switch to disable this has been moved to the <span class="onscreen">Options</span> panel.</p>
@@ -140,48 +278,78 @@ you to keep your place while briefly looking something up.</p>-->
 				<p>Access to <span class="onscreen">Settings</span> panel has been moved slightly downwards and renamed <span class="onscreen">Options</span> in the full version.</p>
 				<p>The default order for items in lists is now &lt;character&gt;&lt;codepoint&gt;&lt;name&gt;, rather than the previous &lt;codepoint&gt;&lt;character&gt;&lt;name&gt;. This can still be changed in the <span class="onscreen">Options</span> panel, or by setting query parameters.</p>
 				<p>I changed the <span class="onscreen">Next</span> and <span class="onscreen">Previous</span> functions in the character detail pane so that it moves one code point at a time through the Unicode encoding space. The controls are now buttons rather than images.</p>
-			</div>
-			<div class="section2">
-				<h3>Changes in version 5.2.0a</h3>
+			</section>
+			
+			
+			
+			
+			
+			<section>
+				<h2>Changes in version 5.2.0a</h2>
 				<p>The major change in this update is the addition of a function, <span class="onscreen">Show age</span>, to show the version of Unicode where a character was added. The same information is also listed in the details given for a character in the lower right panel.</p>
 				<p>The trigger for context-sensitive help was reduced to the first character of a command name, rather than the whole command name. This improves behaviour for commands under <span class="onscreen">More actions</span> by allowing you to click on the command name rather than just the icon alongside to activate the command. </p>
 				<p>The highlighting mechanism was changed. Rather than highlight characters using a coloured border (which is typically not very visible), highlighting now works by greying out characters that are not highlighted. This also makes it clearer when nothing is highlighted.</p>
 				<p>In the recent past, when you converted a matrix to a list in the lower left panel, greyed-out rows would be added for non-characters. These are no longer displayed. Consequently, the command to remove such rows from the list (previously under <span class="onscreen">More actions</span>) has been removed.</p>
 				<p>A lot of invisible work went into replacing style attributes in the code with class names. This produces better source code, but doesn't affect the user experience.</p>
 				<p>Some 'quick start' instructions were added to the initial display to orient people new to the tool, and this help text was updated in various areas.</p>
-			</div>
-			<div class="section2">
-		<h3>Changes in version 5.2.0</h3>
+			</section>
+			
+			
+			
+			
+			
+			<section>
+		<h2>Changes in version 5.2.0</h2>
 					<p>The major change in this update is conformance to the final 5.2.0 version of the Unicode database.</p>
 					<p>The order of blocks listed in the top left pulldown menu was changed to resemble the order in the <a href="http://www.unicode.org/charts">Unicode Charts page</a>. Several sub-block selections were also added to the list (as in the Unicode page), and are displayed in italics.</p>
 					<p>When you display details of a character in the right panel, the heading <span class="onscreen">Script group</span> has now been used to indicate the sub-block-level headings in the block listings of the Unicode Standard. The link to the Show block now follows the heading <span class="onscreen">Show block</span>. These sub-block-level headings are also shown when you display a range as a list (as opposed to a matrix).</p>
 					<p>When you mouse over characters displayed in a matrix, the code point and name information for that character now appear just above the matrix. This makes it much easier to locate characters you are looking for..</p>
 					<p>Finally, graphics are now available for all the many Egyptian Hieroglyph characters. This was the last block for which graphics were completely unavailable.</p>
-			</div>
-			<div class="section2">
-				<h3>Changes in version 5.2(beta)a</h3>
+			</section>
+			
+			
+			
+			
+			
+			<section>
+				<h2>Changes in version 5.2(beta)a</h2>
 				<p>The big change in this update is that UniView starts up in graphics mode by default. This means that pages load more slowly, but (especially with the continuing growth of Unicode) also means that you are more likely to be able to see the characters you are looking for. (If you preferred font glyphs as a default, you just need to <a href="#defaults">change the URI</a> in your bookmarked link slightly, and you can continue to work that way.)</p>
 				<p>To facilitate this change, I created my own graphics for blocks which are not yet covered by decodeunicode, or which are no longer fully covered by decodeunicode. The  blocks for which I provided graphics are Latin Extended-C, Latin Extended-D, Latin Extended Additional, Cyrillic Supplement, Cyrillic Extended-B, Modifier Tone Letters, Tibetan, Malayalam, Saurashtra, Ol Chiki, Myanmar, Kayah Li, Cham, Rejang, Vai, Supplemental Punctuation, and Miscellaneous Symbols and Arrows. </p>
 				<p>There are still many characters for which there are no graphics (especially the new characters in Unicode 5.2), but coverage is much better than it was. As I find more fonts, I will be able to create graphics for the remaining characters.</p>
 				<p>I also put a grey box around the characters in tables. This is particularly useful if there are no graphics or font glyphs for a block or range of characters.</p>
 				<p>I also fixed a problem that was preventing Chrome and Safari and IE from displaying the first two Latin blocks.</p>
-			</div>
-			<div class="section2">
-				<h3>Changes in version 5.2(beta)</h3>
+			</section>
+			
+			
+			
+			
+			
+			<section>
+				<h2>Changes in version 5.2(beta)</h2>
 				<p>This update adds the characters and changes proposed for Unicode 5.2. </p>
 				<p>While the properties for new and modified characters are still in beta they are not officially stable, however the characters should be stable at this point. UniView therefore alerts you if you are looking at a new character. If the Unicode database information has changed for a given character you are also warned, and provided with a  link that points to the previous information for that character.</p>
 				<p>These warnings will be removed from UniView when Unicode 5.2 is released.</p>
 				<p>This release also fixes a few small bugs in the HTML and JavaScript code.</p>
-			</div>
-			<div class="section2">
-				<h3>Changes in version 5.1.0f</h3>
+			</section>
+			
+			
+			
+			
+			
+			<section>
+				<h2>Changes in version 5.1.0f</h2>
 				<p>This is a very small update. </p>
 				<p>Moved the <img border="0" src="images/selectall.png" align="bottom" alt=" " /> icon (to select all text in the text area) near to the beginning of the row, since this is a frequently used icon. </p>
 				<p>Caused the <img src="images/convert.png" alt="Open the converter file" title="Send characters to the converter" /> icons to link to the latest version of the converter tool, and work properly.</p>
 				<p>Text area now has the focus when you open UniView.</p>
-			</div>
-			<div class="section2">
-				<h3>Changes in version 5.1.0e</h3>
+			</section>
+			
+			
+			
+			
+			
+			<section>
+				<h2>Changes in version 5.1.0e</h2>
 				<p>Custom ranges are no longer enlarged to fill full columns in the matrix. Full columns are still shown, but characters not in the range specified are greyed out. When displaying the range as a list, only the characters in the specified range appear.</p>
 				<p>Context-sensitive help was added. The labels for controls link to a new section in this document where the controls are explained one by one. To get the help, click on the label.</p>
 				<p>Some changes were made to help those who want to copy and paste lists of characters to other documents. There are new settings that make it possible to automatically prefix hex code point numbers in lists with U+, if you prefer, and tailor what appears in the list, and where the character is shown. (You can also set U+ to appear by default by including <code>u=yes</code> in the URI you use to call UniView.) These controls are accessed by clicking on <span class="onscreen">Settings</span> (used to be called Options).</p>
@@ -190,9 +358,14 @@ you to keep your place while briefly looking something up.</p>-->
 				<p>The default font was set to nothing, and the <span class="onscreen">Font</span> control was moved from the settings popup to the main control area. To reset the default font, simply delete the last font name in the font control and hit return.</p>
 				<p>If an unassigned character is displayed in the right panel, it is now possible to display the group it belongs to on the left. Hex code point numbers for unassigned characters in lists are now a minimum of 4 characters long. Unassigned characters now have a grey background in all lists. DB notes are no longer reported for unassigned characters (bugfix).</p>
 				<p>A couple more minor user interface changes.</p>
-			</div>
-			<div class="section2">
-				<h3>Changes in version 5.1.0d</h3>
+			</section>
+			
+			
+			
+			
+			
+			<section>
+				<h2>Changes in version 5.1.0d</h2>
 				<p>A major feature change is the addition of buttons to the <span class="onscreen">Text area</span> to allow conversion of the text to NFC or NFD normalization forms. (You may not notice the change until you list the characters.)</p>
 				<p>The control panel was also substantially rearranged again to hopefully make it easier for newcomers to see what they can do.</p>
 				<p>The <span class="onscreen">Code point</span> conversion feature was upgraded to handle decimal code point values.</p>
@@ -202,8 +375,13 @@ you to keep your place while briefly looking something up.</p>-->
 				<p>Jettisoned some unneeded code to reduce download by around 40-50K bytes. Implemented the NFC/NFD feature using AJAX, to avoid putting the download size back up.</p>
 				<p>When you delete the contents of the text area or the code point area, the associated input field is given focus, so you are ready for input.</p>
 				<p>A couple more minor bug fixes.</p>
-			</div>
-<h3>Changes in version 5.1.0c</h3>
+			</section>
+			
+			
+			
+			
+<section>			
+<h2>Changes in version 5.1.0c</h2>
 <p>Removed the two <span class="onscreen">Highlight</span> selection boxes. These used to highlight characters in the lower left panel with a specific property value. The <span class="onscreen">Show</span> selection box on the left (used to be <span class="onscreen">Show list</span>) now does that job if you set the <span class="onscreen">Local</span> check box alongside it. (Local is the default for this feature.)</p>
 			<p>As part of that move, the former <span class="onscreen">SiR</span> (search in range) check box that used to be alongside <span class="onscreen">Show range</span> has been moved below the <span class="onscreen">Find</span> input field, and renamed to <span class="onscreen">Local</span>. If <span class="onscreen">Local</span> is checked, searching can now be done on any content in the lower left panel, and the results are shown as highlighting, rather than a new list.</p>
 			<p>To complement these new highlighting capabilities, a new feature was added. If you click on the icon next to <span class="onscreen">Make list from highlights</span> the content of the lower left panel will be replaced by a list of just those items that are currently highlighted - whether the highlighting results from a search or a property listing. Note that this can also be useful to refine searches: perform an initial search, convert the result to a list, then perform another search on that list, and so on.</p>
@@ -211,7 +389,12 @@ you to keep your place while briefly looking something up.</p>-->
 			<p>Added an icon <img border="0" src="images/tochar.png" align="bottom" alt=" " /> to the text area. If you click on this, all the characters in the lower left panel are copied into the text area. This is very useful for capturing the result of a search, or even a whole block. Note that if a list in the lower left panel contains unassigned code points, these are not copied to the text area.</p>
 			<p>As a result of the above changes, the way <span class="onscreen">Show as graphics</span> and <span class="onscreen">Show range as list</span> work internally was essential rewritten, but users shouldn't see the difference.</p>
 			<p>Changed the label <span class="onscreen">Character area</span> to <span class="onscreen">Text area</span>.</p>
-<h3>Changes in version 5.1.0b</h3>
+			</section>
+			
+			
+			
+			<section>
+<h2>Changes in version 5.1.0b</h2>
 <p>Moved the <span class="onscreen">cut&amp;paste</span> field downwards, made it larger, and changed the label to <span class="onscreen">character area</span>. This should make it easier to deal with text copy/cut &amp; paste, and more obvious that that is possible with UniView. It is much clearer now that UniView provides character map/picker functionality, and not just character lookup.</p>
 			<p>Whereas previously you had to  double-click to put a character in the lower left pane into the <span class="onscreen">Cut&amp;paste</span> field, UniView now echoes characters to the  <span class="onscreen">Character area</span> every time you (single) click on a character in the lower left hand pane. This can be turned off. Double-clicking will still add the code point of a character in the lower left panel to the <span class="onscreen">Code points</span> field.</p>
 			<p>The <span class="onscreen">Character area</span> has its own set of icons, some of which are new: ie. you can select the text, add a space, and change the font of the text in the area (as well as turn the echo on and off). I also spruced up the icons on the UI in general.</p>
@@ -229,15 +412,30 @@ you to keep your place while briefly looking something up.</p>-->
 			<p>Of course, UniView is not able to tell that an ordinary word like 'Abba' is not a hex code point, so you obviously need to watch out for that and a few other situations, but much of the time this should make it much easier to extract code point information.</p>
 			<p>I still haven't found a way to fix the display bug in Safari and Google Chrome that causes initial content in the lower left pane to be only partially displayed.</p>
 <p>&nbsp;</p>
-			<h3>Changes in version 5.1.0a</h3>
+</section>
+
+
+
+
+<section>
+			<h2>Changes in version 5.1.0a</h2>
 <p>A large amount of code was rewritten to enable data to be downloaded from the server via AJAX at the point of need. This eliminates the long wait when you start to use UniView without the database information in your cache. This means that there is a slightly longer delay when you view a new block, but the code is designed so that if you have already downloaded  data, you don't have to retrieve it again from the server.</p>
 			<p>The search mechanism was also rewritten. The regular expressions used must now be supported in both JavaScript and PHP (PHP is used if not searching within the current range). When 'other' is ticked, the search will look in the alternative name fields, but not in other property settings (so you can no longer use something like <code>;AL;</code> to search for characters with a particular property. (Use 'Show list' instead.)</p>
 			<p>Removed several zero-width space characters from the code, which means that UniView now works with Google Chrome, except for some annoying display bugs that I'm not sure how to fix - for example, the first time you try to display any block you only seem to get the top line (although, if you click or drag the mouse, the block is actually there). This seems to be WebKit related, since it happens in Safari, too.</p>
-			<h3>Changes in version 5.1.0</h3>
+			</section>
+			
+			
+			<section>
+			<h2>Changes in version 5.1.0</h2>
 			<p>Updated to cover Unicode Version 5.1.0.</p>
 			<p>Added &lt;option value=&quot;(;R;)|(;AL;)&quot;&gt;Right-to-left (R or AL)&lt;/option&gt; to property lister.</p>
 			<p>Bugfix: fixed ranges supplied via URI query (used to still split).</p>
-			<h3>Changes in version 5.0.0c</h3>
+			</section>
+			
+			
+			
+			<section>
+			<h2>Changes in version 5.0.0c</h2>
 			<p>Changed the custom range input to a single field that will accept various range formats. </p>
 			<p>Added the ability to select whether Search looks at any combination of character names only,  other parts of a record in the Unicode database, or the other character description information, and added a message to say how many characters were matched. </p>
 			<p>Added the ability to search within the range specified in the field entitled Range.</p>
@@ -250,7 +448,11 @@ you to keep your place while briefly looking something up.</p>-->
 			<p>Added reference to decodeunicode when graphics are displayed in left column</p>
 			<p>Bugfix: search parameter won't break when graphics etc toggled</p>
 			<p>You can now specify windowHeight parameter at startup in the URI's query string.  </p>
-			<h3>Changes in version 5.0.0b</h3>
+			</section>
+			
+			
+			<section>
+			<h2>Changes in version 5.0.0b</h2>
 			<p>Extended the ability to open UniView with data displayed from a URI. In addition to specifying a block and a character, you can now
 				specify a range, a list of codepoints, a list of characters, or a search string. This is useful for pointing people to results using URIs in links or
 				email.</p>
@@ -264,8 +466,13 @@ you to keep your place while briefly looking something up.</p>-->
 			<p>Reinstated CJK Unified Ideographics and Hangul Syllables in the block selection pull-down, but added a warning and opt out if the block
 				you are about to display contains more than 2000 characters. Also added warning and opt out if you try to specify a range of over 2000
 				characters.</p>
+</section>
 
-			<h3>Changes in version 5.0.0a</h3>
+
+
+
+<section>
+			<h2>Changes in version 5.0.0a</h2>
 			<p>Substantially revised the code so that UniView now handles ideographic and hangul characters and other characters not in the Unidata
 				database. For example, ideographs now display in the left panel for a specified range and property values are available in the right panel.</p>
 			<p>Added regular expression support to the search input field.</p>
@@ -291,8 +498,13 @@ you to keep your place while briefly looking something up.</p>-->
 				no-one has complained). This is because AJAX technology will not allow an XML file to be included from another domain. When that is fixed I will
 				reinstate it.</p>
 			<p>Fixed a number of other bugs, particularly related to supplementary character support and highlighting.</p>
+</section>
 
-			<h3>Changes in version 5.0.0</h3>
+
+
+
+<section>
+			<h2>Changes in version 5.0.0</h2>
 			<p>Updated to support Unicode 5.0.0.</p>
 			<p>Restyled the menu panels, moving some less used functions to pop up windows to save on horizontal space.</p>
 			<p>Implemented an AJAX approach for incorporating notes files. This means that the page no longer has to be reloaded to add notes. It is now
@@ -302,14 +514,22 @@ you to keep your place while briefly looking something up.</p>-->
 			<p>Most of the properties display in the character-detail panel on the right are taken from the unicodedata file at the moment. I plan to
 				incorporate additional property information over the coming months, but wanted to release this now so that you can get information about Unicode 5
 				characters sooner rather than later.</p>
+</section>
 
-			<h3>Changes in version 4.1.0b</h3>
+
+
+<section>
+			<h2>Changes in version 4.1.0b</h2>
 			<p><a href="#detail">Added a link</a> to the decodeUnicode wiki for each character that is displayed in the right-hand panel.</p>
 			<p><a href="#defaults">Provided a way</a> to start up UniView with a particular block and/or character displayed as a table in the lower
 				panels. This should be particularly useful for pointing a person to a particular Show block or character in a URI.</p>
 			<p>Fixed a couple of minor bugs in the CSS.</p>
+</section>
 
-			<h3>Changes in version 4.1.0a</h3>
+
+
+<section>
+			<h2>Changes in version 4.1.0a</h2>
 			<p>Rearranged the top of the page to allow UniView to be used in narrower windows.</p>
 			<p>Added support for Unicode version 4.1.0.</p>
 			<p>Retrieves graphics from decodeunicode.org rather than the slow-loading and sparse graphics that were available from the Unicode site.
@@ -324,20 +544,33 @@ you to keep your place while briefly looking something up.</p>-->
 				I will also post notes on how to customise various aspects of the setup.</p>
 			<p>Note also that I have disabled links to the French version until and new French translation has been prepared. I will probably not do
 				language based content-negotiation.</p>
+</section>
 
-			<h3>Changes in version 4.1</h3>
+
+
+<section>
+			<h2>Changes in version 4.1</h2>
 			<p>Surrogate support added.</p>
 			<p>You can now double-click on any line in a list on the left, and the character will appear in the Cut&amp;Paste field above.</p>
 			<p>Han and Hangul character glyphs are now displayed in the right panel after entering a code point in the Code Point field. There may not be
 				much information available, but at least you can see the character if you have a font that supports it.</p>
+</section>
 
-			<h3>Changes in version 4.0.1</h3>
+
+
+<section>
+			<h2>Changes in version 4.0.1</h2>
 			<p>Minor improvements to user interface, including provision of tooltips for all feature selectors.</p>
 			<p>Disabled (attempts to) display user-defined notes for IE and Opera. I still haven't found how to make it work yet, even using proprietary
 				coding, but at least the attempt won't crash the browser now.</p>
 			<p>Provided a facility to allow visible area in left panel to be increased.</p>
+</section>
 
-			<h3>Changes in version 4.0</h3>
+
+
+
+<section>
+			<h2>Changes in version 4.0</h2>
 			<p>Name changed to UniView.</p>
 			<p>Support for Unicode 4.0.0.</p>
 			<p>No frames. Cross-browser support.</p>
@@ -356,17 +589,20 @@ you to keep your place while briefly looking something up.</p>-->
 				character size in IE over and above what is available from the font size setting provided on the page.</p>
 			<p>Options for displaying in page descriptions of script blocks have been disabled. Open the files in a separate tab or window as a
 				standalone file.</p>
-		</div>
+		</section>
+		
+
 
 
 <div class="smallprint"> <span id="version">This version <span id="version-info"> 
-  <!-- #BeginDate format:IS1m -->2015-02-23  9:08<!-- #EndDate --> 
+  <!-- #BeginDate format:IS1m -->2020-01-19  11:23<!-- #EndDate --> 
   </span> GMT. &nbsp;&bull;&nbsp; Copyright <a href="mailto:r12a@w3.org">r12a@w3.org</a>. Licence <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC-By</a>.</span> </div>
   
 
-		<script type="text/javascript">
-		createtoc();
-		</script>
 
-	</body>
+
+<script>
+createtoc(3);
+</script>
+</body>
 </html>
