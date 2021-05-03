@@ -49,14 +49,14 @@
 <div id="dialogue" style="vertical-align:bottom;">
 <div id="panelWrapper">
 <div id="tabpanels">
-  <div id="blockInfoPointer"></div>
-  <ul id="tabs">
-    <li class="ontab" id="lookuppaneltab"><a href="#initialpanel" onclick="tabswitch('lookuppanel', 'listpanel optionspanel'); return false;">Look up</a></li>
-    <li id="listpaneltab"><a href="#rangepanel" onclick="tabswitch('listpanel', 'lookuppanel optionspanel'); return false;">Filter</a></li>
-    <li id="optionspaneltab"><a href="#optionspanel" onclick="tabswitch('optionspanel', 'listpanel lookuppanel'); return false;">Options</a></li>
+<ul id="tabs">
+    <li class="ontab" id="lookuppaneltab"><a href="#initialpanel" onclick="tabswitch('lookuppanel', 'listpanel optionspanel sendtopanel'); return false;">Look up</a></li>
+    <li id="listpaneltab"><a href="#rangepanel" onclick="tabswitch('listpanel', 'lookuppanel optionspanel sendtopanel'); return false;">Filter</a></li>
+    <li id="sendtopaneltab"><a href="#sendtopanel" onclick="tabswitch('sendtopanel', 'lookuppanel optionspanel listpanel'); return false;">Send</a></li>
+    <li id="optionspaneltab"><a href="#optionspanel" onclick="tabswitch('optionspanel', 'listpanel lookuppanel sendtopanel'); return false;">Options</a></li>
     <li id="helppaneltab" style="background-color: rgba(93,167,246,1.00); float:right;"><a style="color: white;" href="#helppanel" onclick="help = window.open('help', 'help'); help.focus(); return false;">Help</a></li>
-  </ul>
-  <br  style="clear:both;" />
+</ul>
+<br  style="clear:both;" />
   
   
   
@@ -904,6 +904,63 @@
 
 
 
+
+
+<!-- SEND TO PANEL -->
+
+<div id="sendtopanel" style="height: 10.5em;">
+<p>Send contents of text area to one of the following apps:</p>
+<div style="display: flex; flex-wrap: nowrap; flex-direction: row; justify-content: space-around;">
+  <div style="display: flex; flex-direction: column; justify-content: space-between;">   
+  <p onclick="chars = document.getElementById('picker').value;
+	converter = window.open('/app-conversion/?q='+ encodeURIComponent(chars), 'converter')">Converter</p>
+  <p onclick="chars = document.getElementById('picker').value;
+	analyse = window.open('/app-analysestring/?chars='+	encodeURIComponent(chars), 'analyse')">Analyse string</p>
+  <p onclick="chars = document.getElementById('picker').value;
+    filtered = [...chars]
+    const uniqueSet = new Set(filtered)
+    const backToArray = [...uniqueSet]
+    chars = backToArray.join('')
+	analyse = window.open('/app-analysestring/?chars='+	encodeURIComponent(chars), 'analyse')">Analyse string (unique)</p>
+  <p onclick="chars = document.getElementById('picker').value;
+	list = window.open('/app-listcharacters/?chars='+ encodeURIComponent(chars), 'list')">List characters</p>
+<p onclick="chars = document.getElementById('picker').value;
+    filtered = [...chars]
+    const uniqueSet = new Set(filtered)
+    const backToArray = [...uniqueSet]
+    chars = backToArray.join('')
+	usage = window.open('/app-charuse/?charlist='+ encodeURIComponent(chars), 'usage')">Character usage</p>
+</div>
+
+
+<div style="display: flex; flex-direction: column; justify-content: space-between;">   
+<p onclick="chars = document.getElementById('picker').value;
+    scriptName = '';
+    if (document.getElementById('blockname')) {
+        scriptName = document.getElementById('blockname').textContent.trim();
+	    flist = window.open('/scripts/fontlist/?script='+scriptName+'&text='+ encodeURIComponent(chars), 'flist'); }
+    else { alert('Can only send to the Font Lister if a script code is displayed.\nChoose a block in order to display one.');}">Font lister</p>
+<p onclick="chars = document.getElementById('picker').value;
+	cat = window.open('/scripts/apps/listcategories/?chars='+ encodeURIComponent(chars), 'cat')">Triage by category</p>
+<p onclick="chars = document.getElementById('picker').value;
+	bidi = window.open('/scripts/apps/listbidi/?chars='+ encodeURIComponent(chars), 'bidi')">Triage by bidi class</p>
+<p onclick="chars = document.getElementById('picker').value;
+	lbreak = window.open('/scripts/apps/listlinebreak/?chars='+ encodeURIComponent(chars), 'lbreak')">Triage by line-break</p>
+<p onclick="chars = document.getElementById('picker').value;
+	indic = window.open('/scripts/apps/listindic/?chars='+ encodeURIComponent(chars), 'indic')">Triage by indic category</p>
+  </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- OPTIONS PANEL -->
+
+
 <div id="optionspanel"> 
     
   <div title="Puts U+ in front of codepoint numbers in a list.">
@@ -1049,10 +1106,10 @@
 
 
 
+<div id="blockInfoPointer"></div>
 
-
-           <div style="clear: both; float:left; font-size: 90%; vertical-align:top;">
-              <span id="searchParameters" style="display: none; font-size:80%; margin-left:10px; margin-bottom: 5px; "> <span title="Search character names.">
+<div style="clear: both; float:left; font-size: 90%; vertical-align:top;">
+  <span id="searchParameters" style="display: none; font-size:80%; margin-left:10px; margin-bottom: 5px; "> <span title="Search character names.">
     <input name="searchNames" type="checkbox" id="searchNames" checked="checked"  />
     Name&nbsp;</span> <span title="Search character descriptions (ie. the NamesList.txt file).">
     <input name="searchDesc" type="checkbox" id="searchDesc" checked="checked"  />

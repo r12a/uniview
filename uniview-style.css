@@ -572,7 +572,7 @@ span[lang|='ur'] {
 #lookuppaneltab {
 	border-top-left-radius: 5px; 
 	}
-#lookuppanel, #listpanel, #optionspanel, #helppanel,  #dropzonepanel, #blockinfoptr, #listcreator { 
+#lookuppanel, #listpanel, #sendtopanel, #optionspanel, #helppanel,  #dropzonepanel, #blockinfoptr, #listcreator { 
 	border: 1px solid #C96;
 	border-bottom-left-radius: 5px; 
 	border-bottom-right-radius: 5px; 
@@ -583,10 +583,21 @@ span[lang|='ur'] {
 	}
 
 
-
+#sendtopanel div p:hover { background-color: beige; cursor: pointer; }
+#sendtopanel div div { 
+    height: 9em;
+    font-size: 90%;
+    line-height: 1.4em;
+    text-align: center;
+    }
+#sendtopanel div div p { 
+    background-color: white;
+    font-weight: bold;
+    color: chocolate;
+    }
 #helppanel { max-width: 42%; min-width: 40%; }
-#listpanel, #optionspanel, #helppanel { display: none; }
-#lookuppanel, #listpanel, #optionspanel, #helppanel { line-height: 2em; color: #a52a2a; } 
+#listpanel, #sendtopanel, #optionspanel, #helppanel { display: none; }
+#lookuppanel, #sendtopanel, #listpanel, #optionspanel, #helppanel { line-height: 2em; color: #a52a2a; } 
 #listcreator { text-align: right; text-align: end; float: right; margin-top: 5px; font-size: 85%; padding-top:2px; padding-bottom:2px; margin-right: 5px; cursor:pointer; }
 
 
@@ -603,9 +614,15 @@ span[lang|='ur'] {
 	float: right;
 	}
 #blockInfoPointer { 
-	float: right;
+	margin-block-start: 5px; 
+	margin-inline-end: 5px; 
+	font-size: 85%; 
+	padding-block-start:2px; 
+	padding-block-end:2px; 
+    padding-inline-start: 1em;
+	cursor:pointer;
 	}
-#blockname { 
+/* #blockname { 
 	text-align: left; 
 	text-align: start; 
 	margin-top: 0; 
@@ -617,7 +634,7 @@ span[lang|='ur'] {
 	padding: 0; 
 	cursor: pointer;
 	}
-
+*/
 
 #charInfo h2 { margin-top: 0; font-weight: normal; color:#C63; }
 #charInfo .links td { vertical-align: top; padding: 15px 10px 15px 0; }

@@ -1650,8 +1650,11 @@ function showSelection (range) {
 	
 	// add pointer to block info, if such exists
 	var infoptr = scriptInfoPointer(rangeArray[0])
+	//if (infoptr) { 
+	//	document.getElementById('blockInfoPointer').innerHTML = '<div id="blockname" onclick="displayBlockData(\''+infoptr+'\');">'+scriptGroups[infoptr][3]+' <img style="vertical-align:bottom;" src="images/info.gif" alt="info"/></div> '
+	//	}
 	if (infoptr) { 
-		document.getElementById('blockInfoPointer').innerHTML = '<div id="blockname" onclick="displayBlockData(\''+infoptr+'\');">'+scriptGroups[infoptr][3]+' <img style="vertical-align:bottom;" src="images/info.gif" alt="info"/></div> '
+		document.getElementById('blockInfoPointer').innerHTML = '<img style="vertical-align:bottom;" src="images/info.gif" alt="info"/> Script ISO code: <span id="blockname" style="font-weight: bold; " onclick="displayBlockData(\''+infoptr+'\');">'+scriptGroups[infoptr][3]+'</span> '
 		}
 	else { document.getElementById('blockInfoPointer').innerHTML = '' }
 	
