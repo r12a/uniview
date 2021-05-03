@@ -2217,7 +2217,7 @@ function printProperties ( codepoint ) {
 		td = tr.appendChild( document.createElement( 'td' ))
 			td.setAttribute('colspan', '2')
 			a = td.appendChild( document.createElement( 'a' ))
-			a.appendChild( document.createTextNode( 'Show all character properties' ))
+			a.appendChild( document.createTextNode( 'Show character properties' ))
 			a.setAttribute( 'href', 'http://unicode.org/cldr/utility/character.jsp?a='+cRecord[0] )
 			a.setAttribute( 'target', 'cldr' )
 			a.style.fontSize = '110%'
