@@ -513,7 +513,7 @@ span[lang|='ur'] {
 #panelWrapper {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-around;
+	justify-content: space-between;
 	}
 #charInfo .startmsg { margin-top: 1em; }
 /* -------- TABS ---------------- */
