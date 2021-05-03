@@ -1739,6 +1739,7 @@ function displayTags (list) {
 	out += ' • <a href="none" onclick="showProperties(\'(;Nd;|;Nl;|;No;)\'); return false;">number</a> '
 	out += ' • <a href="none" onclick="showProperties(\'(;Pc;|;Pd;|;Ps;|;Pe;|;Pi;|;Pf;|;Po;)\'); return false;">punctuation</a> '
 	out += ' • <a href="none" onclick="showProperties(\'(;Sm;|;Sc;|;Sk;|;So;)\'); return false;">symbol</a> '
+	out += ' • <a href="none" onclick="showProperties(\'(;Cc;|;Cf;|;Co;|;Cn;)\'); return false;">other</a> '
 	out += ' • <a href="none" onclick="showProperties(\'none\'); return false;">X</a><br/>'
 	
 	if (list.length > 0) {
@@ -2210,6 +2211,18 @@ function printProperties ( codepoint ) {
 		td = tr.appendChild( document.createElement( 'td' ))
 			td.appendChild( document.createTextNode( cRecord[AGE_FIELD] ))
 			td.setAttribute('style', 'padding-bottom:15px;')
+		
+		// add link to CLDR properties demo
+		tr = tbody.appendChild( document.createElement( 'tr' ))
+		td = tr.appendChild( document.createElement( 'td' ))
+			td.setAttribute('colspan', '2')
+			a = td.appendChild( document.createElement( 'a' ))
+			a.appendChild( document.createTextNode( 'Show all character properties' ))
+			a.setAttribute( 'href', 'http://unicode.org/cldr/utility/character.jsp?a='+cRecord[0] )
+			a.setAttribute( 'target', 'cldr' )
+			a.style.fontSize = '110%'
+			td.setAttribute('style', 'padding-bottom:15px;')
+
 
 
 		//add link to UniHan db
@@ -2287,31 +2300,32 @@ function printProperties ( codepoint ) {
 
 			
 		//add link to CLDR
-		p = newContent.appendChild( document.createElement( 'p' ))
-        p.style.marginTop = "18px"
-		p.appendChild( document.createTextNode( 'More properties at ' ))
-		a = p.appendChild( document.createElement( 'a' ))
-		a.appendChild( document.createTextNode( 'CLDR\'s Property demo' ))
-		a.setAttribute( 'href', 'http://unicode.org/cldr/utility/character.jsp?a='+cRecord[0] )
-		a.setAttribute( 'target', 'cldr' )
+		//p = newContent.appendChild( document.createElement( 'p' ))
+        //p.style.marginTop = "18px"
+		//p.appendChild( document.createTextNode( 'More properties at ' ))
+		//a = p.appendChild( document.createElement( 'a' ))
+		//a.appendChild( document.createTextNode( 'See more Character Properties' ))
+		//a.setAttribute( 'href', 'http://unicode.org/cldr/utility/character.jsp?a='+cRecord[0] )
+		//a.setAttribute( 'target', 'cldr' )
+		//a.style.fontSize = '120%'
 		
 		//add link to decodeUnicode
-		p = newContent.appendChild( document.createElement( 'p' ))
-        p.style.marginTop = "0px"
-		p.appendChild( document.createTextNode( 'Descriptions at ' ))
-		a = p.appendChild( document.createElement( 'a' ))
-		a.appendChild( document.createTextNode( 'decodeUnicode' ))
-		a.setAttribute( 'href', 'http://www.decodeunicode.org/U+'+cRecord[0] )
-		a.setAttribute( 'target', 'decodeunicode' )
+		//p = newContent.appendChild( document.createElement( 'p' ))
+        //p.style.marginTop = "0px"
+		//p.appendChild( document.createTextNode( 'Descriptions at ' ))
+		//a = p.appendChild( document.createElement( 'a' ))
+		//a.appendChild( document.createTextNode( 'decodeUnicode' ))
+		//a.setAttribute( 'href', 'http://www.decodeunicode.org/U+'+cRecord[0] )
+		//a.setAttribute( 'target', 'decodeunicode' )
 		
 		//add link to FileFormat
-		p = newContent.appendChild( document.createElement( 'p' ))
-        p.style.marginTop = "0px"
-		p.appendChild( document.createTextNode( 'Java data at ' ))
-		a = p.appendChild( document.createElement( 'a' ))
-		a.appendChild( document.createTextNode( 'FileFormat' ))
-		a.setAttribute( 'href', 'http://www.fileformat.info/info/unicode/char/'+cRecord[0] )
-		a.setAttribute( 'target', 'fileformat' )
+		//p = newContent.appendChild( document.createElement( 'p' ))
+        //p.style.marginTop = "0px"
+		//p.appendChild( document.createTextNode( 'Java data at ' ))
+		//a = p.appendChild( document.createElement( 'a' ))
+		//a.appendChild( document.createTextNode( 'FileFormat' ))
+		//a.setAttribute( 'href', 'http://www.fileformat.info/info/unicode/char/'+cRecord[0] )
+		//a.setAttribute( 'target', 'fileformat' )
 		
 
 		
