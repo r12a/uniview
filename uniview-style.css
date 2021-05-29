@@ -249,6 +249,7 @@ p		{ margin-top: 0; margin-bottom: 0; }
 	padding: 0;
 	border: 0;
 	cursor: pointer;
+    min-width: 1em;
 	}
 #chart td.ch {
 	border: 1px solid #DDD;
@@ -594,6 +595,7 @@ span[lang|='ur'] {
     background-color: white;
     font-weight: bold;
     color: chocolate;
+    border-radius: .25em;
     }
 #helppanel { max-width: 42%; min-width: 40%; }
 #listpanel, #sendtopanel, #optionspanel, #helppanel { display: none; }
