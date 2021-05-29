@@ -1015,6 +1015,11 @@
       <option value="500%">500%</option>
     </select>
   </div>
+  <div title="Change the font for the characters displayed in tables or lists. (Only works if Use Graphics is turned off.)">Change font:
+      <input type="text" onInput="changeFont(this.value)" id="chFont">
+      &nbsp;<img src="images/go.gif" height="16"
+					width="20" alt="Apply" style="vertical-align: middle" onclick="changeFont(document.getElementById('chFont').value); return false;" title="Apply"/>
+  </div>
 </div>
 <!-- optionspanel -->
 
