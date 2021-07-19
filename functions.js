@@ -1335,6 +1335,7 @@ function showAge () {
                 case '11.0': c = 'c11-0'; break;
                 case '12.0': c = 'c12-0'; break;
                 case '13.0': c = 'c13-0'; break;
+                case '14.0': c = 'c14-0'; break;
                 }
             nodeArray[i].classList.add(c)
             }

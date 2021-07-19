@@ -463,9 +463,14 @@ span[lang|='ur'] {
 .c12-0:before { content: '12.0'; font-size: 9px; color: black; display: block; }
 
 .c13-0 { background-color: #7BF7C9}
-#chart td.c13-0 { padding-top: 0px; }  div.c12-0 { padding-left: 20px; }
+#chart td.c13-0 { padding-top: 0px; }  div.c13-0 { padding-left: 20px; }
 .c13-0 img { opacity:0.5; filter:alpha(opacity=50); }
 .c13-0:before { content: '13.0'; font-size: 9px; color: black; display: block; }
+
+.c14-0 { background-color: brown; }
+#chart td.c14-0 { padding-top: 0px; }  div.c14-0 { padding-left: 20px; }
+.c14-0 img { opacity:0.5; filter:alpha(opacity=50); }
+.c14-0:before { content: '14.0'; font-size: 9px; color: white; display: block; }
 
 
 .cshelp { border:0; margin:0; padding:0; background-color: #ffa500; color: white; cursor: pointer; }
