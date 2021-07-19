@@ -9,7 +9,12 @@ Make copies in the generatedata directory without the version info in the filena
 Step 2
 Run: genScriptGroups.plx
 	Input: Blocks.txt
-	Output: scriptGroups.js and tempScriptGroups.php (not used)
+	Output: scriptGroups.js
+	
+	Do a diff against /shared/scriptGroups.js and update that file with the new lines
+
+	Add the new blocks to the selector and the #blockhints in index.html
+	
 
 Step 2a
 Run: genDerivedAge.plx
@@ -17,7 +22,7 @@ Run: genDerivedAge.plx
 	Output: age.php
 	
 Step 3
-                                     // Convert NameList.txt to utf-8, using TextWrangler/Word
+            // Convert NameList.txt to utf-8, using TextWrangler/Word
 Run: genDescriptions.plx
 	Input: NameList.txt
 	Output: descriptions.js + subtitles.php + tempSubtRefs.php
@@ -39,6 +44,7 @@ Run: genUnicodeData.plx
 
 
 Step 4a  (if just updating the graphics list, update graphicranges.php and just do this step and copy u.js to the main directory)
+
 Run:  doGraphics.php  // adds pointers to local graphics and to subtitles in subtitles.php
 	Input tempu.php + tempSubtRefs.php + age.php + graphicranges.php
 	Output: u.js

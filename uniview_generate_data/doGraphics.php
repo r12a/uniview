@@ -25,7 +25,7 @@ $diff = 'U = new Array();'."\n";
 
 while($Ucounter < 1114110) {
 	#print $Ucounter.'   '.$Uocounter.'*'."\n";
-	if (isset($ages[$Ucounter])) { $cAge = $ages[$Ucounter]; }
+	if (isset($a[$Ucounter])) { $cAge = $a[$Ucounter]; }
 	else { $cAge = '1.0'; }
 	if (isset($U[$Ucounter]) && isset($graphicInfo[$Ucounter]) ) {
 		$diff .= 'U['.$Ucounter.']="'.$U[$Ucounter].';;m;'.$stref[$Ucounter].";".$cAge."\";\n";

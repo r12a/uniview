@@ -12,7 +12,7 @@ while ( <SOURCEFILE> ) {
 		s/\.\./¶/;
 		s/; /¶/;
 		@cRecord = split( /¶/ );
-		if (index($_, '¶') > 0) { print OUTFILE "\"", hex( @cRecord[0] ), "¶", hex( @cRecord[1] ), "¶", @cRecord[2], "¶\",\n" ; }
+		if (index($_, '¶') > 0) { print OUTFILE "\[", hex( @cRecord[0] ), ",", hex( @cRecord[1] ), ",\"", @cRecord[2], "\",\"\",\"\"],\n" ; }
 		print STDOUT $counter++, ' ' ;
 		}
 	}
