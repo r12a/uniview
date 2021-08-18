@@ -654,12 +654,14 @@ span[lang|='ur'] {
 	border-bottom-left-radius: 5px;
 	}
 #cparea { 
-	margin: 0 5px;
+	/*margin: 0 5px;*/
 	float: left;
 	border: 1px solid #a52a2a;
 	border-radius: 5px; 
 	border-color: #C96;
 	background-color: #EDE4D0;
+    width: 50%;
+    min-width: 400px;
 	}
 #cppanel {
 	border-top-right-radius: 5px;
@@ -677,10 +679,12 @@ span[lang|='ur'] {
 	height: 100px;
 	}
 #cparea textarea {
-	width:350px; 
+	width:400px;
+    width: 98%;
 	font-size: 150%; 
 	border:2px solid #ede4d0; 
 	height: 5.25em;
+    margin-block-end: 4px;
 	}
 /* for iPad portrait */
 @media only screen 
@@ -689,12 +693,15 @@ span[lang|='ur'] {
   and (orientation: portrait) 
   and (-webkit-min-device-pixel-ratio: 2) {
 
+#cparea {
+    width: 250px;
+    }
 #cparea textarea {
-	width:300px; 
+	width:300px;
 	font-size: 120%; 
 	height: 6em;
 	}
-#rotateIcon, #commaInsert {
+#rotateIcon, #commaInsert, #convertEscapes, #externalConvert {
 	display: none;
 	}
 }
@@ -703,7 +710,8 @@ span[lang|='ur'] {
   and (min-width: 1000px) {
 
 #cparea textarea {
-	width:500px; 
+	width:500px;
+    width: 98%;
 	font-size: 150%; 
 	height: 5.25em;
 	}
@@ -811,8 +819,21 @@ span#version {
 	}
 
 
-
-
+#shuttle {
+    text-align: right;
+    position: absolute;
+    right: 5px;
+    z-index: 2;
+    width: 12em;
+    }
+#shuttle button { 
+    width: 100%;
+    background-color: antiquewhite;
+    border: 3px solid white;
+    padding: .25em;
+    color: #A52a2a;
+    background-color: #EDE4D0;
+    }
 
 
 

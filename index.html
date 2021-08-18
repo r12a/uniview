@@ -50,10 +50,10 @@
 <div id="panelWrapper">
 <div id="tabpanels">
 <ul id="tabs">
-    <li class="ontab" id="lookuppaneltab"><a href="#initialpanel" onclick="tabswitch('lookuppanel', 'listpanel optionspanel sendtopanel'); return false;">Look up</a></li>
-    <li id="listpaneltab"><a href="#rangepanel" onclick="tabswitch('listpanel', 'lookuppanel optionspanel sendtopanel'); return false;">Filter</a></li>
-    <li id="sendtopaneltab"><a href="#sendtopanel" onclick="tabswitch('sendtopanel', 'lookuppanel optionspanel listpanel'); return false;">Send</a></li>
-    <li id="optionspaneltab"><a href="#optionspanel" onclick="tabswitch('optionspanel', 'listpanel lookuppanel sendtopanel'); return false;">Options</a></li>
+    <li class="ontab" id="lookuppaneltab"><a href="#initialpanel" onclick="tabswitch('lookuppanel', 'listpanel optionspanel'); return false;">Look up</a></li>
+    <li id="listpaneltab"><a href="#rangepanel" onclick="tabswitch('listpanel', 'lookuppanel optionspanel'); return false;">Filter</a></li>
+    <!--li id="sendtopaneltab"><a href="#sendtopanel" onclick="tabswitch('sendtopanel', 'lookuppanel optionspanel listpanel'); return false;">Send</a></li-->
+    <li id="optionspaneltab"><a href="#optionspanel" onclick="tabswitch('optionspanel', 'listpanel lookuppanel'); return false;">Options</a></li>
     <li id="helppaneltab" style="background-color: rgba(93,167,246,1.00); float:right;"><a style="color: white;" href="#helppanel" onclick="help = window.open('help', 'help'); help.focus(); return false;">Help</a></li>
 </ul>
 <br  style="clear:both;" />
@@ -934,7 +934,7 @@
 
 <!-- SEND TO PANEL -->
 
-<div id="sendtopanel" style="height: 10.5em;">
+<!--div id="sendtopanel" style="height: 10.5em;">
 <p>Send contents of text area to one of the following apps:</p>
 <div style="display: flex; flex-wrap: nowrap; flex-direction: row; justify-content: space-around;">
   <div style="display: flex; flex-direction: column; justify-content: space-between;">   
@@ -976,7 +976,7 @@
 	indic = window.open('/scripts/apps/listindic/?chars='+ encodeURIComponent(chars), 'indic')">Triage by indic category</p>
   </div>
   </div>
-</div>
+</div-->
 
 
 
@@ -1072,7 +1072,7 @@
 
 
 <div id="cparea" style="height: 12em; display: flex; flex-direction: column; justify-content: space-between; padding: 5px;">
-          <textarea id="picker" placeholder="text area" name="picker" rows="3" cols="30"></textarea>
+          <textarea id="picker" dir="auto" placeholder="text area" name="picker" rows="3" cols="30"></textarea>
 		  
 		  
 		  <div id="textBoxControls" style="display: flex; flex-wrap: nowrap; justify-content: space-between; flex-direction: row;">
@@ -1094,7 +1094,7 @@
   			</div>
 			
 			
-			
+
 			<div id="smallControls" style="text-align: end;">
 			<img src="images/addspace.png" alt="Select" title="Separate the characters in the edit buffer with spaces." onmouseover="this.src='images/addspace_focus.png'" onmouseout="this.src='images/addspace.png'" onclick="addSpacesToPicker(' ');" />
 			
@@ -1104,7 +1104,7 @@
 
           	<img src="images/rotate.png" id="rotateIcon" alt="Select" title="Turn a sequence of items into a list." onmouseover="this.src='images/rotate_focus.png'" onmouseout="this.src='images/rotate.png'" onclick="rotatePickerContent();"/>
           
-		  	<img src="images/convert.png" alt="Convert text area" title="Convert escapes in the text area to characters." onmouseover="this.src='images/convert_focus.png'" onmouseout="this.src='images/convert.png'"	onclick="document.getElementById('picker').value = convertTextArea(document.getElementById('picker').value)" />
+		  	<img src="images/convert.png" id="convertEscapes" alt="Convert text area" title="Convert escapes in the text area to characters." onmouseover="this.src='images/convert_focus.png'" onmouseout="this.src='images/convert.png'"	onclick="document.getElementById('picker').value = convertTextArea(document.getElementById('picker').value)" />
 
            <img src="images/case_simple.png" alt="Convert" title="Show upper/lower/title case alternatives for all characters in the copy/paste box." onmouseover="this.src='images/case_simple_focus.png'" onmouseout="this.src='images/case_simple.png'"	onclick="convert2upper(document.getElementById('picker').value, false);  return false;" />
 		   
@@ -1120,7 +1120,7 @@
 	        
 			<img src="images/han.png" alt="UniHan" onmouseover="this.src='images/han_focus.png'" onmouseout="this.src='images/han.png'" onclick="showUnihan(document.getElementById('picker').value, 'char');" title="Look up characters in the Copy &amp; Paste box in the UniHan database."/>
            
-		  	<img src="images/openConvert.png" alt="Convert" title="Send characters in the text area to the Unicode Character Converter tool." onmouseover="this.src='images/openConvert_focus.png'" onmouseout="this.src='images/openConvert.png'"	onclick="converter = window.open('../app-conversion?q='+encodeURIComponent(document.getElementById('picker').value), 'converter'); converter.focus();" />
+		  	<img src="images/openConvert.png" alt="Convert" id="externalConvert" title="Send characters in the text area to the Unicode Character Converter tool." onmouseover="this.src='images/openConvert_focus.png'" onmouseout="this.src='images/openConvert.png'"	onclick="converter = window.open('../app-conversion?q='+encodeURIComponent(document.getElementById('picker').value), 'converter'); converter.focus();" />
          
 		 	<img src="images/case_detail.png" alt="Convert" title="Show upper/lower/title case alternatives with correspondences for all characters in the copy/paste box." onmouseover="this.src='images/case_detail_focus.png'" onmouseout="this.src='images/case_detail.png'"	onclick="convert2upper(document.getElementById('picker').value, true); return false;" />
           
@@ -1128,6 +1128,43 @@
             
 			<img src="images/convertPicker2Char.png" alt="Convert to characters" title="Convert hex values to characters." onmouseover="this.src='images/convertPicker2Char_focus.png'" onmouseout="this.src='images/convertPicker2Char.png'" onclick="convertPicker2Chars()"/>
         </div>
+        <div style="position: relative; align-self:center;">
+             <img src="images/transfer.png" alt="Select" title="Send the characters in the text box to another application." style="width: 25px; height:29px;" 
+             onclick="if (document.getElementById('shuttle').style.display === 'none') {document.getElementById('shuttle').style.display = 'block'} else {document.getElementById('shuttle').style.display = 'none'
+              };" />
+
+
+
+
+<div id="shuttle" style="display: none;" onmouseup="this.style.display='none'; document.getElementById('picker').focus();">
+
+<button onclick="openEscapeWindow(); return false;" title="Convert to escapes.">Convert to escapes</button><br>
+
+<button onclick="openAnalyseWindow(); return false;" title="Open in Analyse String app.">Analyse String</button><br>
+
+<button onclick="openUniqueAnalyseWindow(); return false;" title="Open in Analyse String app.">Analyse String (unique)</button><br>
+
+<button onclick="openListWindow(); return false;" title="Open in List Characters app.">List Characters</button><br>
+
+<button onclick="openUsageWindow(); return false;" title="Open in Character Usage app.">Character Usage</button><br>
+
+<button onclick="openFontlistWindow('arab'); return false;" title="Open in Font Lister app.">Font Lister</button><br>
+
+<button onclick="openListcatsWindow(); return false;" title="Open in List by category app.">General categories</button><br>
+
+<button onclick="openListbidiWindow(); return false;" title="Open in Triage Bidi app.">Bidi class</button><br>
+
+<button onclick="openListlinebreakWindow(); return false;" title="Open in Triage for Linebreaking  app.">Line breaking</button><br>
+
+<button onclick="openListindicWindow(); return false;" title="Open in Triage for Indic_Syllabic_Category app.">Indic category </button><br>
+
+<!--button onclick="openScriptPageWindow(); return false;" title="View first character in selection in a page that describes the script.">Script notes</button><br-->
+
+<button onclick="openBlockPageWindow(); return false;" title="View notes for first character in selection.">Character notes</button><br>
+
+<div id="closeShuttle" style="cursor: pointer; background: antiquewhite; padding: .25em 1em; border: 4px solid white;" onclick="document.getElementById('shuttle').style.display='none'; document.getElementById('picker').focus();">X</div>
+</div>
+    </div>
 	</div>
 </div>
 

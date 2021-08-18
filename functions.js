@@ -2519,15 +2519,15 @@ function scriptInfoPointer (codepoint) {
 	// returns: a pointer to the scriptGroups array, if successful
 	//          otherwise ''
 	
-	charNum = parseInt(codepoint,16); 
-	if (charNum < 128) { return 1; }
-	var i=1;
+	charNum = parseInt(codepoint,16)
+	if (charNum < 128) return 1
+	var i=1
 	while ( i<scriptGroups.length && charNum > scriptGroups[i][0] ) {
-		i++; 
+		i++
 		}
-	if ( i == scriptGroups.length ) { return( '' ); }
-	if ( scriptGroups[i][0] == charNum && scriptGroups[i][3]) { return( i ); }
-	return( '' );
+	if ( i == scriptGroups.length ) return( '' )
+	if ( scriptGroups[i][0] == charNum && scriptGroups[i][3]) return( i )
+	return( '' )
 	}
 
 
@@ -2726,4 +2726,135 @@ function togglePanelDestination () {
 		_copy2Picker=true
 		}
 	}
+
+
+
+// FUNCTIONS FOR EXPORTING TEXT AREA TO ANOTHER APP
+
+
+function showCodepoints () {
+	var output = document.getElementById('output')
+	showNameDetails(getHighlightedText(output), defaults.language, template.blocklocation, 'c', document.getElementById('panel') )
+	document.querySelector('#panel #title').style.fontFamily = output.style.fontFamily
+	output.focus()
+	}
+
+function openEscapeWindow () {
+	var chars =  document.getElementById('picker').value
+	var converter = window.open('/app-conversion/?q='+	encodeURIComponent(chars), 'converter') 
+	converter.focus()
+	}
+
+function openAnalyseWindow () {
+	var chars =  document.getElementById('picker').value
+	var analyse = window.open('/app-analysestring/?chars='+	encodeURIComponent(chars), 'analyse') 
+	analyse.focus()
+	}
+
+function openUniqueAnalyseWindow () {
+	var chars =  document.getElementById('picker').value
+    filtered = [...chars]
+    const uniqueSet = new Set(filtered)
+    const backToArray = [...uniqueSet]
+    chars = backToArray.join('')
+	analyse = window.open('/app-analysestring/?chars='+	encodeURIComponent(chars), 'analyse')
+	analyse.focus()
+	}
+
+function openListWindow () {
+	var chars =  document.getElementById('picker').value
+	var listchar = window.open('/app-listcharacters/?chars='+	encodeURIComponent(chars), 'listchar') 
+	listchar.focus()
+	}
+
+function openUsageWindow () {
+	var chars =  document.getElementById('picker').value
+    // reduce characters to one of each
+    filtered = [...chars]
+    const uniqueSet = new Set(filtered)
+    const backToArray = [...uniqueSet]
+    chars = backToArray.join('')
+	var usage = window.open('/app-charuse/?charlist='+	encodeURIComponent(chars), 'usage') 
+	usage.focus()
+	}
+
+function openFontlistWindow (scriptName) {
+	var chars =  document.getElementById('picker').value
+    scriptName = ''
+    if (document.getElementById('blockname')) {
+        scriptName = document.getElementById('blockname').textContent.trim()
+	    flist = window.open('/scripts/fontlist/?script='+scriptName+'&text='+ encodeURIComponent(chars), 'flist')
+        }
+    else alert('Can only send to the Font Lister if a script code is displayed.\nChoose a block in order to display one.')
+	flist.focus()
+	}
+
+function openListbidiWindow (scriptName) {
+	var chars =  document.getElementById('picker').value
+	var listbidi = window.open('/scripts/apps/listbidi/?chars='+encodeURIComponent(chars), 'listbidi') 
+	listbidi.focus()
+	}
+    
+function openListcatsWindow (scriptName) {
+	var chars =  document.getElementById('picker').value
+	var listcats = window.open('/scripts/apps/listcategories/?chars='+	encodeURIComponent(chars), 'listcats') 
+	listcats.focus()
+	}
+
+function openListlinebreakWindow (scriptName) {
+	var chars =  document.getElementById('picker').value
+	var listlines = window.open('/scripts/apps/listlinebreak/?chars='+	encodeURIComponent(chars), 'listlines') 
+	listlines.focus()
+	}
+
+function openListindicWindow (scriptName) {
+	var chars =  document.getElementById('picker').value
+	var listindic = window.open('/scripts/apps/listindic/?chars='+encodeURIComponent(chars), 'listindic') 
+	listindic.focus()
+	}
+
+function openScriptPageWindow () { // TBD !
+    if (template.noteslocation === '') return
+	var output = document.getElementById('output')
+	var chars = getHighlightedText(output)
+    chars = [...chars]
+	var scriptdesc = window.open('/scripts/'+template.noteslocation+'?index='+encodeURIComponent(chars[0]), 'scriptdesc')
+	scriptdesc.focus()
+	}
+
+function openBlockPageWindow () {
+	var chars =  document.getElementById('picker').value.trim()
+    var char = chars.codePointAt(0)
+    var infoptr = getScriptInfoPointer(char)-1
+    var hex = char.toString(16).toUpperCase()
+    while (hex.length < 4) hex = '0'+hex
+    
+    if (scriptGroups[infoptr][5]) {
+        var scriptName = scriptGroups[infoptr][5].trim()
+        var blockdesc = window.open('/scripts/'+scriptName+'/block#char'+hex, 'blockdesc') 
+        blockdesc.focus()
+        }
+    else alert('Can only open a Character Notes page if a corresponding notes page exists.\nThere is no notes page for the character U+'+hex+'.')
+	}
+
+
+
+
+function getScriptInfoPointer (charNum) {
+    // finds the array item corresponding to the script of a character
+	// codepoint: dec code point value
+	// returns: a pointer to the scriptGroups array, if successful
+	//          otherwise ''
+	
+	if (charNum < 128) return 1
+	var i=1
+	while ( i<scriptGroups.length && charNum > scriptGroups[i][0] ) {
+		i++
+		}
+    console.log(charNum,i)
+	if ( i == scriptGroups.length ) return( '' )
+    else return i
+	}
+
+
 
