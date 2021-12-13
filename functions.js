@@ -2666,7 +2666,7 @@ function convertPicker2Hex () {
     document.getElementById('picker').value = out.trim()
     }
 
-function convertPicker2Chars () {
+function convertPicker2CharsOLD () {
     // converts a sequence of hex codepoint values in the text area to characters
     
     var str = document.getElementById('picker').value
@@ -2681,6 +2681,18 @@ function convertPicker2Chars () {
         out += String.fromCodePoint(parseInt(chars[i],16))
         }
     document.getElementById('picker').value = out.trim()
+    }
+
+
+function convertPicker2Chars () {
+    // converts a sequence of hex codepoint values in the text area to characters
+    
+    var str = document.getElementById('picker').value
+    str = str.replace(/\&|\#|x|;|U|\+|\\|u/g,' ')
+    str = str.replace(/\s+/g,' ')
+    str = str.trim()
+    
+    document.getElementById('picker').value = convertGreenNumbers2Char(str, 'hex')
     }
 
 
