@@ -74,7 +74,7 @@ img {
     left: 71%;
     top: 0px;
     width: 10px;
-    border-left: 2px dotted #005A9C;
+    /*border-left: 2px dotted #005A9C;*/
     height: 4.5em;
 	}
 /* end header */
@@ -520,6 +520,9 @@ span[lang|='ur'] {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
+	background: antiquewhite;
+    padding: 0.5rem;
+    font-family: Arial, sans-serif;
 	}
 #charInfo .startmsg { margin-top: 1em; }
 /* -------- TABS ---------------- */
@@ -545,10 +548,11 @@ span[lang|='ur'] {
 
 	border: 1px solid #a52a2a;
 	border: 1px solid #ccc;
-	border-bottom: 1px solid #EDE4D0;
+	/*border-bottom: 1px solid #EDE4D0;
 	border-bottom: 1px solid #C96;
 	border-top-right-radius: 5px;
-	border-top-left-radius: 5px;
+	border-top-left-radius: 5px;*/
+	border-radius: 5px;
 	margin-right: 5px;
 	}
 #tabs a { 
@@ -562,11 +566,13 @@ span[lang|='ur'] {
 #tabs .ontab { 
 	font-weight:bold;  
 	border: 1px solid #C96;
-	border-bottom: 1px solid #A22929;
+	/*border-bottom: 1px solid #A22929;
 	border-bottom: 1px solid #EDE4D0;
 	border-top-right-radius: 5px;
-	border-top-left-radius: 5px;
+	border-top-left-radius: 5px;*/
+	border-radius: 5px;
 	background-color: #EDE4D0;
+	background-color: floralwhite;
 	}
 #tabs .ontab a, #tabs .ontab a:visited { 
 	color: white;
@@ -574,17 +580,19 @@ span[lang|='ur'] {
 	background-color: #a52a2a;
 	background-color: #EDE4D0;
 	border-radius: 5px;
+	background-color: floralwhite;
 	}
 #lookuppaneltab {
 	border-top-left-radius: 5px; 
 	}
 #lookuppanel, #listpanel, #sendtopanel, #optionspanel, #helppanel,  #dropzonepanel, #blockinfoptr, #listcreator { 
-	border: 1px solid #C96;
+	/*border: 1px solid #C96;
 	border-bottom-left-radius: 5px; 
 	border-bottom-right-radius: 5px; 
-	border-top-right-radius: 5px;
+	border-top-right-radius: 5px;*/
 	padding: 5px; 
-	background-color: #EDE4D0; 
+	/*background-color: #EDE4D0; 
+	background-color: floralwhite;*/
 	margin-top: -1px; 
 	}
 
@@ -656,10 +664,10 @@ span[lang|='ur'] {
 #cparea { 
 	/*margin: 0 5px;*/
 	float: left;
-	border: 1px solid #a52a2a;
+	/*border: 1px solid #a52a2a;
 	border-radius: 5px; 
 	border-color: #C96;
-	background-color: #EDE4D0;
+	background-color: #EDE4D0;*/
     width: 50%;
     min-width: 400px;
 	}
@@ -670,6 +678,7 @@ span[lang|='ur'] {
 	background-color: transparent;
 	padding: 5px; 
 	float: left;
+	background-color: floralwhite;
 	}
 #cppanel textarea {
 	width:350px; 
@@ -834,6 +843,28 @@ span#version {
     color: #A52a2a;
     background-color: #EDE4D0;
     }
+
+
+
+
+input, select {
+	background-color: brown;
+	color: white;
+	}
+input::placeholder, select::placeholder {
+	color: white;
+	opacity: 1;
+	}
+input[type="image"] {
+	background: transparent;
+	}
+
+
+
+
+
+
+
 
 
 

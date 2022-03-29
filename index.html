@@ -404,7 +404,7 @@
 
   	<div style="display:flex; flex-direction: row; flex-wrap: nowrap;">
 		<form action="none" onsubmit="showSelection(document.getElementById('block').value);  return false;">
-              <select name="block" onchange="showSelection(this.value)" id="block" style="font-size: 90%; color: gray;">
+              <select name="block" onchange="showSelection(this.value)" id="block" style="font-size: 90%;">
                 <!--select name="block" id="block"-->
                 <option value="0020:00FF" style="color: gray;">Select a block (* indicates new in v14)</option>
                 <optgroup label="European scripts">
@@ -1015,7 +1015,7 @@
 	
   <div title="Set a maximum viewport height for list. Useful for keeping everything on one screen when working on small devices such as ipads, netbooks, etc.">Left panel max height (pixels):
     <form onsubmit="changeHeight(document.getElementById('chHeight').value+'px'); return false;" action="none">
-      <input name="chHeight" id="chHeight" value="500" size="5" style="color:gray;"/>
+      <input name="chHeight" id="chHeight" value="500" size="5"/>
       &nbsp;<img src="images/go.gif" height="16"
 					width="20" alt="Apply" style="vertical-align: middle" onclick="changeHeight(document.getElementById('chHeight').value+'px'); return false;" title="Apply"/>
     </form>
@@ -1031,7 +1031,7 @@
   </div>
   <!--div class="helpButton" onclick="help = window.open('help', 'help'); help.focus(); return false;">Help <img src="images/help.png" alt="" style="vertical-align:top;"/></div-->
   <div title="Adjust the size of the characters displayed in tables or lists. (Only works if Use Graphics is turned off.)">Left panel font size:
-    <select id="fontSize" name="fontSize" onchange="changeFontSize(this.value)" title="Change the size of characters in the matrix." style="color:gray;">
+    <select id="fontSize" name="fontSize" onchange="changeFontSize(this.value)" title="Change the size of characters in the matrix.">
       <option value="75%">75%</option>
       <option value="100%" selected="selected">100%</option>
       <option value="150%">150%</option>
@@ -1218,7 +1218,7 @@
  
   <p id="ack">Uses graphics from decodeunicode project.</p>
   <div id="tags">
-<p><input type="text" onChange="highlightByTag(this.value);"/></p>
+<p><!--input type="text" onChange="highlightByTag(this.value);"/--></p>
 </div>
 </div>
 
