@@ -2849,6 +2849,12 @@ function openBlockPageWindow () {
     else alert('Can only open a Character Notes page if a corresponding notes page exists.\nThere is no notes page for the character U+'+hex+'.')
 	}
 
+function openGClusterWindow () {
+	var chars =  document.getElementById('picker').value
+	var gcluster = window.open('/scripts/apps/grapheme_clusters/index.html?q='+encodeURIComponent(chars), 'gcluster') 
+	gcluster.focus()
+	}
+
 
 
 
