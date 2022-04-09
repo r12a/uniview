@@ -2851,7 +2851,7 @@ function openBlockPageWindow () {
 
 function openGClusterWindow () {
 	var chars =  document.getElementById('picker').value
-	var gcluster = window.open('/scripts/apps/grapheme_clusters/index.html?q='+encodeURIComponent(chars), 'gcluster') 
+	var gcluster = window.open('/scripts/apps/graphemes/index.html?q='+encodeURIComponent(chars), 'gcluster') 
 	gcluster.focus()
 	}
 
