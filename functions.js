@@ -4,24 +4,35 @@
 // © Richard Ishida
 
 // constants for U array record fields
-const HEX_NUM = 0 // hex number
-const CHAR_NAME = 1 // character name
-const GEN_CAT = 2 // general category
-const CAN_COMB_CL = 3 // canonical combining class
-const BIDI_CAT = 4 // bidi category
-const DECOMP_MAP = 5 // decomposition mapping
-const DEC_DIG_VALUE = 6 // decimal digit value
-const DIG_VALUE = 7 // digit value
-const NUMERIC_VALUE = 8 // numeric value
-const UNICODE_1_NAME = 10 // Unicode 1 name
-const ISO_COMMENT = 11 // ISO 10646 comment
-const UC_MAP = 12 // uppercase mapping
-const LC_MAP = 13 // lowercase mapping
-const TC_MAP = 14 // titlecase mapping
-const BETA = 15 // beta indicator
-const GRAPHIC_FIELD = 16; // where graphic information is found
-const SUBTITLE_FIELD = 17; // where subtitle reference is found
-const AGE_FIELD = 18; // where Unicode version is found
+//const HEX_NUM = 0 // hex number
+const CHAR_NAME = 0 // character name
+const GEN_CAT = 1 // general category
+const CAN_COMB_CL = 2 // canonical combining class
+const BIDI_CAT = 3 // bidi category
+const DECOMP_MAP = 4 // decomposition mapping
+const UC_MAP = 5 // uppercase mapping
+const LC_MAP = 6 // lowercase mapping
+const TC_MAP = 7 // titlecase mapping
+//const BETA = 15 // beta indicator
+//const GRAPHIC_FIELD = 16; // where graphic information is found
+const AGE_FIELD = 8; // where Unicode version is found
+const SUBTITLE_FIELD = 9; // where subtitle reference is found
+const DEC_DIG_VALUE = 10 // decimal digit value
+const DIG_VALUE = 11 // digit value
+const NUMERIC_VALUE = 12 // numeric value
+const UNICODE_1_NAME = 13 // Unicode 1 name
+const ISO_COMMENT = 14 // ISO 10646 comment
+
+
+// character types
+const NONCHARACTER = 0   // unrecognised code point
+const UNASSIGNED = 1  // unassigned code point inside a defined block
+const IN_U_DB = 2 // a character in the u.js database
+const HAN_HANG_TANG = 3 // Han, Hangul, or Tangut character
+const SURROGATE = 4  // a surrogate code point
+const PRIVATEUSE = 5 // a private use character
+
+
 
 // Global variables
 var _notesArray = []
@@ -88,9 +99,9 @@ function adjacentChar (codepoint, direction) {
 	while (codepoint !== 0 && codepoint !== U.length) {
 		codepoint += direction
         var charType = getCharType(codepoint)
-		if (charType === 2 || charType === 3) { break }
+		if (charType === IN_U_DB || charType === HAN_HANG_TANG) { break }
 		}
-	printProperties(codepoint);
+	printProperties(codepoint)
 	}
 
 
@@ -101,6 +112,8 @@ function addLine (codepoint, newContent) {
     // calls to decodeunicode images have been removed
     var img, span
 	var cRecord = getDataFor(codepoint).split(';')
+    var cpHex = codepoint.toString(16).toUpperCase()
+    while (cpHex.length < 4) cpHex = '0'+cpHex
 	var uplus = ''
 	if (document.getElementById('uPlusToggle').checked) { uplus = 'U+' }
 
@@ -108,13 +121,13 @@ function addLine (codepoint, newContent) {
 	var div = newContent.appendChild( document.createElement( 'div' ))
 		setOnclick( codepoint, div )
 		div.title = 'Hex: '+codepoint.toString(16).toUpperCase()+' Dec: '+codepoint
-		if (cRecord[1].indexOf('Unassigned') > -1) { 
+		if (cRecord[CHAR_NAME].indexOf('Unassigned') > -1) { 
 			div.className = 'empty'
 			}
 		else { div.className = 'ch' }
 
-    // if the charType is 2, there is a graphic
-    // if 3, there is a character but no graphic
+    // if the charType is IN_U_DB, there is a graphic
+    // if HAN_HANG_TANG, there is a character but no graphic
     var charType = getCharType(codepoint)
 
     // add character if listC1 is checked in options
@@ -123,18 +136,18 @@ function addLine (codepoint, newContent) {
 			if (document.getElementById('graphicsToggle').checked === false || charType === 3) {
 				span = div.appendChild( document.createElement( 'span' ))
 				span.className = 'chSpan'
-				span.appendChild( document.createTextNode( getCharFromInt(parseInt(cRecord[0],16)) ))
+				span.appendChild( document.createTextNode( getCharFromInt(codepoint) ))
 				}
 			else { 
 				img = div.appendChild( document.createElement( 'img' ))
                 scriptGroup = findScriptGroup(codepoint)
-                img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+cRecord[0]+'.png' 
+                img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+cpHex+'.png' 
                 }
 			}
 		}
 
 	if (document.getElementById('listN').checked) { 
-		div.appendChild( document.createTextNode( '\u00A0\u200E'+uplus+cRecord[0] ))
+		div.appendChild( document.createTextNode( '\u00A0\u200E'+uplus+cpHex ))
 		}
         
 	if (document.getElementById('listC2').checked) { 
@@ -142,18 +155,18 @@ function addLine (codepoint, newContent) {
 			if (document.getElementById('graphicsToggle').checked === false || charType === 3) {
 				span = div.appendChild( document.createElement( 'span' ))
 				span.className = 'chSpan'
-				span.appendChild( document.createTextNode( getCharFromInt(parseInt(cRecord[0],16)) ))
+				span.appendChild( document.createTextNode( getCharFromInt(codepoint) ))
 				}
 			else { 
 				img = div.appendChild( document.createElement( 'img' ))
                 scriptGroup = findScriptGroup(codepoint)
-                img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+cRecord[0]+'.png' 
+                img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+cpHex+'.png' 
                 }
 			}
 		}
 
     if (document.getElementById('listNm').checked) { 
-		div.appendChild( document.createTextNode( ' '+cRecord[1] ))
+		div.appendChild( document.createTextNode( ' '+cRecord[CHAR_NAME] ))
 		}
     return false
 	}
@@ -435,7 +448,7 @@ function createList (formField) {
 	var prevSubtitle = '';
 	for (i=start; i<=end; i++) {
         var charType = getCharType(i)
-		if (charType > 1) {
+		if (charType > UNASSIGNED) {
 			var cRecord = getDataFor(i).split(';')
 			currSubtitle = cRecord[SUBTITLE_FIELD]
 			if ( currSubtitle !== '' && currSubtitle !== prevSubtitle ) {
@@ -534,7 +547,7 @@ function createMatrix ( formField ) {
                     }
                 
                 // character has image and images required
-				if (charType === 2) {
+				if (charType === IN_U_DB) {
                     if (document.getElementById('graphicsToggle').checked === true) {
                         while( hexNum.length < 4 ) hexNum = '0' + hexNum
                         img = td.appendChild( document.createElement( 'img' ))
@@ -549,13 +562,13 @@ function createMatrix ( formField ) {
                     }
             
                 // surrogates
-				if (charType === 4) {
+				if (charType === SURROGATE) {
                     td.appendChild( document.createTextNode( 'X' ))              
                     td.classList.add('empty')
                     }
               
                 // private use or no image char (eg. CJK)
-				if (charType === 5 || charType === 3) {
+				if (charType === PRIVATEUSE || charType === HAN_HANG_TANG) {
                     td.appendChild( document.createTextNode( getCharFromInt(cCell) ))              
                     td.classList.add('chSpan')
                     }
@@ -835,30 +848,34 @@ function getCharFromInt ( n ) {
 	}
 
 
+
+
+
 function getCharType (codepoint) {
 	// codepoint: the dec codepoint for the character to display
 	// return values: 0 not a character; 1 unassigned character in a block; 2 character listed in u.js; 3 character not listed in u.js; 4 surrogate; 5 private use
     if ((codepoint >= 0x3400 && codepoint <= 0x4DBF) || (codepoint >= 0x4E00 && codepoint <= 0x9FFF) ||           // CJK Ext A, CJK main
         (codepoint >= 0x20000 && codepoint <= 0x2A6DF) || (codepoint >= 0x2A700 && codepoint <= 0x2B73F) ||     // CKL Ext B, C
-        (codepoint >= 0x2B740 && codepoint <= 0x2B81F) || (codepoint >= 0x2B820 && codepoint <= 0x2CEAF) || (codepoint >= 0x2CEB0 && codepoint <= 0x2EBE0) ||   // CJK Ext D, E, F
+        (codepoint >= 0x2B740 && codepoint <= 0x2B81F) || (codepoint >= 0x2B820 && codepoint <= 0x2CEAF) || (codepoint >= 0x2CEB0 && codepoint <= 0x2EBEF) ||   // CJK Ext D, E, F
+        (codepoint >= 0x30000 && codepoint <= 0x3134F) || (codepoint >= 0x31350 && codepoint <= 0x323AF) || // CJK G, H
         (codepoint >= 0xAC00 && codepoint <= 0xD7AF) ||   // hangul syllables
         (codepoint >= 0x17000 && codepoint <= 0x187FF)  // tangut
         ) { 
-        return 3;
+        return HAN_HANG_TANG
         }
     else if ( U[codepoint] ) {
-        return 2;
+        return IN_U_DB
         }
     else if ((codepoint >= 57344 && codepoint <= 63743) || (codepoint > 983040 && codepoint < 1048573) || 
         (codepoint >= 1048576 && codepoint <= 1114109)) { // private use
-        return 5;
+        return PRIVATEUSE
         }
     else if (codepoint >= 55296 && codepoint <= 57343) { // surrogates
-        return 4;
+        return HAN_HANG_TANG
         }
     else if (findScriptGroup(codepoint) !== sNotAChar) return 1  // unassigned character in block
     
-    else return 0  // unrecognized character
+    else return NONCHARACTER  // unrecognized character
 	}
 
 
@@ -869,11 +886,11 @@ function getDataFor (codepoint) {
 	var hexcp = codepoint.toString(16).toUpperCase()
     while (hexcp.length<4) hexcp='0'+hexcp
 	// return values: 0 not a character; 1 unassigned character in a block; 2 character listed in u.js; 3 character not listed in u.js; 4 surrogate; 5 private use
-	if ( charType == 2 ) return U[codepoint]
-	else if (charType < 2) return hexcp+";[Unassigned code point];;;;;;;;;;;;;;;;;"
-	else if (charType == 3) return hexcp+";["+ findScriptGroup( codepoint )+"];Lo;0;L;;;;;N;;;;;;;;;"
-	else if (charType == 5) return hexcp+";["+ findScriptGroup( codepoint )+"];Co;0;L;;;;;N;;;;;;;;;"
-	else if (charType > 4) return hexcp+";["+ findScriptGroup( codepoint )+"];;;;;;;;;;;;;;;;;"
+	if ( charType == IN_U_DB ) return U[codepoint]
+	else if (charType < IN_U_DB) return hexcp+";[Unassigned code point];;;;;;;;;;;;;;;;;"
+	else if (charType == HAN_HANG_TANG) return hexcp+";["+ findScriptGroup( codepoint )+"];Lo;0;L;;;;;N;;;;;;;;;"
+	else if (charType == PRIVATEUSE) return hexcp+";["+ findScriptGroup( codepoint )+"];Co;0;L;;;;;N;;;;;;;;;"
+	else if (charType > SURROGATE) return hexcp+";["+ findScriptGroup( codepoint )+"];;;;;;;;;;;;;;;;;"
 	else { 
         alert("Error in getDataFor: Unexpected value for charType")
 		return hexcp+";[Error];;;;;;;;;;;;;;;;;"
@@ -1000,9 +1017,9 @@ function highlight2List () {
 	}
 
 	
-function listProperties ( searchString ) { 
+function listProperties ( searchString ) { console.log('>>> listProperties (', searchString, ')')
 	// effect: outputs in the left panel a list of characters whose properties match searchString
-	// searchString: a string of text to search for in the database
+	// searchString: a string of text to search for in the database that wil be used as a regular expression
 
 	_tempList = true
 	var counter = 0
@@ -1011,52 +1028,52 @@ function listProperties ( searchString ) {
 	document.getElementById('propertyResultCount').style.display = 'none'
 
 	// if searching in current range
-	if (document.getElementById('locallist').checked) { // if the Local checkbox is ticked
+	if (document.getElementById('locallist').checked) { console.log('local') // if the Local checkbox is ticked
 		searchString = searchString.replace(/;/g,'')
 		// work out which field to search in
         var directionality = new Set(['L','R','EN','ES','ET','AN','CS','NSM','BN','WS','ON'])
-        if (directionality.has(searchString)) field = 4
+        if (directionality.has(searchString)) field = BIDI_CAT
 
         
 		//var directionality = { L:'', R:'', EN:'', ES:'', ET:'', AN:'', CS:'', NSM:'', BN:'', WS:'', ON:'' }
 		//if (searchString in directionality) { field = 4 }
-		else if (searchString === '0') { field = 3 }
-		else { field = 2 } 
+		else if (searchString === '0') { field = CAN_COMB_CL }
+		else { field = GEN_CAT } 
 		
 		highlightList(field, searchString)
 		}
-	else {
-		var listDiv = document.getElementById( 'listOutput' );
-		var oldContent = document.getElementById('chart');
+	else { console.log('else')
+		var listDiv = document.getElementById( 'listOutput' )
+		var oldContent = document.getElementById('chart')
 
 		// put up a temporary message to say searching
-		var tempContent = document.createElement( 'div' );
-			tempContent.className = 'charList';
-			tempContent.id = 'chart';
+		var tempContent = document.createElement( 'div' )
+			tempContent.className = 'charList'
+			tempContent.id = 'chart'
 		tempContent.appendChild( document.createTextNode( sSearching ))
-		var removedNode = listDiv.replaceChild( tempContent, oldContent );
-		oldContent = document.getElementById('chart');
+		var removedNode = listDiv.replaceChild( tempContent, oldContent )
+		oldContent = document.getElementById('chart')
 	
 		// create container for list
-		var newContent = document.createElement( 'div' );
-			newContent.className = 'charList';
-			newContent.id = 'chart';
-		var resultdiv = newContent.appendChild( document.createElement('div'));
-			resultdiv.style.color = 'brown';
-			resultdiv.style.fontSize = '80%';
+		var newContent = document.createElement( 'div' )
+			newContent.className = 'charList'
+			newContent.id = 'chart'
+		var resultdiv = newContent.appendChild( document.createElement('div'))
+			resultdiv.style.color = 'brown'
+			resultdiv.style.fontSize = '80%'
 	
-		_lastOperation = "listproperties"; 
+		_lastOperation = "listproperties"
 		_newContent = newContent; _resultdiv = resultdiv; _searchString = searchString;
 		//uri = 'getproperties.php?search=/'+searchString+'/'; 
 		//httpRequest('GET', uri, true, ajaxGetSearchList);
 		
-		var records = '';
-		var count = 0;
-		var re = new RegExp(searchString);
-		found = false;
+		var records = ''
+		var count = 0
+		var re = new RegExp(searchString)
+		found = false
 		for (i=0; i<scriptGroups.length-1; i++) { 
-			if (scriptGroups[i][0] !== 131072 && scriptGroups[i][0] !== 13312 && scriptGroups[i][0] !== 44032 && scriptGroups[i][0] !== 19968 && 
-				scriptGroups[i][0] !== 57344 && scriptGroups[i][0] !== 983040 && scriptGroups[i][0] !== 1048576) {  
+			if (scriptGroups[i][0] !== 131072 && scriptGroups[i][0] !== 13312 && scriptGroups[i][0] !== 44032 && scriptGroups[i][0] !== 19968 
+				&& scriptGroups[i][0] !== 57344 && scriptGroups[i][0] !== 983040 && scriptGroups[i][0] !== 1048576) {  
 				for (j=scriptGroups[i][0]; j<scriptGroups[i][1]; j++) {
 					if (U[j]) {
 						found = false
@@ -1217,7 +1234,7 @@ function previewChar ( hexCode ) {
 		//check for combining character
 		if (U[decCode]) {
 			cRecord = U[decCode].split(';');
-			if (cRecord[3] > 0) { ccPadding = '\u00A0'; }  // ie. this is a combining character
+			if (cRecord[CAN_COMB_CL] > 0) { ccPadding = '\u00A0'; }  // ie. this is a combining character
 			}
 		
 		var preview = document.getElementById('preview');
@@ -1357,9 +1374,8 @@ function convert2upper ( string, detail ) {
 	// output: ...
 	// string: a string of characters
 	// detail: if false, just outputs the converted character, otherwise '<source> -> <converted>'
-	// i have removed the code that would download information for characters as needed by ajax
 
-	codepoints = convertChar2Dec(string).split(' ') 
+	codepoints = convertChar2Dec(string).split(' ')
 	var uppercase = ''
 	var lowercase = ''
 	var titlecase = ''
@@ -1370,16 +1386,16 @@ function convert2upper ( string, detail ) {
 		for (var i=0; i<codepoints.length; i++) {
 			cRecord = U[codepoints[i]].split(';')
 			notfound = true
-			if (cRecord[12]) {
-				uppercase += ' '+getCharFromInt(parseInt(cRecord[0],16))+'→'+getCharFromInt(parseInt(cRecord[12],16))
+			if (cRecord[UC_MAP]) {
+				uppercase += ' '+getCharFromInt(parseInt(cRecord[0],16))+'→'+getCharFromInt(parseInt(cRecord[UC_MAP],16))
 				notfound = false
 				}
-			if (cRecord[13]) {
-				lowercase += ' '+getCharFromInt(parseInt(cRecord[0],16))+'→'+getCharFromInt(parseInt(cRecord[13],16))
+			if (cRecord[LC_MAP]) {
+				lowercase += ' '+getCharFromInt(parseInt(cRecord[0],16))+'→'+getCharFromInt(parseInt(cRecord[LC_MAP],16))
 				notfound = false
 				}
-			if (cRecord[14]) {
-				titlecase += ' '+getCharFromInt(parseInt(cRecord[0],16))+'→'+getCharFromInt(parseInt(cRecord[14],16))
+			if (cRecord[TC_MAP]) {
+				titlecase += ' '+getCharFromInt(parseInt(cRecord[0],16))+'→'+getCharFromInt(parseInt(cRecord[TC_MAP],16))
 				notfound = false
 				}
 			if (notfound) { singletons += ' '+getCharFromInt(parseInt(cRecord[0],16)) }
@@ -1389,18 +1405,18 @@ function convert2upper ( string, detail ) {
 		for (var i=0; i<codepoints.length; i++) {
 			cRecord = U[codepoints[i]].split(';')
 			notfound = true
-			if (cRecord[12]) {
-				uppercase += getCharFromInt(parseInt(cRecord[12],16))
+			if (cRecord[UC_MAP]) {
+				uppercase += getCharFromInt(parseInt(cRecord[UC_MAP],16))
 				notfound = false
 				}
 			else { uppercase += getCharFromInt(parseInt(cRecord[0],16)) }
-			if (cRecord[13]) {
-				lowercase += getCharFromInt(parseInt(cRecord[13],16))
+			if (cRecord[LC_MAP]) {
+				lowercase += getCharFromInt(parseInt(cRecord[LC_MAP],16))
 				notfound = false
 				}
 			else { lowercase += getCharFromInt(parseInt(cRecord[0],16)) }
-			if (cRecord[14]) {
-				titlecase += getCharFromInt(parseInt(cRecord[14],16))
+			if (cRecord[TC_MAP]) {
+				titlecase += getCharFromInt(parseInt(cRecord[TC_MAP],16))
 				notfound = false
 				}
 			else { titlecase += getCharFromInt(parseInt(cRecord[0],16)) }
@@ -1445,20 +1461,22 @@ function expandList ( string ) {
 function showName ( codepoint, node ) {
 	// display character name for characters in a matrix
 	if (U[codepoint]) {
-		cRecord = U[codepoint].split(';');
-		span = document.createElement( 'span' );
-		span.appendChild(document.createTextNode( cRecord[0]+' '+cRecord[1] ));
-		var namedisplay = document.getElementById('namedisplay');	
-		namedisplay.replaceChild( span, namedisplay.firstChild );
+		cRecord = U[codepoint].split(';')
+        var hexvalue = codepoint.toString(16).toUpperCase()
+        while (hexvalue.length < 4) hexvalue = '0'+hexvalue
+		span = document.createElement( 'span' )
+		span.appendChild(document.createTextNode( hexvalue+' '+cRecord[CHAR_NAME] ))
+		var namedisplay = document.getElementById('namedisplay')
+		namedisplay.replaceChild( span, namedisplay.firstChild )
 		}
 	}
 	
 function hideName () {
 	// hide character name for characters in a matrix
-	span = document.createElement( 'span' );
-	span.appendChild(document.createTextNode( '\u00a0' ));
-	var namedisplay = document.getElementById('namedisplay');	
-	namedisplay.replaceChild( span, namedisplay.firstChild );
+	span = document.createElement( 'span' )
+	span.appendChild(document.createTextNode( '\u00a0' ))
+	var namedisplay = document.getElementById('namedisplay');
+	namedisplay.replaceChild( span, namedisplay.firstChild )
 	}
 	
 function originalshowName ( codepoint, node ) {
@@ -1573,7 +1591,7 @@ function showList (property) {
 	}
 
 
-function showProperties (value) { 
+function showProperties (value) { console.log('>>> showProperties (', value, ')')
 	if (document.getElementById('searchOther').checked !== true) {  
 		alert('You need to select the checkbox next to Other (under the Search field) for this to work.') 
 		}  
@@ -1886,7 +1904,6 @@ function toggleSpan2Img (node, decchar) {
 function toggleGraphic (graphic) { 
 	// switch characters to graphics and vice versa
     // this doesn't just redraw the matrix or list, because that would obliterate highlighting
-    // removes calls to decodeunicode images
     
 	var leftpanel = document.getElementById('chart')
 	var titlefields, img, span, text, hexNum, charType
@@ -1904,7 +1921,7 @@ function toggleGraphic (graphic) {
                 charType = getCharType(parseInt(titlefields[3]))
                 
                 // change text to img
-				if (document.getElementById('graphicsToggle').checked === true && charType === 2 &&
+				if (document.getElementById('graphicsToggle').checked === true && charType === IN_U_DB &&
                     tds[i].classList.contains('chSpan')) { 
 					img = document.createElement( 'img' )
 				    scriptGroup = findScriptGroup(parseInt(titlefields[3]))
@@ -1932,10 +1949,9 @@ function toggleGraphic (graphic) {
 				hexNum = titlefields[1].toUpperCase()
                 while (hexNum.length < 4) hexNum = '0' + hexNum  // padd with zeros
                 charType = getCharType(parseInt(titlefields[3]))
-//               cRecord = U[titlefields[3]].split(';')
  
                 // change span to img
-				if (document.getElementById('graphicsToggle').checked == true && charType === 2) {
+				if (document.getElementById('graphicsToggle').checked == true && charType === IN_U_DB) {
 					img = document.createElement( 'img' )
 				    scriptGroup = findScriptGroup(parseInt(titlefields[3]))
 				    img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+hexNum+'.png' 
@@ -1988,21 +2004,24 @@ function toggleNumbers () {
 
 
 function printProperties ( codepoint ) { 
-	// displays a description of a single character in the right panel, plus notes if appropriate
+	// displays a description of a single character in the right panel, plus any notes
 	// codepoint: a decimal integer representing the Unicode scalar value of the character to be displayed
-    // removes calls to decodeunicode images
     
 	var MsPadding = ''  // Will be set to a space if this is a non-spacing mark
 	var description = false
-	var div, span, img, table, tbody, tr, td, button
+	var div, span, img, table, tbody, tr, td, button, cpHex
 
+    // get the hex code point value
+    cpHex = codepoint.toString(16).toUpperCase()
+    while (cpHex.length < 4) cpHex = '0'+cpHex
+    
 	var listDiv = document.getElementById( 'charOutput' )
 	var oldContent = document.getElementById('charInfo')
 	listDiv.style.display = 'block'
 
 	var newContent = document.createElement( 'div' )
-			newContent.className = 'charInfo'
-			newContent.setAttribute( 'id', 'charInfo' )
+        newContent.className = 'charInfo'
+        newContent.setAttribute( 'id', 'charInfo' )
 
 	charData = getDataFor(codepoint)
 	charType = getCharType( codepoint )
@@ -2030,34 +2049,34 @@ function printProperties ( codepoint ) {
 		button.className = 'moveForwardBack' 
 
 
-	if (charType == 2 || charType == 3 || charType == 5) { 
+	if (charType == IN_U_DB || charType == HAN_HANG_TANG || charType == PRIVATEUSE) { 
 		cRecord = charData.split(';')
-		if (cRecord[3] > 0) { MsPadding = '\u00A0' }  // ie. this is a combining character
+		if (cRecord[CAN_COMB_CL] > 0) { MsPadding = '\u00A0' }  // ie. this is a combining character
 
 		// draw the large character
 		div = newContent.appendChild( document.createElement( 'div' ))
         div.className = 'largeCharDiv'
         
          // add img, if available and graphic toggle set
-		if (document.getElementById('graphicsToggle').checked === true && charType === 2) {
+		if (document.getElementById('graphicsToggle').checked === true && charType === IN_U_DB) {
 			img = div.appendChild( document.createElement( 'img' ))
             img.setAttribute( 'id', 'largeChar' )
-            img.title = parseInt(cRecord[0], 16)
-            img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/large/'+cRecord[0]+'.png'; 
+            img.title = codepoint
+            img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/large/'+cpHex+'.png'; 
             }       
         // otherwise add text
 		else { 
 			span = div.appendChild( document.createElement( 'span' ))
             span.setAttribute( 'id', 'largeChar' )
-            span.title = parseInt(cRecord[0], 16)
+            span.title = codepoint
             span.className = 'largeChar'
-            span.appendChild( document.createTextNode( MsPadding + getCharFromInt(parseInt(cRecord[0],16)) ))
+            span.appendChild( document.createTextNode( MsPadding + getCharFromInt(codepoint) ))
 			}
         
 		
 		// character no. & name
         span = document.createElement('span')
-        span.appendChild( document.createTextNode('U+'+cRecord[HEX_NUM]))
+        span.appendChild( document.createTextNode('U+'+cpHex))
         span.style.marginRight = '.75em'
         
 		div = newContent.appendChild( document.createElement( 'div' ))
@@ -2067,7 +2086,8 @@ function printProperties ( codepoint ) {
 
 
 		// add warning if this character is new or changed in a beta version
-		if (cRecord[15]) {
+        // retired in v15 because it's easier to create a new version, so this info no longer in the database
+		/*if (cRecord[15]) {
 			div = newContent.appendChild( document.createElement( 'div' ));
 				div.className = 'beta';
 			if (cRecord[15] == 'n') { 
@@ -2080,7 +2100,7 @@ function printProperties ( codepoint ) {
 					a.target = 'old version';
 				a.appendChild( document.createTextNode( 'See the previous version.' )); 
 				}
-			}
+			}*/
 		
 		// fill out properties table		
 		table = newContent.appendChild( document.createElement( 'table' ))
@@ -2213,7 +2233,7 @@ function printProperties ( codepoint ) {
 			td.appendChild( document.createTextNode( 'Unicode version:' ))
 			td.setAttribute('style', 'padding-bottom:15px;')
 		td = tr.appendChild( document.createElement( 'td' ))
-			td.appendChild( document.createTextNode( cRecord[AGE_FIELD] ))
+			td.appendChild( document.createTextNode( age2VersionMap[cRecord[AGE_FIELD]] ))
 			td.setAttribute('style', 'padding-bottom:15px;')
 		
 		// add link to CLDR properties demo
@@ -2248,7 +2268,7 @@ function printProperties ( codepoint ) {
 			p.appendChild( document.createTextNode( 'View data in ' ))
 			a = p.appendChild( document.createElement( 'a' ))
 			a.appendChild( document.createTextNode( 'UniHan database' ))
-			a.setAttribute( 'href', 'http://www.unicode.org/cgi-bin/GetUnihanData.pl?codepoint='+cRecord[0]+'&useutf8=true' )
+			a.setAttribute( 'href', 'http://www.unicode.org/cgi-bin/GetUnihanData.pl?codepoint='+cpHex+'&useutf8=true' )
 			a.setAttribute( 'target', 'unihan' )
 			}
 		
@@ -2271,7 +2291,7 @@ function printProperties ( codepoint ) {
             td.appendChild( document.createTextNode( 'As text:' ))
             td = tr.appendChild( document.createElement( 'td' ))
             td.className = 'astext'
-            td.appendChild( document.createTextNode( MsPadding + getCharFromInt(parseInt(cRecord[0],16)) ))
+            td.appendChild( document.createTextNode( MsPadding + getCharFromInt(codepoint) ))
 			}
 
 		// add decimal value
@@ -2286,7 +2306,7 @@ function printProperties ( codepoint ) {
 		td = tr.appendChild( document.createElement( 'td' ))
         td.appendChild( document.createTextNode( 'HTML escape:' ))
 		td = tr.appendChild( document.createElement( 'td' ))
-        td.appendChild( document.createTextNode( '&#x'+cRecord[0]+';' ))
+        td.appendChild( document.createTextNode( '&#x'+codepoint.toString(16).toLocaleUpperCase()+';' ))
 
 		// add URL encoded value
 		tr = tbody.appendChild( document.createElement( 'tr' ))
@@ -2299,7 +2319,7 @@ function printProperties ( codepoint ) {
 		tr = tbody.appendChild( document.createElement( 'tr' ))
 		td = tr.appendChild( document.createElement( 'td' ))
         td.setAttribute( 'colspan', '2')
-        td.innerHTML = '<a href="../app-conversion?q='+getCharFromInt(parseInt(cRecord[0],16))+'" target="conversion">More alternative forms</a>'
+        td.innerHTML = '<a href="../app-conversion?q='+getCharFromInt(codepoint)+'" target="conversion">More alternative forms</a>'
 
 
 			
@@ -2309,7 +2329,7 @@ function printProperties ( codepoint ) {
 		//p.appendChild( document.createTextNode( 'More properties at ' ))
 		//a = p.appendChild( document.createElement( 'a' ))
 		//a.appendChild( document.createTextNode( 'See more Character Properties' ))
-		//a.setAttribute( 'href', 'http://unicode.org/cldr/utility/character.jsp?a='+cRecord[0] )
+		//a.setAttribute( 'href', 'http://unicode.org/cldr/utility/character.jsp?a='+cpHex )
 		//a.setAttribute( 'target', 'cldr' )
 		//a.style.fontSize = '120%'
 		
@@ -2319,7 +2339,7 @@ function printProperties ( codepoint ) {
 		//p.appendChild( document.createTextNode( 'Descriptions at ' ))
 		//a = p.appendChild( document.createElement( 'a' ))
 		//a.appendChild( document.createTextNode( 'decodeUnicode' ))
-		//a.setAttribute( 'href', 'http://www.decodeunicode.org/U+'+cRecord[0] )
+		//a.setAttribute( 'href', 'http://www.decodeunicode.org/U+'+cpHex )
 		//a.setAttribute( 'target', 'decodeunicode' )
 		
 		//add link to FileFormat
@@ -2328,7 +2348,7 @@ function printProperties ( codepoint ) {
 		//p.appendChild( document.createTextNode( 'Java data at ' ))
 		//a = p.appendChild( document.createElement( 'a' ))
 		//a.appendChild( document.createTextNode( 'FileFormat' ))
-		//a.setAttribute( 'href', 'http://www.fileformat.info/info/unicode/char/'+cRecord[0] )
+		//a.setAttribute( 'href', 'http://www.fileformat.info/info/unicode/char/'+cpHex )
 		//a.setAttribute( 'target', 'fileformat' )
 		
 
@@ -2358,19 +2378,19 @@ function printProperties ( codepoint ) {
 
 
 		// return block name if this character listed as contained in block doc
-		var blockfile = charInfoPointer(cRecord[HEX_NUM])
+		var blockfile = charInfoPointer(cpHex)
 		
 		
 		// display Description heading
-		if (desc[eval('0x'+cRecord[HEX_NUM])] || blockfile) { 
+		if (desc[eval('0x'+cpHex)] || blockfile) { 
 			p = newContent.appendChild( document.createElement( 'p' ))
             p.style.marginTop = "18px"
 			strong = p.appendChild( document.createElement( 'strong' ))
 			strong.appendChild( document.createTextNode( sDescription ))
 
 			// display any Unicode descriptions
-			if (desc[eval('0x'+cRecord[HEX_NUM])]) {
-				dRecord = desc[eval('0x'+cRecord[HEX_NUM])].split('¶')
+			if (desc[eval('0x'+cpHex)]) {
+				dRecord = desc[eval('0x'+cpHex)].split('¶')
 				description = true
 				for (var j=0; j < dRecord.length; j++ ) {
 					p.appendChild( document.createTextNode( dRecord[j] ))
@@ -2384,12 +2404,12 @@ function printProperties ( codepoint ) {
 				span = p.appendChild( document.createElement('span') )
 				span.className = 'notesexpl'
 				a = span.appendChild( document.createElement('a'))
-				a.href = '../scripts/'+blockfile+'/block#char'+cRecord[HEX_NUM]
+				a.href = '../scripts/'+blockfile+'/block#char'+cpHex
 				a.target = 'blockdata'
 				a.appendChild( document.createTextNode('Open the notes in a separate page.'))
 				span.style.fontSize = '80%'
 
-				document.getElementById('notesIframe').src = '../scripts/'+blockfile+'/block?char='+cRecord[HEX_NUM]
+				document.getElementById('notesIframe').src = '../scripts/'+blockfile+'/block?char='+cpHex
 				}
 			// if _showNotes isn't on, just mention that there are some notes
 			else if (blockfile) {  
@@ -2414,7 +2434,7 @@ function printProperties ( codepoint ) {
 		// character no. & name
 		div = newContent.appendChild( document.createElement( 'div' ))
         div.style.marginTop = '10px'
-		var hexcpvalue = codepoint.toString(16).toUpperCase()
+		var hexcpvalue = cpHex
 		while (hexcpvalue.length < 4) { hexcpvalue = '0'+hexcpvalue; }
 		div.appendChild( document.createTextNode( 'U+'+hexcpvalue+' '+'Unassigned character.' ))
 		

@@ -4,15 +4,16 @@
 <meta charset="utf-8"/>
 
 
-<title>UniView 14</title>
+<title>UniView 15</title>
 <link rel="stylesheet" href="uniview-style.css"/>
 
-<!-- &copy; Copyright 2001-2021 Richard Ishida [ishida@w3.org].  All rights reserved.  -->
+<!-- &copy; Copyright 2001-2022 Richard Ishida [ishida@w3.org].  All rights reserved.  -->
 <script src="u.js"></script>
 <script src="descriptions.js"></script>
 <script src="../shared/code/scriptGroups.js"></script>
 <script src="subtitles.js"></script>
 <script src="function-text.js"></script>
+<script src="agemap.js"></script>
 <script src="propNames.js"></script>
 <script src="functions.js"></script>
 <script src="../app-conversion/conversionfunctions.js"></script>
@@ -35,7 +36,7 @@
 <body>
 <header>
 <div id="header-boilerplate"><div id="site-navigation"> <img id="bp_picture" class="compact" alt=" " src="../shared/images/world.gif"></div><div id="boilerplate"><div id="line" class="midlength">&nbsp;</div></div>
-<div id="topbar"><a href="/">r12a</a> &gt;&gt; apps  &gt;&gt; UniView 14</div><div id="sitelinks" class="noprint"><a href="https://r12a.github.io/blog/">blog</a>&nbsp; <a href="../doclist">docs</a>&nbsp; <a href="../maplist">maps</a>&nbsp; <a href="../applist">apps</a>&nbsp; <a href="../photos">photos</a>&nbsp;&nbsp;</div></div>
+<div id="topbar"><a href="/">r12a</a> &gt;&gt; apps  &gt;&gt; UniView 15</div><div id="sitelinks" class="noprint"><a href="https://r12a.github.io/blog/">blog</a>&nbsp; <a href="../doclist">docs</a>&nbsp; <a href="../maplist">maps</a>&nbsp; <a href="../applist">apps</a>&nbsp; <a href="../photos">photos</a>&nbsp;&nbsp;</div></div>
 </header>
 
 
@@ -88,6 +89,7 @@
                 <option value="Cyrillic Extended-A">Cyrillic Extended-A</option>
                 <option value="Cyrillic Extended-B">Cyrillic Extended-B</option>
                 <option value="Cyrillic Extended-C">Cyrillic Extended-C</option>
+                <option value="Cyrillic Extended-D">Cyrillic Extended-D</option>
                 <option value="Elbasan">Elbasan</option>
                 <option value="Georgian">Georgian</option>
                 <option value="Georgian Supplement">Georgian Supplement</option>
@@ -148,6 +150,8 @@
                <option value="Arabic">Arabic</option>
                 <option value="Arabic Supplement">Arabic Supplement</option>
                 <option value="Arabic Extended-A">Arabic Extended-A</option>
+                <option value="Arabic Extended-B">Arabic Extended-B</option>
+                <option value="Arabic Extended-C">Arabic Extended-C</option>
                 <option value="Arabic Presentation Forms-A">Arabic Presentation Forms-A</option>
                 <option value="Arabic Presentation Forms-B">Arabic Presentation Forms-B</option>
                 <option value="Avestan">Avestan</option>
@@ -190,6 +194,7 @@
                 <option value="Chakma">Chakma</option>
                 <option value="Devanagari">Devanagari</option>
                 <option value="Devanagari Extended">Devanagari Extended</option>
+                <option value="Devanagari Extended-A">Devanagari Extended-A</option>
                 <option value="Grantha">Grantha</option>
                 <option value="Gujarati">Gujarati</option>
                 <option value="Gurmukhi">Gurmukhi</option>
@@ -209,6 +214,7 @@
                 <option value="Mro">Mro</option>
 				<option value="Multani">Multani</option>
                 <option value="Newa">Newa</option>
+                <option value="Nag Mundari">Nag Mundari</option>
                 <option value="Ol Chiki">Ol Chiki</option>
                 <option value="Oriya">Oriya</option>
                 <option value="Saurashtra">Saurashtra</option>
@@ -246,6 +252,7 @@
                 <option value="Buhid">Buhid</option>
                 <option value="Hanunoo">Hanunoo</option>
                 <option value="Javanese">Javanese</option>
+                <option value="Kawi">Kawi</option>
                 <option value="Rejang">Rejang</option>
                 <option value="Sundanese">Sundanese</option>
                 <option value="Sundanese Supplement">Sundanese Supplement</option>
@@ -260,6 +267,8 @@
                 <option value="CJK Unified Ideographs Extension D">CJK Unified Ideographs Extension D</option>
 				<option value="CJK Unified Ideographs Extension E (big!)">CJK Unified Ideographs Extension E (big!)</option>
 				<option value="CJK Unified Ideographs Extension F(big!)">CJK Unified Ideographs Extension F(big!)</option>
+				<option value="CJK Unified Ideographs Extension G(big!)">CJK Unified Ideographs Extension G(big!)</option>
+				<option value="CJK Unified Ideographs Extension H(big!)">CJK Unified Ideographs Extension H(big!)</option>
                 <option value="CJK Compatibility Ideographs">CJK Compatibility Ideographs</option>
                 <option value="CJK Compatibility Ideographs Supplement">CJK Compatibility Ideographs Supplement</option>
                 <option value="Kangxi Radicals">Kangxi Radicals</option>
@@ -297,6 +306,7 @@
                 <option value="Braille Patterns">Braille Patterns</option>
                 <option value="Musical Symbols">Musical Symbols</option>
                 <option value="Ancient Greek Musical Notation">Ancient Greek Musical Notation</option>
+                <option value="Kaktovik Numerals">Kaktovik Numerals</option>
                 <option value="Byzantine Musical Symbols">Byzantine Musical Symbols</option>
                 <option value="Duployan">Duployan</option>
                 <option value="Shorthand Format Controls">Shorthand Format Controls</option>
@@ -375,9 +385,7 @@
                 <option value="Lisu Supplement">Lisu Supplement</option>
                 <option value="Khitan Small Script">Khitan Small Script</option>
                 <option value="Tangut Supplement">Tangut Supplement</option>
-                <option value="Symbols for Legacy Computing">Symbols for Legacy Computing</option>
-                <option value="CJK Unified Ideographs Extension G">CJK Unified Ideographs Extension G</option>
-                
+                <option value="Symbols for Legacy Computing">Symbols for Legacy Computing</option>                
                 <option value="Arabic Extended-B">Arabic Extended-B</option>
                 <option value="Vithkuqi">Vithkuqi</option>
                 <option value="Latin Extended-F">Latin Extended-F</option>
@@ -411,13 +419,14 @@
                 <option value="0530:058F">Armenian</option>
                 <option value="FB13:FB17" class="pb">Armenian ligatures</option>
                 <option value="10530:1056F">Caucasian Albanian</option>
-<option value="12F90:12FFF">Cypro-Minoan *</option>
+                <option value="12F90:12FFF">Cypro-Minoan</option>
                 <option value="10800:1083F">Cypriot Syllabary</option>
                <option value="0400:04FF">Cyrillic</option>
                 <option value="0500:052F">Cyrillic Supplement</option>
                 <option value="2DE0:2DFF">Cyrillic Extended-A</option>
                 <option value="A640:A69F">Cyrillic Extended-B</option>
                 <option value="1C80:1C8F">Cyrillic Extended-C</option>
+<option value="1E030:1E08F">Cyrillic Extended-D *</option>
                 <option value="10500:1052F">Elbasan</option>
                 <option value="10A0:10FF">Georgian</option>
                 <option value="1C90:1CBF">Georgian Extended</option>
@@ -434,8 +443,8 @@
                 <option value="2C60:2C7F">Latin Extended-C</option>
                 <option value="A720:A7FF">Latin Extended-D</option>
                 <option value="AB30:AB6F">Latin Extended-E</option>
-<option value="10780:107BF">Latin Extended-F *</option>
-<option value="1DF00:1DFFF">Latin Extended-G *</option>
+                <option value="10780:107BF">Latin Extended-F</option>
+                <option value="1DF00:1DFFF">Latin Extended-G</option>
                 <option value="1E00:1EFF">Latin Extended Additional</option>
                 <option value="FB00:FB06" class="pb">Latin ligatures</option>
                 <option value="FF00:FF5E" class="pb">Fullwidth Latin letters</option>
@@ -453,7 +462,7 @@
                 <option value="101D0:101FF">Phaistos Disc</option>
                 <option value="16A0:16FF">Runic</option>
                 <option value="10450:1047F">Shavian</option>
-<option value="10570:105BF">Vithkuqi *</option>
+                <option value="10570:105BF">Vithkuqi</option>
                </optgroup>
                 <optgroup label="Modifier Letters">
                 <option value="A700:A71F">Modifier Tone Letters</option>
@@ -476,12 +485,12 @@
                 <option value="03E2:03EF" class="pb">Coptic in Greek block</option>
                  <option value="102E0:102FF">Coptic Epact Numbers</option>
                 <option value="13000:1342F">Egyptian Hieroglyphs</option>
-                <option value="13430:1343F">Egyptian Hieroglyph Format Controls</option>
+                <option value="13430:1345F">Egyptian Hieroglyph Format Controls</option>
                 <option value="1200:137F">Ethiopic</option>
                 <option value="1380:139F">Ethiopic Supplement</option>
                 <option value="2D80:2DDF">Ethiopic Extended</option>
                 <option value="AB00:AB2F">Ethiopic Extended-A</option>
-<option value="1E7E0:1E7FF">Ethiopic Extended-B *</option>
+                <option value="1E7E0:1E7FF">Ethiopic Extended-B</option>
                 <option value="16E40:16E9F">Medefaidrin</option>
                 <option value="1E800:1E8DF">Mende Kikakui</option>
                 <option value="109A0:109FF">Meroitic Cursive</option>
@@ -496,7 +505,8 @@
                 <option value="0600:06FF">Arabic</option>
                 <option value="0750:077F">Arabic Supplement</option>
                 <option value="08A0:08FF">Arabic Extended-A</option>
-<option value="0870:089F">Arabic Extended-B *</option>
+                <option value="0870:089F">Arabic Extended-B</option>
+<option value="10EC0:10EFF">Arabic Extended-C *</option>
                 <option value="FB50:FDFF">Arabic Presentation Forms-A</option>
                 <option value="FE70:FEFF">Arabic Presentation Forms-B</option>
                 <option value="10B00:10B3F">Avestan</option>
@@ -535,14 +545,14 @@
                 <option value="11660:1167F">Mongolian Supplement</option>
                 <option value="10F00:10F2F">Old Sogdian</option>
                 <option value="10C00:10C4F">Old Turkic</option>
-<option value="10F70:10FAF">Old Uyghur *</option>
+                <option value="10F70:10FAF">Old Uyghur</option>
                 <option value="A840:A87F">Phags-pa</option>
                 <option value="10F30:10F6F">Sogdian</option>
                 <option value="11A50:11AAF">Soyombo</option>
                 <option value="0F00:0FFF">Tibetan</option>
                 <option value="11A00:11A4F">Zanabazar Square</option>
                 </optgroup>
-                <optgroup label="South Asian Scripts">
+            <optgroup label="South Asian Scripts">
                 <option value="11700:1174F">Ahom</option>
                 <option value="0980:09FF">Bengali</option>
                 <option value="11C00:11C6F">Bhaiksuki</option>
@@ -550,6 +560,7 @@
                 <option value="11100:1114F">Chakma</option>
                 <option value="0900:097F">Devanagari</option>
                 <option value="A8E0:A8FF">Devanagari Extended</option>
+<option value="11B00:11B5F">Devanagari Extended-A *</option>
                 <option value="11900:1195F">Dives Akuru</option>
                 <option value="11800:1184F">Dogra</option>
                 <option value="11300:1137F">Grantha</option>
@@ -571,6 +582,7 @@
                 <option value="11600:1165F">Modi</option>
                 <option value="16A40:16A6F">Mro</option>
                 <option value="11280:112AF">Multani</option>
+<option value="1E4D0:1E4FF">Nag Mundari *</option>
                 <option value="119A0:119FF">Nandinagari</option>
                 <option value="11400:1147F">Newa</option>
                 <option value="1C50:1C7F">Ol Chiki</option>
@@ -588,13 +600,12 @@
                 <option value="0C00:0C7F">Telugu</option>
                 <option value="0780:07BF">Thaana</option>
                 <option value="11480:114DF">Tirhuta</option>
-                1E290..1E2BF 	Toto
-<option value="1E290:1E2BF">Toto *</option>
+                <option value="1E290:1E2BF">Toto</option>
                 <option value="1CD0:1CFF">Vedic Extensions</option>
                 <option value="1E2C0:1E2FF">Wancho</option>
                 <option value="118A0:118FF">Warang Citi</option>
                 </optgroup>
-                <optgroup label="Southeast Asian Scripts">
+            <optgroup label="Southeast Asian Scripts">
                 <option value="AA00:AA5F">Cham</option>
                 <option value="10D00:10D3F">Hanifi Rohingya</option>
                 <option value="A900:A92F">Kayah Li</option>
@@ -610,16 +621,17 @@
                 <option value="1950:197F">Tai Le</option>
                 <option value="1A20:1AAF">Tai Tham</option>
                 <option value="AA80:AADF">Tai Viet</option>
-<option value="16A70:16ACF">Tangsa *</option>
+                <option value="16A70:16ACF">Tangsa</option>
                 <option value="0E00:0E7F">Thai</option>
                 </optgroup>
-                <optgroup label="Indonesia &amp; Oceania Scripts">
+            <optgroup label="Indonesia &amp; Oceania Scripts">
                 <option value="1B00:1B7F">Balinese</option>
                 <option value="1BC0:1BFF">Batak</option>
                 <option value="1A00:1A1F">Buginese</option>
                 <option value="1740:175F">Buhid</option>
                 <option value="1720:173F">Hanunoo</option>
                 <option value="A980:A9DF">Javanese</option>
+<option value="11F00:11F5F">Kawi *</option>
                 <option value="11EE0:11EFF">Makasar</option>
                 <option value="A930:A95F">Rejang</option>
                 <option value="1B80:1BBF">Sundanese</option>
@@ -627,7 +639,7 @@
                 <option value="1700:171F">Tagalog</option>
                 <option value="1760:177F">Tagbanwa</option>
                 </optgroup>
-                <optgroup label="East Asian Scripts">
+            <optgroup label="East Asian Scripts">
                 <option value="3100:312F">Bopomofo</option>
                 <option value="31A0:31BF">Bopomofo Extended</option>
                 <option value="4E00:9FFF">CJK Unified Ideographs (big!)</option>
@@ -636,8 +648,9 @@
                 <option value="2A700:2B73F">CJK Unified Ideographs Extension C (big!)</option>
                 <option value="2B740:2B81F">CJK Unified Ideographs Extension D</option>
                 <option value="2B820:2CEA1">CJK Unified Ideographs Extension E (big!)</option>
-                <option value="2CEB0:2EBE0">CJK Unified Ideographs Extension F (big!)</option>
+                <option value="2CEB0:2EBEF">CJK Unified Ideographs Extension F (big!)</option>
                 <option value="30000:3134F">CJK Unified Ideographs Extension G (big!)</option>
+<option value="31350:323AF">CJK Unified Ideographs Extension H * (big!)</option>
                 <option value="F900:FAFF">CJK Compatibility Ideographs</option>
                 <option value="2F800:2FA1F">CJK Compatibility Ideographs Supplement</option>
                 <option value="2F00:2FDF">Kangxi Radicals</option>
@@ -653,7 +666,7 @@
                 <option value="FFA0:FFDC" class="pb">Halfwidth Jamo</option>
                 <option value="3040:309F">Hiragana</option>
                 <option value="1B100:1B12F">Kana Extended-A</option>
-<option value="1AFF0:1AFFF">Kana Extended-B *</option>
+                <option value="1AFF0:1AFFF">Kana Extended-B</option>
                 <option value="1B000:1B0FF">Kana Supplement</option>
                 <option value="1B130:1B16F">Small Kana Extension</option>
                 <option value="30A0:30FF">Katakana</option>
@@ -671,7 +684,7 @@
                 <option value="A000:A48F">Yi Syllables</option>
                 <option value="A490:A4CF">Yi Radicals</option>
                 </optgroup>
-                <optgroup label="American Scripts">
+            <optgroup label="American Scripts">
                 <option value="13A0:13FF">Cherokee</option>
                 <option value="AB70:ABBF">Cherokee Supplement</option>
                 <option value="10400:1044F">Deseret</option>
@@ -680,13 +693,13 @@
                 <option value="104B0:104FF">Osage</option>
                 <option value="1400:167F">Unified Canadian Aboriginal Syllabics</option>
                 <option value="18B0:18FF">UCAS Extended</option>
-<option value="11AB0:11ABF">Unified Canadian Aboriginal Syllabics Extended-A *</option>
+                <option value="11AB0:11ABF">Unified Canadian Aboriginal Syllabics Extended-A</option>
                 </optgroup>
-                <optgroup label="Other">
+            <optgroup label="Other">
                 <option value="FB00:FB4F">Alphabetic Presentation Forms</option>
                 <option value="FF00:FFEF">Halfwidth and Fullwidth Forms</option>
                 </optgroup>
-                <optgroup label="Notational Systems">
+            <optgroup label="Notational Systems">
                 <option value="2800:28FF">Braille Patterns</option>
                 <option value="1D100:1D1FF">Musical Symbols</option>
                 <option value="2669:266F" class="pb">More Musical Symbols</option>
@@ -695,22 +708,22 @@
                 <option value="1BC00:1BC9F">Duployan</option>
                 <option value="1BCA0:1BCAF">Shorthand Format Controls</option>
                 <option value="1D800:1DAAF">Sutton SignWriting</option>
-<option value="1CF00:1CFCF">Znamenny Musical Notation *</option>
+                <option value="1CF00:1CFCF">Znamenny Musical Notation</option>
                 </optgroup>
-                <optgroup label="Punctuation">
+            <optgroup label="Punctuation">
                 <option value="2000:206F">General Punctuation</option>
                 <option value="0021:007F" class="pb">ASCII Punctuation</option>
                 <option value="00A1:00BF" class="pb">Latin-1 Punctuation</option>
                 <option value="2E00:2E7F">Supplemental Punctuation</option>
                 <option value="3000:303F">CJK Symbols and Punctuation</option>
                 </optgroup>
-                <optgroup label="Compatibility punctuation">
+            <optgroup label="Compatibility punctuation">
                 <option value="FE50:FE6F">Small Form Variants</option>
                 <option value="FE30:FE4F">CJK Compatibility Forms</option>
                 <option value="FF01:FF60" class="pb">Fullwidth ASCII Punctuation</option>
                 <option value="FE10:FE1F">Vertical Forms</option>
                 </optgroup>
-                <optgroup label="Alphanumeric Symbols">
+            <optgroup label="Alphanumeric Symbols">
                 <option value="1EE00:1EEFF">Arabic Mathematical Alphabetic Symbols</option>
                 <option value="2100:214F">Letterlike Symbols</option>
                 <option value="10190:101CF">Roman Symbols</option>
@@ -721,18 +734,19 @@
                 <option value="1F200:1F2FF">Enclosed Ideographic Supplement</option>
                 <option value="3300:33FF">CJK Compatibility</option>
                 </optgroup>
-                <optgroup label="Technical Symbols">
+            <optgroup label="Technical Symbols">
                 <option value="2400:243F">Control Pictures</option>
                 <option value="2300:23FF">Miscellaneous Technical</option>
                 <option value="2440:245F">Optical Character Recognition</option>
                 <option value="1FB00:1FBFF">Symbols for Legacy Computing</option>
                 </optgroup>
-                <optgroup label="Numbers and Digits">
+            <optgroup label="Numbers and Digits">
                 <option value="A830:A83F">Common Indic Number Forms</option>
                 <option value="1D360:1D37F">Counting Rod Numerals</option>
                 <option value="12400:1247F">Cuneiform Numbers and Punctuation</option>
                 <option value="FF10:FF19" class="pb">Fullwidth ASCII Digits</option>
                 <option value="1EC70:1ECBF">Indic Siyaq Numbers</option>
+<option value="1D2C0:1D2DF">Kaktovik Numerals *</option>
                 <option value="1ED00:1ED4F">Ottoman Siyaq Numbers</option>
                 <option value="2150:218F">Number Forms</option>
                 <option value="10E60:10E7F">Rumi Numeral Symbols</option>
@@ -745,7 +759,7 @@
                 <option value="1F800:1F8FF">Supplemental Arrows-C</option>
                 <option value="2B00:2BFF">Miscellaneous Symbols and Arrows</option>
                 </optgroup>
-                <optgroup label="Mathematical Symbols">
+            <optgroup label="Mathematical Symbols">
                 <option value="1D400:1D7FF">Mathematical Alphanumeric Symbols</option>
                 <option value="1EE00:1EEFF">Arabic Mathematical Alphabetic Symbols</option>
                 <option value="2100:214F">Letterlike Symbols</option>

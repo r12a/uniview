@@ -347,7 +347,7 @@ span[lang|='ur'] {
 
 .pb { font-style: italic; }
 
-.subcat {  color: #930; }
+.subcat {  color: #930; margin-block-start: 1.5rem; font-weight: bold; }
 
 .outofrange { color: #ccc; background-color:#f2f2f2; }
 
