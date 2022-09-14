@@ -768,14 +768,14 @@ function findString ( searchString ) {
 		for (var i=0; i < nodeArray.length; i++) {
 			decCP = nodeArray[i].title.split(' ')[3];
 			if (nodeArray[i].className.match(/ch/) && U[decCP]) {
-				var fields = U[decCP].split(";");
-				var found = false;
-				if (showName && fields[1].search(re, 0) > -1) {
+				var fields = U[decCP].split(";")
+				var found = false
+				if (showName && fields[CHAR_NAME].search(re, 0) > -1) {
 					newclass = nodeArray[i].className.replace('dim', '');
 					nodeArray[i].className = newclass;
 					found = true;
 					}
-				if (! found && showOther && (fields[10].search(re, 0) > -1 || fields[11].search(re, 0) > -1)) {
+				if (! found && showOther && (fields[UNICODE_1_NAME].search(re, 0) > -1 || fields[ISO_COMMENT].search(re, 0) > -1)) {
 					newclass = nodeArray[i].className.replace('dim', '');
 					nodeArray[i].className = newclass;
 					found = true;
@@ -802,18 +802,20 @@ function findString ( searchString ) {
 				for (j=scriptGroups[i][0]; j<=scriptGroups[i][1]; j++) {
 					if (U[j]) {
 						fields = U[j].split(';')
-						found = false;
+						found = false
+                        hexCP = j.toString(16).toUpperCase()
+                        while (hexCP.length < 4) hexCP = '0'+hexCP
 						
-						if (showName && fields[1].search(re, 0) > -1) {
-							records += fields[0]+' ';
+						if (showName && fields[CHAR_NAME].search(re, 0) > -1) {
+							records += hexCP+' ';
 							found = true; count++;
 							}
-						if (! found && showOther && (fields[10].search(re, 0) > -1 || fields[11].search(re, 0) > -1)) {
-							records += fields[0]+' ';
+						if (! found && showOther && (fields[UNICODE_1_NAME].search(re, 0) > -1 || fields[ISO_COMMENT].search(re, 0) > -1)) {
+							records += hexCP+' ';
 							found = true; count++;
 							}
 						if (! found && desc[j] && showDescription && desc[j].search(re, 0) > -1 ) {
-							records += fields[0]+' '; count++;
+							records += hexCP+' '; count++;
 							}
 						}
 					}
@@ -2404,12 +2406,12 @@ function printProperties ( codepoint ) {
 				span = p.appendChild( document.createElement('span') )
 				span.className = 'notesexpl'
 				a = span.appendChild( document.createElement('a'))
-				a.href = '../scripts/'+blockfile+'/block#char'+cpHex
+				a.href = '../scripts/'+blockfile+'/block.html#char'+cpHex
 				a.target = 'blockdata'
 				a.appendChild( document.createTextNode('Open the notes in a separate page.'))
 				span.style.fontSize = '80%'
 
-				document.getElementById('notesIframe').src = '../scripts/'+blockfile+'/block?char='+cpHex
+				document.getElementById('notesIframe').src = '../scripts/'+blockfile+'/block.html?char='+cpHex
 				}
 			// if _showNotes isn't on, just mention that there are some notes
 			else if (blockfile) {  
@@ -2419,11 +2421,11 @@ function printProperties ( codepoint ) {
 				span.appendChild( document.createTextNode( 'Notes are available for this character.' ))
 				span.style.fontSize = '80%'
 
-				document.getElementById('notesIframe').src = 'blank'
+				document.getElementById('notesIframe').src = 'blank.html'
 				}
-			else document.getElementById('notesIframe').src = 'blank'
+			else document.getElementById('notesIframe').src = 'blank.html'
 			}
-		else document.getElementById('notesIframe').src = 'blank'
+		else document.getElementById('notesIframe').src = 'blank.html'
 		}
 		
 		
@@ -2863,7 +2865,7 @@ function openBlockPageWindow () {
     
     if (scriptGroups[infoptr][5]) {
         var scriptName = scriptGroups[infoptr][5].trim()
-        var blockdesc = window.open('/scripts/'+scriptName+'/block#char'+hex, 'blockdesc') 
+        var blockdesc = window.open('/scripts/'+scriptName+'/block.html#char'+hex, 'blockdesc') 
         blockdesc.focus()
         }
     else alert('Can only open a Character Notes page if a corresponding notes page exists.\nThere is no notes page for the character U+'+hex+'.')
