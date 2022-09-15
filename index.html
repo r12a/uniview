@@ -412,7 +412,7 @@
 
   	<div style="display:flex; flex-direction: row; flex-wrap: nowrap;">
 		<form action="none" onsubmit="showSelection(document.getElementById('block').value);  return false;">
-              <select name="block" onchange="showSelection(this.value)" id="block" style="font-size: 90%;">
+              <select name="block" onchange="showSelection(this.value)" id="block" style="height: 2em; font-size: 90%;">
                 <!--select name="block" id="block"-->
                 <option value="0020:00FF" style="color: gray;">Select a block (* indicates new in v15)</option>
                 <optgroup label="European scripts">
@@ -833,7 +833,7 @@
 			
 	  	<div style="display:flex; flex-direction: row; flex-wrap: nowrap;">
 			<form action="none" onsubmit="activateFind(); return false;" style="border:0;margin:0;padding:0;">
-			   <input type="text" id="charNum" tabindex="2" name="charNum" style="width:320px; font-size:90%;" placeholder="Search text here." onchange="return false;"/>
+			   <input type="text" id="charNum" tabindex="2" name="charNum" style="height: 2em; width:320px; font-size:90%; padding-inline: 1em;" placeholder="Search text here." onchange="return false;"/>
               <input name="image2" type="image"  title="List characters to left with names" src="images/apply.gif" alt="Apply" style="border:0; margin:0; padding:0; margin-left:3px; vertical-align: top;"  />
 			</form>
 		</div>
