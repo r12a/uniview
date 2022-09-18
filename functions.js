@@ -1331,30 +1331,31 @@ function showAge () {
             if (! U[decCP]) continue
             fields = U[decCP].split(';')
             switch (fields[AGE_FIELD]) {
-                case '1.0': c = 'c1-0'; break;
-                case '1.1': c = 'c1-1'; break;
-                case '2.0': c = 'c2-0'; break;
-                case '2.1': c = 'c2-1'; break;
-                case '3.0': c = 'c3-0'; break;
-                case '3.1': c = 'c3-1'; break;
-                case '3.2': c = 'c3-2'; break;
-                case '4.0': c = 'c4-0'; break;
-                case '4.1': c = 'c4-1'; break;
-                case '5.0': c = 'c5-0'; break;
-                case '5.1': c = 'c5-1'; break;
-                case '5.2': c = 'c5-2'; break;
-                case '6.0': c = 'c6-0'; break;
-                case '6.1': c = 'c6-1'; break;
-                case '6.2': c = 'c6-2'; break;
-                case '6.3': c = 'c6-3'; break;
-                case '7.0': c = 'c7-0'; break;
-                case '8.0': c = 'c8-0'; break;
-                case '9.0': c = 'c9-0'; break;
-                case '10.0': c = 'c10-0'; break;
-                case '11.0': c = 'c11-0'; break;
-                case '12.0': c = 'c12-0'; break;
-                case '13.0': c = 'c13-0'; break;
-                case '14.0': c = 'c14-0'; break;
+                case '': c = 'c1-0'; break;
+                case 'a': c = 'c1-1'; break;
+                case 'b': c = 'c2-0'; break;
+                case 'c': c = 'c2-1'; break;
+                case 'd': c = 'c3-0'; break;
+                case 'e': c = 'c3-1'; break;
+                case 'f': c = 'c3-2'; break;
+                case 'g': c = 'c4-0'; break;
+                case 'h': c = 'c4-1'; break;
+                case 'i': c = 'c5-0'; break;
+                case 'j': c = 'c5-1'; break;
+                case 'k': c = 'c5-2'; break;
+                case 'l': c = 'c6-0'; break;
+                case 'm': c = 'c6-1'; break;
+                case 'n': c = 'c6-2'; break;
+                case 'o': c = 'c6-3'; break;
+                case 'p': c = 'c7-0'; break;
+                case 'q': c = 'c8-0'; break;
+                case 'r': c = 'c9-0'; break;
+                case 's': c = 'c10-0'; break;
+                case 't': c = 'c11-0'; break;
+                case 'u': c = 'c12-0'; break;
+                case 'v': c = 'c13-0'; break;
+                case 'w': c = 'c14-0'; break;
+                case 'x': c = 'c15-0'; break;
                 }
             nodeArray[i].classList.add(c)
             }
