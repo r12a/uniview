@@ -36,7 +36,7 @@
 <body>
 <header>
 <div id="header-boilerplate"><div id="site-navigation"> <img id="bp_picture" class="compact" alt=" " src="../shared/images/world.gif"></div><div id="boilerplate"><div id="line" class="midlength">&nbsp;</div></div>
-<div id="topbar"><a href="/">r12a</a> &gt;&gt; apps  &gt;&gt; UniView 15</div><div id="sitelinks" class="noprint"><a href="https://r12a.github.io/blog/">blog</a>&nbsp; <a href="../doclist">docs</a>&nbsp; <a href="../maplist">maps</a>&nbsp; <a href="../applist">apps</a>&nbsp; <a href="../photos">photos</a>&nbsp;&nbsp;</div></div>
+<div id="topbar"><a href="/">r12a</a> &gt;&gt; apps  &gt;&gt; UniView 15</div><div id="sitelinks" class="noprint"><a href="../r12a.github.io/blog/index.html">blog</a>&nbsp; <a href="../r12a.github.io/doclist.html">docs</a>&nbsp; <a href="../r12a.github.io/maplist.html">maps</a>&nbsp; <a href="../r12a.github.io/applist.html">apps</a>&nbsp; <a href="../r12a.github.io/photos.html">photos</a>&nbsp;&nbsp;</div></div>
 </header>
 
 
@@ -55,7 +55,7 @@
     <li id="listpaneltab"><a href="#rangepanel" onclick="tabswitch('listpanel', 'lookuppanel optionspanel'); return false;">Filter</a></li>
     <!--li id="sendtopaneltab"><a href="#sendtopanel" onclick="tabswitch('sendtopanel', 'lookuppanel optionspanel listpanel'); return false;">Send</a></li-->
     <li id="optionspaneltab"><a href="#optionspanel" onclick="tabswitch('optionspanel', 'listpanel lookuppanel'); return false;">Options</a></li>
-    <li id="helppaneltab" style="background-color: rgba(93,167,246,1.00); float:right;"><a style="color: white;" href="#helppanel" onclick="help = window.open('help', 'help'); help.focus(); return false;">Help</a></li>
+    <li id="helppaneltab" style="background-color: rgba(93,167,246,1.00); float:right;"><a style="color: white;" href="#helppanel" onclick="help = window.open('help.html', 'help'); help.focus(); return false;">Help</a></li>
 </ul>
 <br  style="clear:both;" />
   
@@ -1064,7 +1064,7 @@
 <!-- optionspanel -->
 
 <div id="helppanel">
-<p><span class="quickstartmsg">See the <strong><span onclick="help = window.open('help', 'help'); help.focus(); return false;" style="color:teal; text-decoration:none; cursor:pointer;" class="link">User Guide</span></strong> or mouse over the first letter of a command name to reveal an orange link to context-sensitive help.<br>
+<p><span class="quickstartmsg">See the <strong><span onclick="help = window.open('help.html', 'help'); help.focus(); return false;" style="color:teal; text-decoration:none; cursor:pointer;" class="link">User Guide</span></strong> or mouse over the first letter of a command name to reveal an orange link to context-sensitive help.<br>
 <br/>
 <strong>Basic use:</strong> Use the <span class="onscreen">Show Block</span> selector on the <span class="onscreen">Lookup</span> tab, or add characters or code points or a search string to one of the input fields in the <span class="onscreen">Find</span> field and click on one of <span class="onscreen">Hex</span>, <span class="onscreen">Dec</span>, <span class="onscreen">Characters</span> or <span class="onscreen">Search</span>. The
         <input src="images/apply.gif" alt="Apply"  title="List results below" type="image" style="border:0; margin:0; padding:0;  vertical-align: top;" />
@@ -1130,11 +1130,11 @@
  
 		 	<img src="images/count.png" alt="Count" title="Count the characters in the text area." onmouseover="this.src='images/count_focus.png'" onmouseout="this.src='images/count.png'" onclick="if (document.getElementById('picker').value== '') { alert('None.'); } else { alert(countPickerChars()); }"/>
          
-			<img src="images/analyse.png" alt="Expand" title="Produce an annotated list of characters that are in the text area." onmouseover="this.src='images/analyse_focus.png'" onmouseout="this.src='images/analyse.png'" onclick="analysis = window.open('../app-analysestring?chars='+encodeURIComponent(document.getElementById('picker').value), 'analysis'); analysis.focus();"/>
+			<img src="images/analyse.png" alt="Expand" title="Produce an annotated list of characters that are in the text area." onmouseover="this.src='images/analyse_focus.png'" onmouseout="this.src='images/analyse.png'" onclick="analysis = window.open('../app-analysestring/index.html?chars='+encodeURIComponent(document.getElementById('picker').value), 'analysis'); analysis.focus();"/>
 	        
 			<img src="images/han.png" alt="UniHan" onmouseover="this.src='images/han_focus.png'" onmouseout="this.src='images/han.png'" onclick="showUnihan(document.getElementById('picker').value, 'char');" title="Look up characters in the Copy &amp; Paste box in the UniHan database."/>
            
-		  	<img src="images/openConvert.png" alt="Convert" id="externalConvert" title="Send characters in the text area to the Unicode Character Converter tool." onmouseover="this.src='images/openConvert_focus.png'" onmouseout="this.src='images/openConvert.png'"	onclick="converter = window.open('../app-conversion?q='+encodeURIComponent(document.getElementById('picker').value), 'converter'); converter.focus();" />
+		  	<img src="images/openConvert.png" alt="Convert" id="externalConvert" title="Send characters in the text area to the Unicode Character Converter tool." onmouseover="this.src='images/openConvert_focus.png'" onmouseout="this.src='images/openConvert.png'"	onclick="converter = window.open('../app-conversion/index.html?q='+encodeURIComponent(document.getElementById('picker').value), 'converter'); converter.focus();" />
          
 		 	<img src="images/case_detail.png" alt="Convert" title="Show upper/lower/title case alternatives with correspondences for all characters in the copy/paste box." onmouseover="this.src='images/case_detail_focus.png'" onmouseout="this.src='images/case_detail.png'"	onclick="convert2upper(document.getElementById('picker').value, true); return false;" />
           
@@ -1250,7 +1250,7 @@
         <p>Any time you click on a character in a list or table to the left, detailed information and links for that character are displayed here.</p>
       	<p><strong>Notes are available</strong> for many characters. Click on <samp class="onscreen">Show notes</samp>, and you will see them below when   character information is displayed here.</p>
       	<p>The app covers Unicode version 15. For more information about Unicode 15, see the <a href="http://www.unicode.org/versions/15.0.0.html">Unicode 15 page</a>.</p>
-	 	<p>UniView can do much more. Check out the <span onclick="help = window.open('help', 'help'); help.focus(); return false;" style="color:teal; text-decoration:none; cursor:pointer;" class="link"><strong>User Guide</strong></span>.</p>
+	 	<p>UniView can do much more. Check out the <span onclick="help = window.open('help.html', 'help'); help.focus(); return false;" style="color:teal; text-decoration:none; cursor:pointer;" class="link"><strong>User Guide</strong></span>.</p>
  </div>
 </div>
 <iframe id="notesIframe" src="blank.html"></iframe>

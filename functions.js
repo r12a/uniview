@@ -1576,7 +1576,7 @@ function showConverter (codepoints, origin) {
 	else { codepoints = cleanHexCPs(codepoints); } 
 	if ( codepoints == '' || codepoints == ' ') { alert('No codepoints found.'); return 0; }
 	if ( codepoints.match(/[^abcdefABCDEF0-9\s]/)) { alert('Can\'t work out what the codepoints are. Unexpected characters found. Boiled down to: '+codepoints); return 0; }
-	converter = window.open('../app-conversion?codepoints='+codepoints+'&origin='+origin, 'converter');
+	converter = window.open('../app-conversion/index.html?codepoints='+codepoints+'&origin='+origin, 'converter');
 	converter.focus();
 	}
 
@@ -2322,7 +2322,7 @@ function printProperties ( codepoint ) {
 		tr = tbody.appendChild( document.createElement( 'tr' ))
 		td = tr.appendChild( document.createElement( 'td' ))
         td.setAttribute( 'colspan', '2')
-        td.innerHTML = '<a href="../app-conversion?q='+getCharFromInt(codepoint)+'" target="conversion">More alternative forms</a>'
+        td.innerHTML = '<a href="../app-conversion/index.html?q='+getCharFromInt(codepoint)+'" target="conversion">More alternative forms</a>'
 
 
 			
@@ -2776,13 +2776,13 @@ function showCodepoints () {
 
 function openEscapeWindow () {
 	var chars =  document.getElementById('picker').value
-	var converter = window.open('/app-conversion/?q='+	encodeURIComponent(chars), 'converter') 
+	var converter = window.open('../app-conversion/index.html?q='+	encodeURIComponent(chars), 'converter') 
 	converter.focus()
 	}
 
 function openAnalyseWindow () {
 	var chars =  document.getElementById('picker').value
-	var analyse = window.open('/app-analysestring/?chars='+	encodeURIComponent(chars), 'analyse') 
+	var analyse = window.open('../app-analysestring/index.html?chars='+	encodeURIComponent(chars), 'analyse') 
 	analyse.focus()
 	}
 
@@ -2792,13 +2792,13 @@ function openUniqueAnalyseWindow () {
     const uniqueSet = new Set(filtered)
     const backToArray = [...uniqueSet]
     chars = backToArray.join('')
-	analyse = window.open('/app-analysestring/?chars='+	encodeURIComponent(chars), 'analyse')
+	analyse = window.open('../app-analysestring/index.html?chars='+	encodeURIComponent(chars), 'analyse')
 	analyse.focus()
 	}
 
 function openListWindow () {
 	var chars =  document.getElementById('picker').value
-	var listchar = window.open('/app-listcharacters/?chars='+	encodeURIComponent(chars), 'listchar') 
+	var listchar = window.open('../app-listcharacters/index.html?chars='+	encodeURIComponent(chars), 'listchar') 
 	listchar.focus()
 	}
 
@@ -2809,7 +2809,7 @@ function openUsageWindow () {
     const uniqueSet = new Set(filtered)
     const backToArray = [...uniqueSet]
     chars = backToArray.join('')
-	var usage = window.open('/app-charuse/?charlist='+	encodeURIComponent(chars), 'usage') 
+	var usage = window.open('../app-charuse/index.html?charlist='+	encodeURIComponent(chars), 'usage') 
 	usage.focus()
 	}
 
@@ -2818,7 +2818,7 @@ function openFontlistWindow (scriptName) {
     scriptName = ''
     if (document.getElementById('blockname')) {
         scriptName = document.getElementById('blockname').textContent.trim()
-	    flist = window.open('/scripts/fontlist/?script='+scriptName+'&text='+ encodeURIComponent(chars), 'flist')
+	    flist = window.open('../scripts/fontlist/index.html?script='+scriptName+'&text='+ encodeURIComponent(chars), 'flist')
         }
     else alert('Can only send to the Font Lister if a script code is displayed.\nChoose a block in order to display one.')
 	flist.focus()
@@ -2826,25 +2826,25 @@ function openFontlistWindow (scriptName) {
 
 function openListbidiWindow (scriptName) {
 	var chars =  document.getElementById('picker').value
-	var listbidi = window.open('/scripts/apps/listbidi/?chars='+encodeURIComponent(chars), 'listbidi') 
+	var listbidi = window.open('../scripts/apps/listbidi/index.html?chars='+encodeURIComponent(chars), 'listbidi') 
 	listbidi.focus()
 	}
     
 function openListcatsWindow (scriptName) {
 	var chars =  document.getElementById('picker').value
-	var listcats = window.open('/scripts/apps/listcategories/?chars='+	encodeURIComponent(chars), 'listcats') 
+	var listcats = window.open('../scripts/apps/listcategories/index.html?chars='+	encodeURIComponent(chars), 'listcats') 
 	listcats.focus()
 	}
 
 function openListlinebreakWindow (scriptName) {
 	var chars =  document.getElementById('picker').value
-	var listlines = window.open('/scripts/apps/listlinebreak/?chars='+	encodeURIComponent(chars), 'listlines') 
+	var listlines = window.open('../scripts/apps/listlinebreak/index.html?chars='+	encodeURIComponent(chars), 'listlines') 
 	listlines.focus()
 	}
 
 function openListindicWindow (scriptName) {
 	var chars =  document.getElementById('picker').value
-	var listindic = window.open('/scripts/apps/listindic/?chars='+encodeURIComponent(chars), 'listindic') 
+	var listindic = window.open('../scripts/apps/listindic/index.html?chars='+encodeURIComponent(chars), 'listindic') 
 	listindic.focus()
 	}
 
@@ -2853,7 +2853,7 @@ function openScriptPageWindow () { // TBD !
 	var output = document.getElementById('output')
 	var chars = getHighlightedText(output)
     chars = [...chars]
-	var scriptdesc = window.open('/scripts/'+template.noteslocation+'?index='+encodeURIComponent(chars[0]), 'scriptdesc')
+	var scriptdesc = window.open('../scripts/'+template.noteslocation+'?index='+encodeURIComponent(chars[0]), 'scriptdesc')
 	scriptdesc.focus()
 	}
 
@@ -2866,7 +2866,7 @@ function openBlockPageWindow () {
     
     if (scriptGroups[infoptr][5]) {
         var scriptName = scriptGroups[infoptr][5].trim()
-        var blockdesc = window.open('/scripts/'+scriptName+'/block.html#char'+hex, 'blockdesc') 
+        var blockdesc = window.open('../scripts/'+scriptName+'/block.html#char'+hex, 'blockdesc') 
         blockdesc.focus()
         }
     else alert('Can only open a Character Notes page if a corresponding notes page exists.\nThere is no notes page for the character U+'+hex+'.')
@@ -2874,7 +2874,7 @@ function openBlockPageWindow () {
 
 function openGClusterWindow () {
 	var chars =  document.getElementById('picker').value
-	var gcluster = window.open('/scripts/apps/graphemes/index.html?q='+encodeURIComponent(chars), 'gcluster') 
+	var gcluster = window.open('../scripts/apps/graphemes/index.html?q='+encodeURIComponent(chars), 'gcluster') 
 	gcluster.focus()
 	}
 
