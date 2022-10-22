@@ -1672,11 +1672,13 @@ function showSelection (range) {
 	
 	// add pointer to block info, if such exists
 	var infoptr = scriptInfoPointer(rangeArray[0])
-	//if (infoptr) { 
-	//	document.getElementById('blockInfoPointer').innerHTML = '<div id="blockname" onclick="displayBlockData(\''+infoptr+'\');">'+scriptGroups[infoptr][3]+' <img style="vertical-align:bottom;" src="images/info.gif" alt="info"/></div> '
-	//	}
 	if (infoptr) { 
-		document.getElementById('blockInfoPointer').innerHTML = '<img style="vertical-align:bottom;" src="images/info.gif" alt="info"/> Script ISO code: <span id="blockname" style="font-weight: bold; " onclick="displayBlockData(\''+infoptr+'\');">'+scriptGroups[infoptr][3]+'</span> '
+		document.getElementById('blockInfoPointer').innerHTML = 
+        `<span  onclick="displayBlockData('${ infoptr }')">
+        <img style="vertical-align:baseline;" src="images/info.gif" alt="info"/>
+        <span style="font-size:1.2rem; margin-inline-start:1rem;">${ scriptGroups[infoptr][2] }</span>
+        <span id="blockname" style="font-weight: bold; margin-inline-start:1rem;">[${ scriptGroups[infoptr][3] }]</span>
+        </span>`
 		}
 	else { document.getElementById('blockInfoPointer').innerHTML = '' }
 	
@@ -2598,10 +2600,10 @@ function displayBlockData (block) {
 	// displays block data in the right hand pane, if any
 	// block: string from 4th field of scriptGroups record for block in question, identifies 
 	// the object to be used, eg. myanmar
-	
+	// console.log('displayBlockData (', block, ')')
 	var blockname = scriptGroups[block][3]
 	
-	info = window.open('../scripts/links?iso='+blockname, 'info')
+	info = window.open('../scripts/links.html?iso='+blockname, 'info')
     info.focus()
 	}
 
