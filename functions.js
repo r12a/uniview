@@ -2081,10 +2081,14 @@ function printProperties ( codepoint ) {
 		
 		// character no. & name
         span = document.createElement('span')
-        span.appendChild( document.createTextNode('U+'+cpHex))
+        span.appendChild( document.createTextNode('U+'+cpHex+':'))
         span.style.marginRight = '.75em'
         
 		div = newContent.appendChild( document.createElement( 'div' ))
+        div.id = 'characterName'
+        div.addEventListener('click', copyToClipboard)
+        div.style.cursor = 'pointer'
+        div.title = 'Click on this to copy it to the clipboard.'
         div.style.marginTop = '10px'
         div.appendChild(span)
 		div.appendChild( document.createTextNode( ' '+cRecord[CHAR_NAME] ))
@@ -2296,6 +2300,10 @@ function printProperties ( codepoint ) {
             td.appendChild( document.createTextNode( 'As text:' ))
             td = tr.appendChild( document.createElement( 'td' ))
             td.className = 'astext'
+            td.id = 'characterAsText'
+            td.addEventListener('click', copyToClipboard)
+            td.title = 'Click on this to copy it to the clipboard.'
+            td.style.cursor = 'pointer'
             td.appendChild( document.createTextNode( MsPadding + getCharFromInt(codepoint) ))
 			}
 
@@ -2590,7 +2598,7 @@ function charInfoPointer (codepoint) {
 		} 
 	if ( i == scriptGroups.length ) { return ''; }
 	else { 
-		if (foundInList(charNum, scriptGroups[i][4])) {	return( scriptGroups[i][5] ); }
+		if (foundInList(charNum, scriptGroups[i][4])) {	return( scriptGroups[i][3] ); }
 		else { return '' }
 		}
 	}
@@ -2740,11 +2748,39 @@ function rotatePickerContent () {
 
 
 
-function togglePanelDestination () {
+function togglePanelDestinationX () {
 	var buttons
 	if(_copy2Picker) { 
 		document.getElementById('clickDirection').innerHTML='<img src="images/sendToPanel.png" alt="🢂" title="Add character information to the right panel.">'
 		document.getElementById('clickDirection').style.marginTop='4em'
+		if (document.getElementById('charNavigation')) {
+			document.getElementById('charNavigation').style.backgroundColor='#a52a2a'
+			buttons = document.getElementById('charNavigation').querySelectorAll('button')
+			for (var i=0;i<buttons.length;i++)  buttons[i].style.color = 'white'
+			}
+		_copy2Picker=false
+		} 
+	else{ 
+		document.getElementById('clickDirection').innerHTML='<img src="images/sendToText.png" alt="🢅" title="Send characters to the text area.">'
+		document.getElementById('clickDirection').style.marginTop='0'
+		if (document.getElementById('charNavigation')) {
+			document.getElementById('charNavigation').style.backgroundColor='#EDE4D0'
+			buttons = document.getElementById('charNavigation').querySelectorAll('button')
+			for (i=0;i<buttons.length;i++)  buttons[i].style.color = '#666'
+			}
+		_copy2Picker=true
+		}
+	}
+
+
+
+
+
+function togglePanelDestination () {
+	var buttons
+	if(_copy2Picker) { 
+		document.getElementById('clickDirection').innerHTML='<img src="images/sendToPanel.png" alt="🢂" title="Add character information to the right panel.">'
+		//document.getElementById('clickDirection').style.marginTop='4em'
 		if (document.getElementById('charNavigation')) {
 			document.getElementById('charNavigation').style.backgroundColor='#a52a2a'
 			buttons = document.getElementById('charNavigation').querySelectorAll('button')
@@ -2898,6 +2934,25 @@ function getScriptInfoPointer (charNum) {
 	if ( i == scriptGroups.length ) return( '' )
     else return i
 	}
+
+
+
+// EVENTS
+
+function copyToClipboard (evt) {
+    // Copies the content of an element to the clipboard when clicked on
+    // Currently applied to #characterName and #characterAsText
+
+    var node = evt.target
+	node.contentEditable=true
+	node.focus()
+	document.execCommand('selectAll')
+	document.execCommand('copy')
+	node.contentEditable=false
+	}
+
+
+
 
 
 

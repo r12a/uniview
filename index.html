@@ -839,7 +839,7 @@
 		</div>
 
 
-  	<div style="display:flex; flex-direction: row; flex-wrap: nowrap; justify-content: space-between;">
+  	<!--div style="display:flex; flex-direction: row; flex-wrap: nowrap; justify-content: space-between;">
 	<label title="Switch between using graphics or font-based display of characters.">
     <input type="checkbox" id="graphicsToggle" onclick="toggleGraphic(this);" checked="checked" />&nbsp;Use graphics</label>
 	
@@ -849,7 +849,7 @@
 	
     <label title="Display notes for characters, where available.">
     <input name="showNotesToggle" type="checkbox" id="showNotesToggle" style="margin-top: 2px; margin-bottom: 2px;" onclick="toggleNotes(this);" />&nbsp;Show notes</label>
-	</div>
+	</div-->
 
 
  </div>   
@@ -1189,6 +1189,17 @@
 
 
 
+<div id="displayControls">
+	<label title="Switch between using graphics or font-based display of characters.">
+    <input type="checkbox" id="graphicsToggle" onclick="toggleGraphic(this);" checked="checked" />&nbsp;Use graphics</label>
+	
+    <label title="Use a list where UniView would normally produce a matrix (eg. for display of Unicode blocks).">
+    <input name="listMatrixToggle" type="checkbox" id="listMatrixToggle" style="margin-top: 2px; margin-bottom: 2px;" onclick="toggleDisplay(this);" />
+&nbsp;Show tables as a list</label>
+	
+    <label title="Display notes for characters, where available.">
+    <input name="showNotesToggle" type="checkbox" id="showNotesToggle" style="margin-top: 2px; margin-bottom: 2px;" onclick="toggleNotes(this);" />&nbsp;Show notes</label>
+	</div>
 
 <div id="blockInfoPointer"></div>
 
@@ -1301,6 +1312,15 @@ for (var p=0;p<parameters.length;p++) {
 // check for stored settings
 if (localStorage.showNotes == true) { _showNotes = true; document.getElementById('showNotesToggle').checked = true; }
 
+setOutputElementSize()
+window.onresize = setOutputElementSize
+
+function setOutputElementSize () {
+    listOutputElement = document.getElementById('listOutput')
+    listOutputElement.style.height = eval(window.innerHeight - listOutputElement.offsetTop - 40) +'px'
+    charOutputElement = document.getElementById('charOutputWrapper')
+    charOutputElement.style.height = eval(window.innerHeight - charOutputElement.offsetTop - 40) +'px'
+    }
 </script>
 </body>
 </html>
