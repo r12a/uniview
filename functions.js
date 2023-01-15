@@ -1685,7 +1685,7 @@ function showSelection (range) {
 	
     drawSelection(range)
     displayTags(listTags())
-    if (document.getElementById('showNotesToggle').checked) highlightIndexChars()
+    //if (document.getElementById('showNotesToggle').checked) highlightIndexChars()
 		
 	}
 
@@ -1720,7 +1720,7 @@ function unhighlightIndexChars () {
 	
 	
 
-function charInfoPointer (codepoint) {
+function charInfoPointerXXX (codepoint) {
 	// find the name of the file in /block/, if one exists,
 	// for the character in codepoint
 	// codepoint: hex codepoint value
@@ -1733,7 +1733,7 @@ function charInfoPointer (codepoint) {
 	while ( i<scriptGroups.length && charNum > scriptGroups[i][1] ) { i++ } 
 	if ( i == scriptGroups.length ) { return '' }
 	else { 
-		if (foundInList(charNum, scriptGroups[i][4])) {	return( scriptGroups[i][3] ) }
+		if (foundInList(charNum, scriptGroups[i][3])) {	return( scriptGroups[i][3] ) }
 		else { return '' }
 		}
 	}
@@ -1886,7 +1886,7 @@ function toggleDisplay (checkbox) {
 	}
 		
 		
-function toggleNotes (checkbox) { 
+function toggleNotesX (checkbox) { 
 	// if show notes is selected sets _showNotes to true and sets localStorage
 	if (! document.getElementById('showNotesToggle').checked)  {
 		_showNotes = false
@@ -1898,6 +1898,22 @@ function toggleNotes (checkbox) {
 		_showNotes = true
 		localStorage.setItem('showNotes', true)
         highlightIndexChars()
+		}
+	}
+		
+		
+function toggleNotes (checkbox) {     
+	// if show notes is selected sets _showNotes to true and sets localStorage
+	if (! document.getElementById('showNotesToggle').checked)  {
+		_showNotes = false
+		localStorage.setItem('showNotes', false)
+		document.getElementById('notesIframe').src = 'blank.html'
+        //unhighlightIndexChars()
+		}
+	else {
+		_showNotes = true
+		localStorage.setItem('showNotes', true)
+        //highlightIndexChars()
 		}
 	}
 		
@@ -2420,7 +2436,7 @@ function printProperties ( codepoint ) {
 				a = span.appendChild( document.createElement('a'))
 				a.href = '../scripts/'+blockfile+'/block.html#char'+cpHex
 				a.target = 'blockdata'
-				a.appendChild( document.createTextNode('Open the notes in a separate page.'))
+				a.appendChild( document.createTextNode('Open the notes page in a separate window.'))
 				span.style.fontSize = '80%'
 
 				document.getElementById('notesIframe').src = '../scripts/'+blockfile+'/block.html?char='+cpHex
@@ -2583,7 +2599,13 @@ function foundInList (ch, range) {
 	}
 
 
-function charInfoPointer (codepoint) {
+function charInfoPointerX (codepoint) {
+    // SUPERCEDED!  This function requires scriptGroups to be constantly updated each time
+    // a character description is added to a block.
+    // The new version below simply detects whether scriptGroups has anything in field 3
+    // If so, and there is no character description, the display function will still handle it
+    // the new version removes the call to foundInList
+    
 	// find the name of the file in the /block/ directory, if one exists,
 	// for the character in codepoint
 	// only returns the block name if the code point is listed in the 4th field of a scriptGroups row
@@ -2600,6 +2622,26 @@ function charInfoPointer (codepoint) {
 	if ( i == scriptGroups.length ) { return ''; }
 	else { 
 		if (foundInList(charNum, scriptGroups[i][4])) {	return( scriptGroups[i][3] ); }
+		else { return '' }
+		}
+	}
+
+
+function charInfoPointer (codepoint) {
+	// find the name of the file in the /block/ directory, if one exists,
+	// for the character in codepoint
+	// returns the block name if one appears in the 5th field of a scriptGroups row
+	// codepoint: hex codepoint value
+	// returns: the ISO code (which is now the same as the file path), if successful
+	//          otherwise ''
+	
+	charNum = parseInt(codepoint,16)
+	if (charNum < 128) { return scriptGroups[0][3] }
+	var i=1
+	while ( i<scriptGroups.length && charNum > scriptGroups[i][1] ) i++
+	if ( i == scriptGroups.length ) { return '' }
+	else { 
+		if (scriptGroups[i][4]) { return( scriptGroups[i][4] ) }
 		else { return '' }
 		}
 	}
