@@ -5,7 +5,7 @@
 
 
 <title>UniView 15</title>
-<link rel="stylesheet" href="uniview-style.css"/>
+<link rel="stylesheet" href="uniview-style.css">
 
 <!-- &copy; Copyright 2001-2022 Richard Ishida [ishida@w3.org].  All rights reserved.  -->
 <script src="u.js"></script>
@@ -17,20 +17,6 @@
 <script src="propNames.js"></script>
 <script src="functions.js"></script>
 <script src="../app-conversion/conversionfunctions.js"></script>
-<style>
-.dim {
-	background-color: #F9F5DE;
-	background-color: #f2f2f2;
-	color: #ccc;
-}
-.dim img {
-	opacity: 0.1;
-	filter: alpha(opacity=10);
-}
-.empty {
-	background-color: #f2f2f2;
-}
-</style>
 </head>
 
 <body>
@@ -44,32 +30,34 @@
 
 
 <div role="main">
-<br  style="clear:both; height: 10px;" />
+<br  style="clear:both; height: 10px;">
 
 
-<div id="dialogue" style="vertical-align:bottom;">
+<div id="dialogue">
 <div id="panelWrapper">
 <div id="tabpanels">
 <ul id="tabs">
     <li class="ontab" id="lookuppaneltab"><a href="#initialpanel" onclick="tabswitch('lookuppanel', 'listpanel optionspanel'); return false;">Look up</a></li>
+    
     <li id="listpaneltab"><a href="#rangepanel" onclick="tabswitch('listpanel', 'lookuppanel optionspanel'); return false;">Filter</a></li>
-    <!--li id="sendtopaneltab"><a href="#sendtopanel" onclick="tabswitch('sendtopanel', 'lookuppanel optionspanel listpanel'); return false;">Send</a></li-->
+    
     <li id="optionspaneltab"><a href="#optionspanel" onclick="tabswitch('optionspanel', 'listpanel lookuppanel'); return false;">Options</a></li>
-    <li id="helppaneltab" style="background-color: rgba(93,167,246,1.00); float:right;"><a style="color: white;" href="#helppanel" onclick="help = window.open('help.html', 'help'); help.focus(); return false;">Help</a></li>
+    
+    <li id="helppaneltab"><a href="#helppanel" onclick="help = window.open('help.html', 'help'); help.focus(); return false;">Help</a></li>
 </ul>
-<br  style="clear:both;" />
+<br  style="clear:both;">
   
   
   
   
+<!-- LOOKUP PANEL -->
+  <div id="lookuppanel">
   
-  <div id="lookuppanel" style="height: 10.5em;">
-  
-  <div style="display: flex; flex-direction: column; justify-content: space-between; height: 10.5em;">
-  	<div style="display:flex; flex-direction: row; flex-wrap: nowrap;">
+  <div id="lookuppanelSub">
+  	<div id="lookupFind">
 		<form action="none" onsubmit="showRange(); return false;">
               
-               <input type="text" list="blockHints" style="width:17em; height: 2em; font-size: 90%" 
+               <input id="findBlock" type="text" list="blockHints" 
 			   		placeholder="  Find a block name." 
 					title="Find blocks by typing." 
 					onChange="
@@ -78,7 +66,7 @@
 							infoptr = scriptInfoPointer(firstcp[0]);  
 							showSelection( getRange(this.value) );
 							this.value = ''"				
-					/>
+					>
         
               <datalist id="blockHints">
                 <option value="Armenian">Armenian</option>
@@ -400,21 +388,21 @@
                 <option value="Ethiopic Extended-B">Ethiopic Extended-B</option>
 </datalist>               
 
-               <input id="customRange1" size="15" name="customRange1" style="text-align:center; font-size: 90%; height: 2em;" placeholder="0000:0000"  title="Provide two hex digits with :, -, or dots or spaces as separators. NCR, JavaScript, CSS escapes ok." />
-              <input src="images/apply.gif" alt="Apply"  title="List characters below" type="image"  style="border:0; margin:0; padding:0;  vertical-align: top;" />
-           </form>
-		   </div>
+<input id="customRange1" size="15" name="customRange1" placeholder="0000:0000"  title="Provide two hex digits with :, -, or dots or spaces as separators. NCR, JavaScript, CSS escapes ok." />
+<button class="goButton">📥</button>
+</form>
+</div>
 
 
 
 
 
 
-  	<div style="display:flex; flex-direction: row; flex-wrap: nowrap;">
+  	<div id="lookupSelect">
 		<form action="none" onsubmit="showSelection(document.getElementById('block').value);  return false;">
-              <select name="block" onchange="showSelection(this.value)" id="block" style="height: 2em; font-size: 90%;">
+              <select name="block" onchange="showSelection(this.value)" id="block">
                 <!--select name="block" id="block"-->
-                <option value="0020:00FF" style="color: gray;">Select a block (* indicates new in v15)</option>
+                <option value="0020:00FF">Select a block (* indicates new in v15)</option>
                 <optgroup label="European scripts">
                 <option value="0530:058F">Armenian</option>
                 <option value="FB13:FB17" class="pb">Armenian ligatures</option>
@@ -808,51 +796,72 @@
                 <option value="FE00:FE0F">Variation Selectors</option>
                 <option value="E0100:E01EF">Variation Selectors Supplement</option>
                 </optgroup>
-              </select>
-              <input src="images/apply.gif" alt="Apply"  title="List results below" type="image" style="border:0; margin:0; padding:0;  vertical-align: top;" />
+              </select> <button class="goButton">📥</button>
             </form>
 			</div>
 
-
-
-
-  	<div style="display:flex; flex-direction: row; flex-wrap: nowrap; justify-content: space-between; margin-top: .5em; line-height: 1;">
-            Search for: <button onclick="makeActive(this); hideSearchParameters(); if (document.getElementById('charNum').value != '') { showCodepoint(document.getElementById('charNum').value, 'hex');} return false;" title="List hex code point values. Most of the time codepoints embedded in escapes or other text are recognised, eg. 'the codepoints U+1234 and U+1235'." id="hexbutton" class="activebutton">Hex</button>
-              <button onclick="makeActive(this); hideSearchParameters(); if (document.getElementById('charNum').value != '') { showCodepoint(document.getElementById('charNum').value, 'dec');} return false;" title="List decimal code point values. Most of the time codepoints embedded in escapes or other text are recognised, eg. 'the codepoints 1234 and 1235'." id="decbutton">Dec</button>
-              <button onclick="makeActive(this); hideSearchParameters(); showCharacterList(document.getElementById('charNum').value); return false;" title="List characters." id="charbutton">Characters</button>
-			  
-              <div><button onclick="makeActive(this); showSearchParameters();  findString(document.getElementById('charNum').value);  return false;" title="Search the Unicode database. You can use basic regular expressions, eg. \btet\b, or latin.*alpha|latin.*beta, etc." id="searchbutton">Text</button>
-              <label style="font-size:80%; vertical-align: sub;" title="Search only within the characters shown in a list or table, and highlight the characters found.">
-              <input name="localSearch" type="checkbox" id="localSearch" />
-              Local</label></div>
-			  
-              <img src="images/clearpicker.png" alt="Clear" title="Clear the input field." style="margin-left: 3px;" onclick="clearInputFields();" />
-			</div>
 			
-			
-			
-	  	<div style="display:flex; flex-direction: row; flex-wrap: nowrap;">
-			<form action="none" onsubmit="activateFind(); return false;" style="border:0;margin:0;padding:0;">
-			   <input type="text" id="charNum" tabindex="2" name="charNum" style="height: 2em; width:320px; font-size:90%; padding-inline: 1em;" placeholder="Search text here." onchange="return false;"/>
-              <input name="image2" type="image"  title="List characters to left with names" src="images/apply.gif" alt="Apply" style="border:0; margin:0; padding:0; margin-left:3px; vertical-align: top;"  />
-			</form>
-		</div>
+		
+<div id="lookupSearch1">
+Search for: &nbsp;
+
+<!-- text search input -->
+<form action="none" onsubmit=" showSearchParameters();  findString(document.getElementById('textSearch').value); return false;">
+<input type="text" id="textSearch" tabindex="2" name="charNum" placeholder="Text (regex ok)" onchange="return false;" > <button class="goButton">🔍</button>
+</form>
+
+<div id="searchResultCount">Search results found: 0</div>
+</div>
 
 
-  	<!--div style="display:flex; flex-direction: row; flex-wrap: nowrap; justify-content: space-between;">
-	<label title="Switch between using graphics or font-based display of characters.">
-    <input type="checkbox" id="graphicsToggle" onclick="toggleGraphic(this);" checked="checked" />&nbsp;Use graphics</label>
-	
-    <label title="Use a list where UniView would normally produce a matrix (eg. for display of Unicode blocks).">
-    <input name="listMatrixToggle" type="checkbox" id="listMatrixToggle" style="margin-top: 2px; margin-bottom: 2px;" onclick="toggleDisplay(this);" />
-&nbsp;Show tables as a list</label>
-	
-    <label title="Display notes for characters, where available.">
-    <input name="showNotesToggle" type="checkbox" id="showNotesToggle" style="margin-top: 2px; margin-bottom: 2px;" onclick="toggleNotes(this);" />&nbsp;Show notes</label>
-	</div-->
 
 
- </div>   
+<div id="lookupSearch2">
+<span id="searchParameters">
+<span title="Search character names.">
+<input name="searchNames" type="checkbox" id="searchNames" checked="checked">
+Name&nbsp;</span>
+
+<span title="Search character descriptions (ie. the NamesList.txt file).">
+<input name="searchDesc" type="checkbox" id="searchDesc" checked="checked">
+Description&nbsp;</span>
+
+<span title="Search alternative names.">
+<input name="searchOther" type="checkbox" id="searchOther" checked="checked">
+Other</span>
+
+<label title="Search only within the characters shown in a list or table, and highlight the characters found.">
+<input name="localSearch" type="checkbox" id="localSearch" />
+Local</label>
+</span>
+</div>
+
+
+
+
+<div id="lookupSearch3">
+
+<!-- hex search input -->
+<form action="none" onsubmit="showCodepoint(document.getElementById('hexSearch').value, 'hex'); return false;" title="Search for hex code points or escapes.">
+<input type="text" id="hexSearch" tabindex="2" name="charNum" placeholder="Hex" onchange="return false;"/>
+<button class="goButton">🔍</button>
+</form>
+
+<!-- dec search input -->
+<form action="none" onsubmit="showCodepoint(document.getElementById('decSearch').value, 'dec'); return false;" title="Search for decimal code points or escapes.">
+<input type="text" id="decSearch" tabindex="2" name="charNum" placeholder="Dec" onchange="return false;"/>
+<button class="goButton">🔍</button>
+</form>
+
+<!-- char search input -->
+<form action="none" 
+    onsubmit="showCharacterList(document.getElementById('charSearch').value); return false;" title="List characters with these hex numbers (or hex escapes)."
+    ><input type="text" id="charSearch" tabindex="2" name="charNum" placeholder="Chars" onchange="return false;"/>
+<button class="goButton">🔍</button>
+</form>
+</div>
+
+</div>   
 </div>
 
 
@@ -863,9 +872,9 @@
 <!-- FILTER TAB -->
 
 <div id="listpanel">
-	<div style="height: 10.5em; display: flex; flex-direction: column; flex-wrap: nowrap; justify-content: space-between;">
+	<div id="listpanelSub">
   	
-	<div title="Search for characters with a particular property." style="line-height: 1; margin-bottom: 1em;">Show properties
+	<div id="showProperties" title="Search for characters with a particular property.">Show properties
     <form action="none" onsubmit="showProperties(document.getElementById('select').value); return false;">
       <select 	name="select" id="select" onchange="showProperties(this.value); return false;" 
 				title="List characters from a particular category.">
@@ -920,77 +929,47 @@
         <option value=";WS;">WS: Whitespace</option>
         <option value=";ON;">ON: Other neutrals</option>
       </select>
-      &nbsp;
-      <input src="images/apply.gif" alt="Apply"  title="List characters below" type="image"  style="border:0; margin:0; padding:0;  vertical-align: top;" /><br>
-      <label title="By default, Show Properties highlights characters in what is displayed below. Unchecking this produces a new list using a full database search." style="font-size:80%; margin-left:10px; margin-bottom: 5px;">
-      <input name="locallist" type="checkbox" checked="checked" id="locallist" />
-      &nbsp;Show properties only for the items listed below.</label>
-    </form>
-  </div>
+      <button class="goButton">🔍</button>
   
-  <div title="If you have highlighted characters using Search or Show Properties, this creates a list including only the un-highlighted items." onclick="highlight2List(); return false;">Make list from highlights &nbsp; <img src="images/apply.gif" alt="Apply"  title="List results below" style="border:0; margin:0; padding:0;  vertical-align: top;" /></div>
+<span id="propertyResultCount">Search results found: 0</span>
+
+<br>
+<label id="locallistLabel" 
+    title="By default, Show Properties highlights characters in what is displayed below. Unchecking this produces a new list using a full database search.">
+<input name="locallist" type="checkbox" checked="checked" id="locallist">
+&nbsp;Show properties only for the items listed below.</label>
+</form>
+</div>
   
-  <div title="If you have highlighted characters using Search or Show Properties, this creates a list including only the highlighted items." onclick="nonHighlight2List(); return false;">Make list from non-highlighted items &nbsp; <img src="images/apply.gif" alt="Apply"  title="List results below" style="border:0; margin:0; padding:0;  vertical-align: top;" /></div>
+ <div>
+<button class="generalButton"
+    title="If you have highlighted characters using Search or Show Properties, this creates a list including only the highlighted items."
+    onclick="highlight2List(); return false;"
+    >Make list from highlighted items</button>
+</div>
   
-<div id="propertyResultCount" style="display: none; float:right; font-size: 80%; vertical-align:top;">Search results found: 0</div>
+ 
+<div>
+<button class="generalButton"
+    title="If you have highlighted characters using Search or Show Properties, this creates a list including only the NON-highlighted items."
+    onclick="nonHighlight2List(); return false;"
+    >Make list from non-highlighted items</button>
+</div>
   
-<div title="Show in which version of Unicode each character was introduced. Unmarked characters were introduced before version 2."><span  onclick="showAge(); return false;">Show age &nbsp;</span>
-    <input src="images/apply.gif" alt="Apply"  title="Apply." type="image"  style="border:0; margin:0; padding:0;  vertical-align: top;" onclick="showAge(); return false;" />
-    &nbsp;<img src="images/clearpicker.png" alt="Clear." title="Clear the age-related information." style="margin-left: 10px;" onclick="clearHighlighting();" />
-    </div>
-	</div>
+<div>
+<button class="generalButton"
+    title="Show in which version of Unicode each character was introduced. Unmarked characters were introduced before version 2."
+    onclick="showAge(); return false;"
+    >Show age</button> &nbsp;
+<button class="goButton"
+     title="Clear the age-related information."
+     onclick="clearHighlighting(); return false;">❌</button> &nbsp;
+</div>
+</div>
 </div>
 <!-- listpanel -->
 
 
-
-
-
-<!-- SEND TO PANEL -->
-
-<!--div id="sendtopanel" style="height: 10.5em;">
-<p>Send contents of text area to one of the following apps:</p>
-<div style="display: flex; flex-wrap: nowrap; flex-direction: row; justify-content: space-around;">
-  <div style="display: flex; flex-direction: column; justify-content: space-between;">   
-  <p onclick="chars = document.getElementById('picker').value;
-	converter = window.open('/app-conversion/?q='+ encodeURIComponent(chars), 'converter')">Converter</p>
-  <p onclick="chars = document.getElementById('picker').value;
-	analyse = window.open('/app-analysestring/?chars='+	encodeURIComponent(chars), 'analyse')">Analyse string</p>
-  <p onclick="chars = document.getElementById('picker').value;
-    filtered = [...chars]
-    const uniqueSet = new Set(filtered)
-    const backToArray = [...uniqueSet]
-    chars = backToArray.join('')
-	analyse = window.open('/app-analysestring/?chars='+	encodeURIComponent(chars), 'analyse')">Analyse string (unique)</p>
-  <p onclick="chars = document.getElementById('picker').value;
-	list = window.open('/app-listcharacters/?chars='+ encodeURIComponent(chars), 'list')">List characters</p>
-<p onclick="chars = document.getElementById('picker').value;
-    filtered = [...chars]
-    const uniqueSet = new Set(filtered)
-    const backToArray = [...uniqueSet]
-    chars = backToArray.join('')
-	usage = window.open('/app-charuse/?charlist='+ encodeURIComponent(chars), 'usage')">Character usage</p>
-</div>
-
-
-<div style="display: flex; flex-direction: column; justify-content: space-between;">   
-<p onclick="chars = document.getElementById('picker').value;
-    scriptName = '';
-    if (document.getElementById('blockname')) {
-        scriptName = document.getElementById('blockname').textContent.trim();
-	    flist = window.open('/scripts/fontlist/?script='+scriptName+'&text='+ encodeURIComponent(chars), 'flist'); }
-    else { alert('Can only send to the Font Lister if a script code is displayed.\nChoose a block in order to display one.');}">Font lister</p>
-<p onclick="chars = document.getElementById('picker').value;
-	cat = window.open('/scripts/apps/listcategories/?chars='+ encodeURIComponent(chars), 'cat')">Triage by category</p>
-<p onclick="chars = document.getElementById('picker').value;
-	bidi = window.open('/scripts/apps/listbidi/?chars='+ encodeURIComponent(chars), 'bidi')">Triage by bidi class</p>
-<p onclick="chars = document.getElementById('picker').value;
-	lbreak = window.open('/scripts/apps/listlinebreak/?chars='+ encodeURIComponent(chars), 'lbreak')">Triage by line-break</p>
-<p onclick="chars = document.getElementById('picker').value;
-	indic = window.open('/scripts/apps/listindic/?chars='+ encodeURIComponent(chars), 'indic')">Triage by indic category</p>
-  </div>
-  </div>
-</div-->
 
 
 
@@ -1003,35 +982,35 @@
 
 <div id="optionspanel"> 
     
-  <div title="Puts U+ in front of codepoint numbers in a list.">
-    <label><input name="uPlusToggle" type="checkbox" id="uPlusToggle" title="Toggle between showing and hiding U+ before numbers." style="margin:0;" onclick="redrawList();" />
-    &nbsp;Show U+ in lists</label></div>
-
-  <div title="Allows you to change the composition and order of items in a row for lists of characters. It is particularly useful to prepare a list for copy/pasting.">List format:
+  <div title="Allows you to change the composition and order of items in a row for lists of characters. It is particularly useful to prepare a list for copy/pasting.">List format shows:
     &nbsp;&nbsp;
-    <label><input name="listC1" onclick="redrawList();" type="checkbox" checked="checked" id="listC1" style="margin-top: 2px; margin-bottom: 2px;"  title="Show character at start of list item." />
+    <label><input name="listC1" onclick="redrawList();" type="checkbox" checked="checked" id="listC1"  title="Show character at start of list item." />
     character</label> &nbsp;
 	
-    <label><input name="listN" onclick="redrawList();" type="checkbox" checked="checked" id="listN" style="margin-top: 2px; margin-bottom: 2px;"  title="Show character number in list item." />
+    <label><input name="listN" onclick="redrawList();" type="checkbox" checked="checked" id="listN"  title="Show character number in list item." />
     #</label> &nbsp;
 	
-    <label><input name="listC2" onclick="redrawList();" type="checkbox" id="listC2" style="margin-top: 2px; margin-bottom: 2px;"  title="Show character between number and name." />
+    <label><input name="listC2" onclick="redrawList();" type="checkbox" id="listC2"  title="Show character between number and name." />
     character</label> &nbsp;
 	
-    <label><input name="listNm" onclick="redrawList();" type="checkbox" checked="checked" id="listNm" style="margin-top: 2px; margin-bottom: 2px;"  title="Show character name in list item." />
+    <label><input name="listNm" onclick="redrawList();" type="checkbox" checked="checked" id="listNm"  title="Show character name in list item." />
     name</label>
 	</div>
 	
-  <div title="Hide the numbers around a table of characters.">
-    <label><input name="hideNumbers" type="checkbox" id="hideNumbers" title="Toggle between showing and hiding numbers round a table of characters." style="margin:0;" onclick="toggleNumbers();" />
+   <div title="Puts U+ in front of codepoint numbers in a list.">
+    <label><input name="uPlusToggle" type="checkbox" id="uPlusToggle" title="Toggle between showing and hiding U+ before numbers." onclick="redrawList();" />
+    &nbsp;Show U+ in lists</label></div>
+
+ <div title="Hide the numbers around a table of characters.">
+    <label><input name="hideNumbers" type="checkbox" id="hideNumbers" title="Toggle between showing and hiding numbers round a table of characters." onclick="toggleNumbers();" />
     &nbsp; Hide numbers around a table of characters</label>
 	</div>
 	
-  <div title="Set a maximum viewport height for list. Useful for keeping everything on one screen when working on small devices such as ipads, netbooks, etc.">Left panel max height (pixels):
+  <!--div title="Set a maximum viewport height for list. Useful for keeping everything on one screen when working on small devices such as ipads, netbooks, etc.">Left panel max height (pixels):
     <form onsubmit="changeHeight(document.getElementById('chHeight').value+'px'); return false;" action="none">
       <input name="chHeight" id="chHeight" value="500" size="5"/>
       &nbsp;<img src="images/go.gif" height="16"
-					width="20" alt="Apply" style="vertical-align: middle" onclick="changeHeight(document.getElementById('chHeight').value+'px'); return false;" title="Apply"/>
+					width="20" alt="Apply" onclick="changeHeight(document.getElementById('chHeight').value+'px'); return false;" title="Apply"/>
     </form>
   </div>
   <div title="Sets a maximum viewport height for list. Useful for keeping everything on one screen when working on small devices such as ipads, netbooks, etc.">Left panel max height presets:
@@ -1042,9 +1021,9 @@
      <option value="400">Smartphone landscape</option>
      <option value="400">Netbook</option>
      </select>
-  </div>
-  <!--div class="helpButton" onclick="help = window.open('help', 'help'); help.focus(); return false;">Help <img src="images/help.png" alt="" style="vertical-align:top;"/></div-->
-  <div title="Adjust the size of the characters displayed in tables or lists. (Only works if Use Graphics is turned off.)">Left panel font size:
+  </div-->
+
+<div title="Adjust the size of the characters displayed in tables or lists. (Only works if Use Graphics is turned off.)">Left panel font size:
     <select id="fontSize" name="fontSize" onchange="changeFontSize(this.value)" title="Change the size of characters in the matrix.">
       <option value="75%">75%</option>
       <option value="100%" selected="selected">100%</option>
@@ -1055,27 +1034,15 @@
       <option value="500%">500%</option>
     </select>
   </div>
-  <div title="Change the font for the characters displayed in tables or lists. (Only works if Use Graphics is turned off.)">Change font:
+
+<div title="Change the font for the characters displayed in tables or lists. (Only works if Use Graphics is turned off.)">Change font:
       <input type="text" onInput="changeFont(this.value)" id="chFont">
-      &nbsp;<img src="images/go.gif" height="16"
-					width="20" alt="Apply" style="vertical-align: middle" onclick="changeFont(document.getElementById('chFont').value); return false;" title="Apply"/>
+<button class="goButton" alt="Apply" title="Apply"
+    onclick="changeFont(document.getElementById('chFont').value); return false;"
+    >📥</button>
   </div>
 </div>
 <!-- optionspanel -->
-
-<div id="helppanel">
-<p><span class="quickstartmsg">See the <strong><span onclick="help = window.open('help.html', 'help'); help.focus(); return false;" style="color:teal; text-decoration:none; cursor:pointer;" class="link">User Guide</span></strong> or mouse over the first letter of a command name to reveal an orange link to context-sensitive help.<br>
-<br/>
-<strong>Basic use:</strong> Use the <span class="onscreen">Show Block</span> selector on the <span class="onscreen">Lookup</span> tab, or add characters or code points or a search string to one of the input fields in the <span class="onscreen">Find</span> field and click on one of <span class="onscreen">Hex</span>, <span class="onscreen">Dec</span>, <span class="onscreen">Characters</span> or <span class="onscreen">Search</span>. The
-        <input src="images/apply.gif" alt="Apply"  title="List results below" type="image" style="border:0; margin:0; padding:0;  vertical-align: top;" />
-      icon repeats the action.
-      UniView produces tables or lists of characters on the left. By default, clicking on a character in a list or table displays detailed information for that character to the right.
-      Use <img src="images/clicktocparea.png" alt=" " style="height: 1.4em; width: 1.2em;" /> to add the characters to the <span class="onscreen">Edit Buffer</span> box instead.  Alternatively, you can paste characters  directly into the <span class="onscreen">Edit Buffer</span> box and hit
-      <input src="images/apply.gif" alt="Apply"  title="List results below" type="image" style="border:0; margin:0; padding:0;  vertical-align: top; height: 1.4em;" />
-      to discover what they are.  <br><br>
-    The app covers Unicode version 7.0.0. For more information about Unicode 7.0, see the <a href="http://www.unicode.org/versions/Unicode7.0.0/">Unicode 7.0.0 page</a> or this very informative <a href="http://babelstone.blogspot.co.uk/2013/10/whats-new-in-unicode-70.html">Babelstone post</a>.</span></p>
-
-</div>
 </div>
 
 
@@ -1085,11 +1052,11 @@
 
 
 
-<div id="cparea" style="height: 12em; display: flex; flex-direction: column; justify-content: space-between; padding: 5px;">
-          <textarea id="picker" dir="auto" placeholder="text area" name="picker" rows="3" cols="30"></textarea>
+<div id="cparea">
+          <textarea id="picker" dir="auto" placeholder="text area" name="picker" rows="6" cols="30"></textarea>
 		  
 		  
-		  <div id="textBoxControls" style="display: flex; flex-wrap: nowrap; justify-content: space-between; flex-direction: row;">
+		  <div id="textBoxControls">
           
 			<div>		  
 		  	<img id="makeListFromTA" src="images/clickfromcparea.png" alt="Clear." title="Create a list from the characters in the Copy &amp; Paste box." 
@@ -1103,13 +1070,13 @@
           	</div>
 			
 			
-			<div id="captureDelete" style="text-align: center;">
+			<div id="captureDelete">
 			<img src="images/selectall.png" alt="Select" title="Select all text in the Copy &amp; Paste box." onmouseover="this.src='images/selectall_focus.png'" onmouseout="this.src='images/selectall.png'" onclick="document.getElementById('picker').focus();document.getElementById('picker').select()" /><br><img src="images/clearpicker.png" alt="Clear" title="Clear the  Copy &amp; Paste box." onmouseover="this.src='images/clearPicker_focus.png'" onmouseout="this.src='images/clearpicker.png'" onClick="document.getElementById('picker').value = ''; document.getElementById('picker').focus(); return false;" />
   			</div>
 			
 			
 
-			<div id="smallControls" style="text-align: end;">
+			<div id="smallControls">
 			<img src="images/addspace.png" alt="Select" title="Separate the characters in the edit buffer with spaces." onmouseover="this.src='images/addspace_focus.png'" onmouseout="this.src='images/addspace.png'" onclick="addSpacesToPicker(' ');" />
 			
 			<img src="images/removespace.png" alt="Select" title="Remove all spaces from the text area." onmouseover="this.src='images/removespace_focus.png'" onmouseout="this.src='images/removespace.png'" onclick="document.getElementById('picker').value = document.getElementById('picker').value.replace(/\s/g,'')" />
@@ -1120,7 +1087,7 @@
           
 		  	<img src="images/convert.png" id="convertEscapes" alt="Convert text area" title="Convert escapes in the text area to characters." onmouseover="this.src='images/convert_focus.png'" onmouseout="this.src='images/convert.png'"	onclick="document.getElementById('picker').value = convertTextArea(document.getElementById('picker').value)" />
 
-           <img src="images/case_simple.png" alt="Convert" title="Show upper/lower/title case alternatives for all characters in the copy/paste box." onmouseover="this.src='images/case_simple_focus.png'" onmouseout="this.src='images/case_simple.png'"	onclick="convert2upper(document.getElementById('picker').value, false);  return false;" />
+           <img id="case_simple" src="images/case_simple.png" alt="Convert" title="Show upper/lower/title case alternatives for all characters in the copy/paste box." onmouseover="this.src='images/case_simple_focus.png'" onmouseout="this.src='images/case_simple.png'"	onclick="convert2upper(document.getElementById('picker').value, false);  return false;" />
 		   
           	<img src="images/nfc.png" alt="NFC" title="Convert text in the Copy &amp; Paste box to NFC." onmouseover="this.src='images/nfc_focus.png'" onmouseout="this.src='images/nfc.png'" onclick="doN11n('nfc'); document.getElementById('picker').focus();" />
 
@@ -1136,7 +1103,7 @@
            
 		  	<img src="images/openConvert.png" alt="Convert" id="externalConvert" title="Send characters in the text area to the Unicode Character Converter tool." onmouseover="this.src='images/openConvert_focus.png'" onmouseout="this.src='images/openConvert.png'"	onclick="converter = window.open('../app-conversion/index.html?q='+encodeURIComponent(document.getElementById('picker').value), 'converter'); converter.focus();" />
          
-		 	<img src="images/case_detail.png" alt="Convert" title="Show upper/lower/title case alternatives with correspondences for all characters in the copy/paste box." onmouseover="this.src='images/case_detail_focus.png'" onmouseout="this.src='images/case_detail.png'"	onclick="convert2upper(document.getElementById('picker').value, true); return false;" />
+		 	<img id="case_detail" src="images/case_detail.png" alt="Convert" title="Show upper/lower/title case alternatives with correspondences for all characters in the copy/paste box." onmouseover="this.src='images/case_detail_focus.png'" onmouseout="this.src='images/case_detail.png'"	onclick="convert2upper(document.getElementById('picker').value, true); return false;" />
           
 		  	<img src="images/nfd.png" alt="NFD" title="Convert text in the Copy &amp; Paste box to NFD." onmouseover="this.src='images/nfd_focus.png'" onmouseout="this.src='images/nfd.png'" onclick="doN11n('nfd'); document.getElementById('picker').focus();" />
             
@@ -1194,25 +1161,14 @@
     <input type="checkbox" id="graphicsToggle" onclick="toggleGraphic(this);" checked="checked" />&nbsp;Use graphics</label>
 	
     <label title="Use a list where UniView would normally produce a matrix (eg. for display of Unicode blocks).">
-    <input name="listMatrixToggle" type="checkbox" id="listMatrixToggle" style="margin-top: 2px; margin-bottom: 2px;" onclick="toggleDisplay(this);" />
+    <input name="listMatrixToggle" type="checkbox" id="listMatrixToggle" onclick="toggleDisplay(this);" />
 &nbsp;Show tables as a list</label>
 	
     <label title="Display notes for characters, where available.">
-    <input name="showNotesToggle" type="checkbox" id="showNotesToggle" style="margin-top: 2px; margin-bottom: 2px;" onclick="toggleNotes(this);" />&nbsp;Show notes</label>
+    <input name="showNotesToggle" type="checkbox" id="showNotesToggle" onclick="toggleNotes(this);" />&nbsp;Show notes</label>
 	</div>
 
 <div id="blockInfoPointer"></div>
-
-<div style="clear: both; float:left; font-size: 90%; vertical-align:top;">
-  <span id="searchParameters" style="display: none; font-size:80%; margin-left:10px; margin-bottom: 5px; "> <span title="Search character names.">
-    <input name="searchNames" type="checkbox" id="searchNames" checked="checked"  />
-    Name&nbsp;</span> <span title="Search character descriptions (ie. the NamesList.txt file).">
-    <input name="searchDesc" type="checkbox" id="searchDesc" checked="checked"  />
-    Description&nbsp;</span> <span title="Search alternative names.">
-    <input name="searchOther" type="checkbox" id="searchOther" checked="checked"   />
-    Other</span> </span></div>
-
-  <div id="searchResultCount" style="display: none; clear: both; float:left; font-size: 80%; vertical-align:top;">Search results found: 0</div>
 
 
 <div id="namedisplay" style="clear:both;"><span>&nbsp;</span></div>
