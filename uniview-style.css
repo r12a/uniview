@@ -17,6 +17,31 @@ body {
 	margin: 0;
 	}
 
+button {
+  cursor: pointer;
+}
+
+.dim {
+	background-color: #F9F5DE;
+	background-color: #f2f2f2;
+	color: #ccc;
+}
+.dim img {
+	opacity: 0.1;
+	filter: alpha(opacity=10);
+}
+.empty {
+	background-color: #f2f2f2;
+}
+
+.generalButton {
+    background: antiquewhite;
+    border: 0;
+    padding: .3rem;
+    border-radius: .3rem;
+    color: black;
+    }
+
 /* header */
 
 header { 
@@ -78,6 +103,53 @@ img {
     height: 4.5em;
 	}
 /* end header */
+
+
+
+
+#dialogue { vertical-align: bottom; }
+
+
+#tabs #helppaneltab { background-color: rgba(93,167,246,1.00); float:right; }
+#tabs #helppaneltab a { color: white; }
+
+
+
+#listpanelSub { height: 10.5em; display: flex; flex-direction: column; flex-wrap: nowrap; justify-content: space-between; }
+
+#showProperties { line-height: 1; /*margin-bottom: 1em;*/ }
+
+#locallistLabel { font-size:80%; margin-left:10px; margin-bottom: 5px; }
+
+#propertyResultCount { display: none; float:right; font-size: 80%; vertical-align:top; }
+
+
+
+
+#cparea { height: 12em; display: flex; flex-direction: column; justify-content: space-between; padding: 5px; }
+
+#textBoxControls { display: flex; flex-wrap: nowrap; justify-content: space-between; flex-direction: row; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+label { cursor: pointer; }
 
 
 #tags {
@@ -607,6 +679,8 @@ span[lang|='ur'] {
 	background-color: #EDE4D0;
 	border-radius: 5px;
 	background-color: floralwhite;
+    background: brown;
+    color: white;
 	}
 #lookuppaneltab {
 	border-top-left-radius: 5px; 
@@ -621,7 +695,20 @@ span[lang|='ur'] {
 	background-color: floralwhite;*/
 	margin-top: -1px; 
 	}
+#lookuppanel { height: 10.5em; }
+#lookuppanelSub { display: flex; flex-direction: column; justify-content: space-between; height: 10.5em; }
+#lookupFind { display:flex; flex-direction: row; flex-wrap: nowrap; }
+#customRange1 { text-align:center; font-size: 90%; height: 2em; }
+#lookupSelect { display:flex; flex-direction: row; flex-wrap: nowrap; }
+#lookupSelect select { height: 2em; font-size: 90%; }
+#lookupSearch1 { display:flex; flex-direction: row; flex-wrap: nowrap; }
+#lookupSearch1 form { border:0;margin:0;padding:0; }
+#textSearch { height: 2em; width:10rem; font-size:90%; padding-inline: 1em; }
+#lookupSearch2 { text-align: center; }
+#lookupSearch3 { display:flex; flex-direction: row; flex-wrap: nowrap; }
+#lookupSearch3 form { border:0;margin:0;padding:0; }
 
+#searchParameters { display: inline; font-size: 80%; margin-left: 10px; margin-bottom: 5px; }
 
 #sendtopanel div p:hover { background-color: beige; cursor: pointer; }
 #sendtopanel div div { 
@@ -638,7 +725,7 @@ span[lang|='ur'] {
     }
 #helppanel { max-width: 42%; min-width: 40%; }
 #listpanel, #sendtopanel, #optionspanel, #helppanel { display: none; }
-#lookuppanel, #sendtopanel, #listpanel, #optionspanel, #helppanel { line-height: 2em; color: #a52a2a; } 
+#lookuppanel, #sendtopanel, #listpanel, #optionspanel, #helppanel { line-height: 2em; color: #a52a2a; color: #777; } 
 #listcreator { text-align: right; text-align: end; float: right; margin-top: 5px; font-size: 85%; padding-top:2px; padding-bottom:2px; margin-right: 5px; cursor:pointer; }
 
 
@@ -710,7 +797,7 @@ span[lang|='ur'] {
 	width:350px; 
 	font-size: 150%; 
 	border:2px solid #ede4d0; 
-	height: 5.25em;
+	height: 5.6em;
 	height: 100px;
 	}
 #cparea textarea {
@@ -718,9 +805,16 @@ span[lang|='ur'] {
     width: 98%;
 	font-size: 150%; 
 	border:2px solid #ede4d0; 
-	height: 5.25em;
+	height: 5.6em;
     margin-block-end: 4px;
 	}
+
+#findBlock {
+    width:17em; height: 2em; font-size: 90%;
+    }
+#hexSearch, #decSearch, #charSearch { height: 2em; width:5rem; font-size:90%; padding-inline: 1em; }
+#charSearch { width:3rem; }
+
 /* for iPad portrait */
 @media only screen 
   and (min-device-width: 768px) 
@@ -728,18 +822,41 @@ span[lang|='ur'] {
   and (orientation: portrait) 
   and (-webkit-min-device-pixel-ratio: 2) {
 
+#lookuppanel { height: 9rem; }
+#lookuppanelSub { height: 9rem; }
+#block { width: 15rem; }
+#findBlock {width: 8rem; }
+#panelWrapper { flex-wrap: nowrap;  }
+#tabpanels { width: 60%; }
+#textBoxControls { width: 100%; }
 #cparea {
-    width: 250px;
     }
 #cparea textarea {
-	width:300px;
+	width:95%;
 	font-size: 120%; 
 	height: 6em;
 	}
-#rotateIcon, #commaInsert, #convertEscapes, #externalConvert {
+#rotateIcon, #commaInsert {
 	display: none;
 	}
+#block { height: 1rem; }
+#customRange1 { width: 5rem }
+#lookupSearch1 input { height: 1rem; }
+#lookupSearch3 { line-height: 1; }
+#hexSearch, #decSearch, #charSearch { width: 2rem; display: inline; margin: 0; }
+#lookupSearch3 form, #lookupSearch3 input { display: inline; height: 1rem; }
+.goButton { margin-inline-end: 0; display: inline; cursor: pointer; }
+
+
+#displayControls  { white-space: nowrap; }
+#displayControls label { font-size: 80%; margin: 0; }
+
+#cparea textarea { height: 8rem; margin-block-end: 1rem; }
+
+#showProperties select { width: 10rem; }
 }
+
+
 /* for wide screen */
 @media only screen 
   and (min-width: 1000px) {
@@ -748,7 +865,7 @@ span[lang|='ur'] {
 	width:500px;
     width: 98%;
 	font-size: 150%; 
-	height: 5.25em;
+	height: 5.6em;
 	}
 }
 
@@ -807,11 +924,11 @@ span[lang|='ur'] {
 
 #searchResultCount {
 	display: none; 
-	float:left; 
-	font-size: 80%; 
-	vertical-align:top;
 	color: #a52a2a;
-	margin-left: 10px;
+	font-size: 80%; 
+	/*float:left; 
+	vertical-align:top;
+	margin-left: 10px;*/
 	}
 
 .chSpan {
@@ -879,10 +996,14 @@ span#version {
 input, select {
 	background-color: brown;
 	color: white;
+    background: antiquewhite;
+    color: black;
 	}
 input::placeholder, select::placeholder {
 	color: white;
-	opacity: 1;
+	opacity: .6;
+    color: black;
+    font-size: 90%;
 	}
 input[type="image"] {
 	background: transparent;
@@ -906,7 +1027,13 @@ input[type="image"] {
     }
 
 
-
+.goButton {
+    padding: 0;
+    border: 0;
+    background: 0;
+    font-size: 1rem;
+    margin-inline-end:1rem;
+    }
 
 
 

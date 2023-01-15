@@ -307,7 +307,7 @@ function clearHighlighting () {
     var nodeArray = document.getElementById('chart').querySelectorAll('.ch')
 	// clear out any existing highlighting
 	for (var i=0; i < nodeArray.length; i++) { 
-		nodeArray[i].classList.remove('dim','c1-1','c2-0','c2-1','c3-0','c3-1','c3-2','c4-0','c4-1','c5-0','c5-1','c5-2','c6-0','c6-1','c6-2','c6-3','c7-0','c8-0','c9-0','c10-0','c11-0','c12-0')
+		nodeArray[i].classList.remove('dim','c1-1','c2-0','c2-1','c3-0','c3-1','c3-2','c4-0','c4-1','c5-0','c5-1','c5-2','c6-0','c6-1','c6-2','c6-3','c7-0','c8-0','c9-0','c10-0','c11-0','c12-0','c13-0','c14-0','c15-0')
 	    }
 	}
 
@@ -710,13 +710,14 @@ function isListShowing () {
 function findString ( searchString ) { 
 	// effect: if local is set, highlights characters in left panel that match searchString, otherwise, outputs a list of characters in the left panel 
 	// searchString: a string of text to search for in the database, can have regular expression syntax
-	
+	console.log('searchString', searchString)
 	
 	// if the Find box is empty or just white space and local is not selected, just quit
 	searchString = searchString.replace(/\s+/g, ' ');
 	searchString = searchString.replace(/^\s+/, '');
 	searchString = searchString.replace(/\s+$/, '');
 	if (searchString == '' && ! document.getElementById('localSearch').checked) { return; }
+	console.log('searchString', searchString)
 
 	// if the Local checkbox is ticked, make a copy of whats in the left panel
 	// do this now, before the panel is cleared for 'searching...' message
