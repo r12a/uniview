@@ -1266,8 +1266,13 @@ for (var p=0;p<parameters.length;p++) {
 	}
 
 // check for stored settings
-if (localStorage.showNotes == true) { _showNotes = true; document.getElementById('showNotesToggle').checked = true; }
+if (localStorage['showNotes'] === true) { 
+    _showNotes = true
+    document.getElementById('showNotesToggle').checked = true
+    }
+document.getElementById('notesIframe').src = 'blank.html'
 
+// set the output area lengths
 setOutputElementSize()
 window.onresize = setOutputElementSize
 
