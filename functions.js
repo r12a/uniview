@@ -2032,6 +2032,8 @@ function printProperties ( codepoint ) {
 	var MsPadding = ''  // Will be set to a space if this is a non-spacing mark
 	var description = false
 	var div, span, img, table, tbody, tr, td, button, cpHex
+    document.getElementById('descKey').innerHTML = ''
+    dRecord = []
 
     // get the hex code point value
     cpHex = codepoint.toString(16).toUpperCase()
@@ -2423,10 +2425,12 @@ function printProperties ( codepoint ) {
 				dRecord = desc[eval('0x'+cpHex)].split('¶')
 				description = true
 				for (var j=0; j < dRecord.length; j++ ) {
+                    dRecord[j] = dRecord[j].replace(/\[/,'<').replace(/\]/,'>')
 					p.appendChild( document.createTextNode( dRecord[j] ))
 					p.appendChild( document.createElement( 'br' ))
 					}
 				}
+
 
 			// display notes if there are any, and if required
 			if (blockfile && document.getElementById('showNotesToggle').checked) {  
@@ -2494,6 +2498,9 @@ function printProperties ( codepoint ) {
     
     // ensure that the top of the information shows
     document.getElementById('charOutputWrapper').scrollTop = 0 
+    
+    console.log('dRecord is', dRecord, 'and its length is ', dRecord.length)
+    if (dRecord.length > 0) makeDescKey(dRecord)
 	}	
 
 
@@ -2530,6 +2537,40 @@ function mcancelclosetime(){
 		}
 	}
 
+
+function makeDescKey (lines) {
+    // makes a (tailored) key for items in a description list
+    // called when building the right side of the app
+    console.log('makeDescKey(', lines, ')')
+    
+    out = ''
+    legend = ''
+    
+    const uniqueSet = new Set()
+    for (i=1;i<lines.length;i++) uniqueSet.add(lines[i][0])
+    const backToArray = [...uniqueSet]
+    
+    console.log(backToArray)
+    
+    out += '<div id="descKeyList">Key to symbols:</div>'
+
+    for (j=0;j<backToArray.length;j++) {
+        switch (backToArray[j]) {
+            case '\u2022': legend = 'Informative note'; break
+            case '\u2192': legend = 'Related characters'; break
+            case '\u003D': legend = 'Informative alias'; break
+            case '\u0025': legend = 'Normative alias'; break
+            case '\u2261': legend = 'Canonical equivalent'; break
+            case '\u2248': legend = 'Compatibility equivalent'; break
+            case '\u007E': legend = 'Standardised variant'; break
+            }
+        out += `<div><span>${ backToArray[j] }</span> ${ legend }</div>`
+        }
+    
+    //out += '</div>'
+    
+    document.getElementById('descKey').innerHTML = out
+    }
 
 
 function switchpanel (panel) { 

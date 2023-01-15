@@ -1037,3 +1037,45 @@ input[type="image"] {
 
 
 
+
+
+
+#descKey {
+    margin-block: 1rem;
+    font-size: 80%;
+    }
+#descKeyList {
+    font-style: italic;
+    }
+#descKey span {
+    font-size: 2em;
+    line-height: 1rem;
+    display: inline-block;
+    width: 2rem;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
