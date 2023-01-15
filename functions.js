@@ -2491,6 +2491,9 @@ function printProperties ( codepoint ) {
     button.onclick = function () { listDiv.style.display = 'none'; }
     button.appendChild(document.createTextNode('Close'))
     button.className = 'clearButtonBottom'
+    
+    // ensure that the top of the information shows
+    document.getElementById('charOutputWrapper').scrollTop = 0 
 	}	
 
 
