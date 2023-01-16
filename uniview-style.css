@@ -139,8 +139,50 @@ img {
 
 
 
+/* STYLES FOR RIGHT PANEL CONTENT */
 
+.copyme {
+    cursor: pointer;
+    }
+.copyme:hover {
+    background: antiquewhite;
+    }
+.characterSpan {
+    display: inline-block;
+    min-width: 2em;
+    }
 
+.padBlockStart {
+    padding-block-start: 18px;
+    }
+.padBlockEnd {
+    padding-block-end: 18px;
+    }
+
+#characterName {
+    margin-block-start: 10px;
+    }
+.descSymbol {
+    font-size: 2em;
+    display: inline-block;
+    min-width: 2rem;
+    text-align: center;
+    }
+.descLine {
+    line-height: 1rem;
+    }
+.descCharacterSpan {
+    display: inline-block;
+    min-width: 2em;
+    font-size: 1.4rem;
+    margin-inline: .5rem;
+    text-emphasis: center;
+    text-align: center;
+    }
+
+summary {
+    cursor: pointer;
+    }
 
 
 
@@ -937,8 +979,9 @@ span[lang|='ur'] {
 .charList .chSpan {
     margin-right: .25em;
     }
-.largeChar {
+#largeChar {
     font-size: 170px;
+    margin-inline-end: 2rem;
     }
 
 #chart td.notesAvailable {
@@ -1041,7 +1084,7 @@ input[type="image"] {
 
 
 #descKey {
-    margin-block: 1rem;
+    margin-block-end: 1rem;
     font-size: 80%;
     }
 #descKeyList {
@@ -1054,7 +1097,9 @@ input[type="image"] {
     width: 2rem;
     }
 
-
+.notesexpl {
+    margin-block-start: 1rem;
+    }
 
 
 
