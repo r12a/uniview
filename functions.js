@@ -2069,7 +2069,8 @@ function printProperties ( codepoint ) {
         
          // add img, if available and graphic toggle set
 		if (document.getElementById('graphicsToggle').checked === true && charType === IN_U_DB) {
-            out += `<img id="largeChar" alt="${ codepoint }" title="${ codepoint }" src="../c/${ scriptGroup.replace(/ /g,'_')+'/large/'+cpHex }.png">`
+            out += `<img id="largeChar" alt="${ codepoint }" title="${ codepoint }" src="../c/${ scriptGroup.replace(/ /g,'_')+'/large/'+cpHex }.png"
+                onclick="navigator.clipboard.writeText(String.fromCodePoint(this.title))">`
             }       
         // otherwise add text
 		else { 
@@ -3353,7 +3354,7 @@ function getScriptInfoPointer (charNum) {
 
 // EVENTS
 
-function copyToClipboard (evt) {
+function copyToClipboardX (evt) {
     // Copies the content of an element to the clipboard when clicked on
     // Currently applied to #characterName and #characterAsText
     console.log(evt)
@@ -3363,6 +3364,14 @@ function copyToClipboard (evt) {
 	document.execCommand('selectAll')
 	document.execCommand('copy')
 	node.contentEditable=false
+	}
+
+function copyToClipboard (evt) {
+    // Copies the content of an element to the clipboard when clicked on
+    // Currently applied to #characterName and #characterAsText
+
+    var node = evt.target
+    navigator.clipboard.writeText(node.textContent)
 	}
 
 
