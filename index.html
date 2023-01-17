@@ -1229,6 +1229,7 @@ Local</label>
 <br style="clear:both"/>
 
 
+
 <div class="smallprint"><span id="version">
 See <a href="https://github.com/r12a/uniview/commits/gh-pages">recent changes</a>.
 Make a <a href="https://github.com/r12a/uniview/issues/new">comment</a>. 
@@ -1268,12 +1269,14 @@ for (var p=0;p<parameters.length;p++) {
 	else if (pairs[0] == 'font') { if (pairs[1]) { changeFont(pairs[1]); } }
 	}
 
+
 // check for stored settings
+document.getElementById('notesIframe').src = 'blank.html'
 if (localStorage['showNotes'] === 'true') { 
     _showNotes = true
     document.getElementById('showNotesToggle').checked = true
     }
-else document.getElementById('notesIframe').src = 'blank.html'
+
 
 // set the output area lengths
 setOutputElementSize()
