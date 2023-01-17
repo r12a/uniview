@@ -147,6 +147,12 @@ img {
 .copyme:hover {
     background: antiquewhite;
     }
+.copyme:hover::after {
+    content: url('../shared/images/copytiny.png');
+    display: inline-block;
+    margin-left: 2rem;
+    vertical-align: middle;
+    }
 .characterSpan {
     display: inline-block;
     min-width: 2em;
