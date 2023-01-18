@@ -148,10 +148,11 @@ img {
     background: antiquewhite;
     }
 .copyme:hover::after {
-    content: url('../shared/images/copytiny.png');
+    content: url('../shared/images/copytiny.svg');
     display: inline-block;
-    margin-left: 2rem;
+    margin-left: 1rem;
     vertical-align: middle;
+    height: 1rem; width: 1rem;
     }
 .characterSpan {
     display: inline-block;
@@ -621,7 +622,7 @@ span[lang|='ur'] {
 .cshelp { border:0; margin:0; padding:0; background-color: #ffa500; color: white; cursor: pointer; }
 
 
-.largeCharDiv { float: right; margin-left: 10px; }
+.largeCharDiv { float: right; /* margin-left: 10px; */ }
 
 #charNavigation { 
 	background-color: #A52A2A;
@@ -987,7 +988,8 @@ span[lang|='ur'] {
     }
 #largeChar {
     font-size: 170px;
-    margin-inline-end: 2rem;
+    padding-inline-end: 2rem;
+    background: white;
     }
 
 #chart td.notesAvailable {

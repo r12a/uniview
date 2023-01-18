@@ -1071,43 +1071,46 @@ Local</label>
 			
 			
 			<div id="captureDelete">
-			<img src="images/selectall.png" alt="Select" title="Select all text in the Copy &amp; Paste box." onmouseover="this.src='images/selectall_focus.png'" onmouseout="this.src='images/selectall.png'" onclick="document.getElementById('picker').focus();document.getElementById('picker').select()" /><br><img src="images/clearpicker.png" alt="Clear" title="Clear the  Copy &amp; Paste box." onmouseover="this.src='images/clearPicker_focus.png'" onmouseout="this.src='images/clearpicker.png'" onClick="document.getElementById('picker').value = ''; document.getElementById('picker').focus(); return false;" />
+			<img src="images/selectall.svg" alt="Select" title="Select all text in the Copy &amp; Paste box." onmouseover="this.src='images/selectall_focus.svg'" onmouseout="this.src='images/selectall.svg'" onclick="document.getElementById('picker').focus();document.getElementById('picker').select()" /><br><img src="images/clearpicker.svg" alt="Clear" title="Clear the  Copy &amp; Paste box." onmouseover="this.src='images/clearPicker_focus.svg'" onmouseout="this.src='images/clearpicker.svg'" onClick="document.getElementById('picker').value = ''; document.getElementById('picker').focus(); return false;" />
   			</div>
 			
-			
+<style>
+#smallControls img { height: 1.4rem; margin-inline:.1rem; }
+#captureDelete img { height: 1.4rem; }
+</style>
 
 			<div id="smallControls">
-			<img src="images/addspace.png" alt="Select" title="Separate the characters in the edit buffer with spaces." onmouseover="this.src='images/addspace_focus.png'" onmouseout="this.src='images/addspace.png'" onclick="addSpacesToPicker(' ');" />
+			<img src="images/addspace.svg" alt="Select" title="Separate the characters in the edit buffer with spaces." onmouseover="this.src='images/addspace_focus.svg'" onmouseout="this.src='images/addspace.svg'" onclick="addSpacesToPicker(' ');">
 			
-			<img src="images/removespace.png" alt="Select" title="Remove all spaces from the text area." onmouseover="this.src='images/removespace_focus.png'" onmouseout="this.src='images/removespace.png'" onclick="document.getElementById('picker').value = document.getElementById('picker').value.replace(/\s/g,'')" />
-			
-		   	<img src="images/expand.png" alt="Expand" title="Expand ranges of characters in the Copy &amp; Paste box. For example, 'a-zA-Z'." onmouseover="this.src='images/expand_focus.png'" onmouseout="this.src='images/expand.png'" onclick="if (document.getElementById('picker').value== '') { alert('Add characters to the text area.'); } else { document.getElementById('picker').value = expandList(document.getElementById('picker').value); }"/>
+            <img id="commaInsert" src="images/addcomma.svg" alt="Select" title="Separate the characters in the edit buffer with commas." onmouseover="this.src='images/addcomma_focus.svg'" onmouseout="this.src='images/addcomma.svg'" onclick="addSpacesToPicker(',');"/>
 
-          	<img src="images/rotate.png" id="rotateIcon" alt="Select" title="Turn a sequence of items into a list." onmouseover="this.src='images/rotate_focus.png'" onmouseout="this.src='images/rotate.png'" onclick="rotatePickerContent();"/>
+		   	<img src="images/expand.svg" alt="Expand" title="Expand ranges of characters in the Copy &amp; Paste box. For example, 'a-zA-Z'." onmouseover="this.src='images/expand_focus.svg'" onmouseout="this.src='images/expand.svg'" onclick="if (document.getElementById('picker').value== '') { alert('Add characters to the text area.'); } else { document.getElementById('picker').value = expandList(document.getElementById('picker').value); }"/>
           
-		  	<img src="images/convert.png" id="convertEscapes" alt="Convert text area" title="Convert escapes in the text area to characters." onmouseover="this.src='images/convert_focus.png'" onmouseout="this.src='images/convert.png'"	onclick="document.getElementById('picker').value = convertTextArea(document.getElementById('picker').value)" />
+		  	<!--img src="images/convert.png" id="convertEscapes" alt="Convert text area" title="Convert escapes in the text area to characters." onmouseover="this.src='images/convert_focus.png'" onmouseout="this.src='images/convert.png'"	onclick="document.getElementById('picker').value = convertTextArea(document.getElementById('picker').value)" /-->
 
-           <img id="case_simple" src="images/case_simple.png" alt="Convert" title="Show upper/lower/title case alternatives for all characters in the copy/paste box." onmouseover="this.src='images/case_simple_focus.png'" onmouseout="this.src='images/case_simple.png'"	onclick="convert2upper(document.getElementById('picker').value, false);  return false;" />
+           <img id="case_simple" src="images/case_simple.svg" alt="Convert" title="Show upper/lower/title case alternatives for all characters in the copy/paste box." onmouseover="this.src='images/case_simple_focus.svg'" onmouseout="this.src='images/case_simple.svg'"	onclick="convert2upper(document.getElementById('picker').value, false);  return false;" />
 		   
-          	<img src="images/nfc.png" alt="NFC" title="Convert text in the Copy &amp; Paste box to NFC." onmouseover="this.src='images/nfc_focus.png'" onmouseout="this.src='images/nfc.png'" onclick="doN11n('nfc'); document.getElementById('picker').focus();" />
+          	<img src="images/nfc.svg" alt="NFC" title="Convert text in the Copy &amp; Paste box to NFC." onmouseover="this.src='images/nfc_focus.svg'" onmouseout="this.src='images/nfc.svg'" onclick="doN11n('nfc'); document.getElementById('picker').focus();" />
 
-			<img src="images/convertPicker2Hex.png" alt="Convert to hex" title="Convert characters to hex values." onmouseover="this.src='images/convertPicker2Hex_focus.png'" onmouseout="this.src='images/convertPicker2Hex.png'" onclick="convertPicker2Hex()"/><br/>
+			<img src="images/convertPicker2Hex.svg" alt="Convert to hex" title="Convert characters to hex values." onmouseover="this.src='images/convertPicker2Hex_focus.svg'" onmouseout="this.src='images/convertPicker2Hex.svg'" onclick="convertPicker2Hex()"/><br/>
 
-		    <img id="commaInsert" src="images/addcomma.png" alt="Select" title="Separate the characters in the edit buffer with commas." onmouseover="this.src='images/addcomma_focus.png'" onmouseout="this.src='images/addcomma.png'" onclick="addSpacesToPicker(',');"/>
+			<img src="images/removespace.svg" alt="Select" title="Remove all spaces from the text area." onmouseover="this.src='images/removespace_focus.svg'" onmouseout="this.src='images/removespace.svg'" onclick="document.getElementById('picker').value = document.getElementById('picker').value.replace(/\s/g,'')" />
  
-		 	<img src="images/count.png" alt="Count" title="Count the characters in the text area." onmouseover="this.src='images/count_focus.png'" onmouseout="this.src='images/count.png'" onclick="if (document.getElementById('picker').value== '') { alert('None.'); } else { alert(countPickerChars()); }"/>
+		 	<img src="images/count.svg" alt="Count" title="Count the characters in the text area." onmouseover="this.src='images/count_focus.svg'" onmouseout="this.src='images/count.svg'" onclick="if (document.getElementById('picker').value== '') { alert('None.'); } else { alert(countPickerChars()); }"/>
          
-			<img src="images/analyse.png" alt="Expand" title="Produce an annotated list of characters that are in the text area." onmouseover="this.src='images/analyse_focus.png'" onmouseout="this.src='images/analyse.png'" onclick="analysis = window.open('../app-analysestring/index.html?chars='+encodeURIComponent(document.getElementById('picker').value), 'analysis'); analysis.focus();"/>
+          	<img src="images/rotate.svg" id="rotateIcon" alt="Select" title="Turn a sequence of items into a list." onmouseover="this.src='images/rotate_focus.svg'" onmouseout="this.src='images/rotate.svg'" onclick="rotatePickerContent();"/>
+
+            <!--img src="images/analyse.png" alt="Expand" title="Produce an annotated list of characters that are in the text area." onmouseover="this.src='images/analyse_focus.png'" onmouseout="this.src='images/analyse.png'" onclick="analysis = window.open('../app-analysestring/index.html?chars='+encodeURIComponent(document.getElementById('picker').value), 'analysis'); analysis.focus();"/-->
 	        
-			<img src="images/han.png" alt="UniHan" onmouseover="this.src='images/han_focus.png'" onmouseout="this.src='images/han.png'" onclick="showUnihan(document.getElementById('picker').value, 'char');" title="Look up characters in the Copy &amp; Paste box in the UniHan database."/>
+			<img src="images/han.svg" alt="UniHan" onmouseover="this.src='images/han_focus.svg'" onmouseout="this.src='images/han.svg'" onclick="showUnihan(document.getElementById('picker').value, 'char');" title="Look up characters in the Copy &amp; Paste box in the UniHan database."/>
            
-		  	<img src="images/openConvert.png" alt="Convert" id="externalConvert" title="Send characters in the text area to the Unicode Character Converter tool." onmouseover="this.src='images/openConvert_focus.png'" onmouseout="this.src='images/openConvert.png'"	onclick="converter = window.open('../app-conversion/index.html?q='+encodeURIComponent(document.getElementById('picker').value), 'converter'); converter.focus();" />
+		  	<!--img src="images/openConvert.png" alt="Convert" id="externalConvert" title="Send characters in the text area to the Unicode Character Converter tool." onmouseover="this.src='images/openConvert_focus.png'" onmouseout="this.src='images/openConvert.png'"	onclick="converter = window.open('../app-conversion/index.html?q='+encodeURIComponent(document.getElementById('picker').value), 'converter'); converter.focus();" /-->
          
-		 	<img id="case_detail" src="images/case_detail.png" alt="Convert" title="Show upper/lower/title case alternatives with correspondences for all characters in the copy/paste box." onmouseover="this.src='images/case_detail_focus.png'" onmouseout="this.src='images/case_detail.png'"	onclick="convert2upper(document.getElementById('picker').value, true); return false;" />
+		 	<!--img id="case_detail" src="images/case_detail.png" alt="Convert" title="Show upper/lower/title case alternatives with correspondences for all characters in the copy/paste box." onmouseover="this.src='images/case_detail_focus.png'" onmouseout="this.src='images/case_detail.png'"	onclick="convert2upper(document.getElementById('picker').value, true); return false;" /-->
           
-		  	<img src="images/nfd.png" alt="NFD" title="Convert text in the Copy &amp; Paste box to NFD." onmouseover="this.src='images/nfd_focus.png'" onmouseout="this.src='images/nfd.png'" onclick="doN11n('nfd'); document.getElementById('picker').focus();" />
+		  	<img src="images/nfd.svg" alt="NFD" title="Convert text in the Copy &amp; Paste box to NFD." onmouseover="this.src='images/nfd_focus.svg'" onmouseout="this.src='images/nfd.svg'" onclick="doN11n('nfd'); document.getElementById('picker').focus();" />
             
-			<img src="images/convertPicker2Char.png" alt="Convert to characters" title="Convert hex values to characters." onmouseover="this.src='images/convertPicker2Char_focus.png'" onmouseout="this.src='images/convertPicker2Char.png'" onclick="convertPicker2Chars()"/>
+			<img src="images/convertPicker2Char.svg" alt="Convert to characters" title="Convert hex values to characters." onmouseover="this.src='images/convertPicker2Char_focus.svg'" onmouseout="this.src='images/convertPicker2Char.svg'" onclick="convertPicker2Chars()"/>
         </div>
         <div style="position: relative; align-self:center;">
              <img src="images/transfer.png" alt="Select" title="Send the characters in the text box to another application." style="width: 25px; height:29px;" 
