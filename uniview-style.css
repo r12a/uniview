@@ -858,6 +858,12 @@ span[lang|='ur'] {
     margin-block-end: 4px;
 	}
 
+
+
+#smallControls img { height: 1.4rem; margin-inline:.2rem; }
+#captureDelete img { height: 1.4rem; }
+
+
 #findBlock {
     width:17em; height: 2em; font-size: 90%;
     }
@@ -903,6 +909,10 @@ span[lang|='ur'] {
 #cparea textarea { height: 8rem; margin-block-end: 1rem; }
 
 #showProperties select { width: 10rem; }
+
+#smallControls img { height: 1.4rem; margin-inline:.1rem; }
+#captureDelete img { height: 1.4rem; }
+
 }
 
 
@@ -916,6 +926,9 @@ span[lang|='ur'] {
 	font-size: 150%; 
 	height: 5.6em;
 	}
+
+#smallControls img { height: 1.4rem; margin-inline:.5rem; }
+#captureDelete img { height: 1.4rem; }
 }
 
 
@@ -1108,6 +1121,10 @@ input[type="image"] {
 .notesexpl {
     margin-block-start: 1rem;
     }
+
+
+
+
 
 
 
