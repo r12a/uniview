@@ -892,7 +892,7 @@ span[lang|='ur'] {
 	height: 6em;
 	}
 #rotateIcon, #commaInsert {
-	display: none;
+	/*display: none;*/
 	}
 #block { height: 1rem; }
 #customRange1 { width: 5rem }
@@ -924,7 +924,7 @@ span[lang|='ur'] {
 	width:500px;
     width: 98%;
 	font-size: 150%; 
-	height: 5.6em;
+	height: 5.5em;
 	}
 
 #smallControls img { height: 1.4rem; margin-inline:.5rem; }

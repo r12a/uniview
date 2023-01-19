@@ -1089,7 +1089,7 @@ Local</label>
 		   
           	<img src="images/nfc.svg" alt="NFC" title="Convert text in the text area to NFC." onmouseover="this.src='images/nfc_focus.svg'" onmouseout="this.src='images/nfc.svg'" onclick="doN11n('nfc'); document.getElementById('picker').focus();" />
 
-			<img src="images/convertPicker2Hex.svg" alt="Convert to hex" title="Convert characters to hex values." onmouseover="this.src='images/convertPicker2Hex_focus.svg'" onmouseout="this.src='images/convertPicker2Hex.svg'" onclick="convertPicker2Hex()"/><br/>
+			<img src="images/convertPicker2Char.svg" alt="Convert to characters" title="Convert hex values & escapes to characters." onmouseover="this.src='images/convertPicker2Char_focus.svg'" onmouseout="this.src='images/convertPicker2Char.svg'" onclick="convertPicker2Chars()"><br/>
 
 			<img src="images/removespace.svg" alt="Select" title="Remove all spaces from the text area." onmouseover="this.src='images/removespace_focus.svg'" onmouseout="this.src='images/removespace.svg'" onclick="document.getElementById('picker').value = document.getElementById('picker').value.replace(/\s/g,'')" />
  
@@ -1107,7 +1107,7 @@ Local</label>
           
 		  	<img src="images/nfd.svg" alt="NFD" title="Convert text in the text area to NFD." onmouseover="this.src='images/nfd_focus.svg'" onmouseout="this.src='images/nfd.svg'" onclick="doN11n('nfd'); document.getElementById('picker').focus();" />
             
-			<img src="images/convertPicker2Char.svg" alt="Convert to characters" title="Convert hex values to characters." onmouseover="this.src='images/convertPicker2Char_focus.svg'" onmouseout="this.src='images/convertPicker2Char.svg'" onclick="convertPicker2Chars()"/>
+			<img src="images/convertPicker2Hex.svg" alt="Convert to hex" title="Convert characters to hex values." onmouseover="this.src='images/convertPicker2Hex_focus.svg'" onmouseout="this.src='images/convertPicker2Hex.svg'" onclick="convertPicker2Hex()">
         </div>
         <div style="position: relative; align-self:center;">
              <img src="images/transfer.png" alt="Select" title="Send the characters in the text box to another application." style="width: 25px; height:29px;" 
