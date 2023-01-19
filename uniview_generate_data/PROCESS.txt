@@ -19,35 +19,44 @@ Run: genScriptGroups.plx
 Step 2a
 Run: genDerivedAge.plx
 	Input: DerivedAge.txt
-	Output: age.php
+	Output: age.txt
+	// expands derived age data to one line per character with format DDDDD:a, etc.
+	// this perl file maps release numbers to letters
+	
 	
 Step 3
-            // Convert NameList.txt to utf-8, using TextWrangler/Word
 Run: genDescriptions.plx
-	Input: NameList.txt
-	Output: descriptions.js + subtitles.php + tempSubtRefs.php
+	Input: NamesList.txt
+	Output: descriptions.js + subtitles.js + tempSubtRefs.txt
 
 Remove the first entry in the array created in descriptions.js. 
 Search & replace all & to &amp;.
 
+
 Step 4
 Run: genUnicodeData.plx
-	Input UnicodeData.txt
-	Output: tempu.php
-
-		{{ If this is a beta release do the following:
-		Then for beta, copy old u.php to the directory and name it uold.php, and run doDiff.php
-		-> u_withdiffinfo.php
-		Then run doBetaGraphics.php  // need to add subtitles stuff !
-		-> u.php
-		}}
-
-
-Step 4a  (if just updating the graphics list, update graphicranges.php and just do this step and copy u.js to the main directory)
-
-Run:  doGraphics.php  // adds pointers to local graphics and to subtitles in subtitles.php
-	Input tempu.php + tempSubtRefs.php + age.php + graphicranges.php
+	Input UnicodeData.txt + DerivedAge.txt + tempSubtRefs.txt
 	Output: u.js
+
+	// adds pointers to age.js and to subtitles.js
+	// rearranges order of items to reduce bandwidth
+
+
+Step 5
+Run make_name_list.html
+Copy the resulting file all-names.js to /shared/code/
+
+
+Step 6
+Copy the following files to the main directory:
+	descriptions.js
+	u.js
+	names.php
+	subtitles.js
+
+
+
+----------------------
 
 
 Step 5
@@ -62,13 +71,4 @@ Run: genMenu.plx
 
 Reorder the menu items as needed, and copy paste to index.html.
 
-Step 7
-Copy the following files to the main directory:
-	descriptions.js
-	u.js
-	names.php
-	subtitles.js
 
-Step 8
-Run make_name_list.html
-Copy the resulting file all-names.js to /shared/code/
