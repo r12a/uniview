@@ -36,16 +36,16 @@
 <div id="dialogue">
 <div id="panelWrapper">
 <div id="tabpanels">
-<ul id="tabs">
-    <li class="ontab" id="lookuppaneltab"><a href="#initialpanel" onclick="tabswitch('lookuppanel', 'listpanel optionspanel'); return false;">Look up</a></li>
+<div id="tabs">
+    <h2 class="ontab" id="lookuppaneltab"  onclick="tabswitch('lookuppanel', 'listpanel optionspanel');">Look up</h2>
     
-    <li id="listpaneltab"><a href="#rangepanel" onclick="tabswitch('listpanel', 'lookuppanel optionspanel'); return false;">Filter</a></li>
+    <h2 id="listpaneltab" onclick="tabswitch('listpanel', 'lookuppanel optionspanel');">Filter</h2>
     
-    <li id="optionspaneltab"><a href="#optionspanel" onclick="tabswitch('optionspanel', 'listpanel lookuppanel'); return false;">Options</a></li>
+    <h2 id="optionspaneltab" onclick="tabswitch('optionspanel', 'listpanel lookuppanel');">Options</h2>
     
-    <li id="helppaneltab"><a href="#helppanel" onclick="help = window.open('help.html', 'help'); help.focus(); return false;">Help</a></li>
-</ul>
-<br  style="clear:both;">
+    <h2 id="helppaneltab" onclick="help = window.open('help.html', 'help'); help.focus();">Help</h2>
+</div>
+<!--br  style="clear:both;"-->
   
   
   
@@ -1071,9 +1071,10 @@ Local</label>
 			
 			
 			<div id="captureDelete">
-			<img src="images/selectall.svg" alt="Select" title="Select all text in the text area." onmouseover="this.src='images/selectall_focus.svg'" onmouseout="this.src='images/selectall.svg'" onclick="document.getElementById('picker').focus();document.getElementById('picker').select()" /><br><img src="images/clearpicker.svg" alt="Clear" title="Clear the  text area." onmouseover="this.src='images/clearPicker_focus.svg'" onmouseout="this.src='images/clearpicker.svg'" onClick="document.getElementById('picker').value = ''; document.getElementById('picker').focus(); return false;" />
+			<img src="images/selectall.svg" alt="Select" title="Select all text in the text area." onmouseover="this.src='images/selectall_focus.svg'" onmouseout="this.src='images/selectall.svg'" onclick="copyTextArea()"><br><img src="images/clearpicker.svg" alt="Clear" title="Clear the  text area." onmouseover="this.src='images/clearPicker_focus.svg'" onmouseout="this.src='images/clearpicker.svg'" onClick="document.getElementById('picker').value = ''; document.getElementById('picker').focus(); return false;" />
   			</div>
 			
+<!--onclick="document.getElementById('picker').focus();document.getElementById('picker').select()"-->
 
 
 			<div id="smallControls">

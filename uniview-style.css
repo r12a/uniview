@@ -1,3 +1,13 @@
+@font-face {
+    font-family: 'ralewaywf';
+    src: local('Raleway'),
+         url('../shared/webfonts/raleway-regular-webfont.woff2');
+    font-weight: normal;
+    font-style: normal;
+	}
+
+
+
 /* special rule for styling the matrix for glyph capture */
 /* should normally be commented out
 #chart td.ch {
@@ -16,6 +26,7 @@ body {
 	font-family: raleway, 'arial unicode ms', Arial, Helvetica, sans-serif;
 	margin: 0;
 	}
+
 
 button {
   cursor: pointer;
@@ -109,9 +120,6 @@ img {
 
 #dialogue { vertical-align: bottom; }
 
-
-#tabs #helppaneltab { background-color: rgba(93,167,246,1.00); float:right; }
-#tabs #helppaneltab a { color: white; }
 
 
 
@@ -668,10 +676,16 @@ span[lang|='ur'] {
 	justify-content: space-between;
 	/* background: antiquewhite; */
     padding: 0.5rem;
-    font-family: Arial, sans-serif;
+    font-family: ralewaywf, Arial, sans-serif;
     border-block-end: 2px solid #eee;
 	}
 #charInfo .startmsg { margin-top: 1em; }
+
+
+
+
+
+
 /* -------- TABS ---------------- */
 
 #tabpanels {
@@ -679,11 +693,31 @@ span[lang|='ur'] {
 	border-radius: 5px;
 	}
 #tabs {
-	float: left;
+	/*float: left;
 	margin: 0px 0 0 0px; 
 	padding:0;  
-	border-top-right-radius: 10px;
+	border-top-right-radius: 10px;*/
+    border-bottom: 1px solid #ccc;
+    margin: 0;
+    padding-block-end: .3rem;
 	}
+#tabs h2 {
+    display: inline-block;
+    padding: 0 1em;
+    color: rgb(204, 204, 204);
+    text-align: left;
+    font-size: 123%;
+    margin: 0;
+    text-transform: lowercase;
+    border: 1px solid #ccc;
+    border-bottom: 0;
+    font-weight: 400;
+    border-top-left-radius: .5em;
+    border-top-right-radius: .5em;
+    cursor: pointer;
+    }
+
+/*
 #tabs li { 
 	float:left; 
 	margin: 0; 
@@ -695,10 +729,6 @@ span[lang|='ur'] {
 
 	border: 1px solid #a52a2a;
 	border: 1px solid #ccc;
-	/*border-bottom: 1px solid #EDE4D0;
-	border-bottom: 1px solid #C96;
-	border-top-right-radius: 5px;
-	border-top-left-radius: 5px;*/
 	border-radius: 5px;
 	margin-right: 5px;
 	}
@@ -710,17 +740,33 @@ span[lang|='ur'] {
 	background-color: transparent;
 	color: #999;
 	}
+    */
 #tabs .ontab { 
-	font-weight:bold;  
+	/*font-weight:bold;  
 	border: 1px solid #C96;
-	/*border-bottom: 1px solid #A22929;
-	border-bottom: 1px solid #EDE4D0;
-	border-top-right-radius: 5px;
-	border-top-left-radius: 5px;*/
 	border-radius: 5px;
 	background-color: #EDE4D0;
-	background-color: floralwhite;
+	background-color: floralwhite;*/
+    color: #a52a2a;
 	}
+/*
+#tabs #helppaneltab { 
+    background-color: rgba(93,167,246,1.00);
+    }
+#tabs #helppaneltab a { color: white; }
+*/
+#tabs #helppaneltab {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+  margin: 1rem 1rem 1rem 0;
+  background-color: rgba(93,167,246,1.00);
+  border-radius: .5rem;
+  color: white;
+  padding: 0 1rem;
+}
+
 #tabs .ontab a, #tabs .ontab a:visited { 
 	color: white;
 	color: #a52a2a;
@@ -774,7 +820,7 @@ span[lang|='ur'] {
     }
 #helppanel { max-width: 42%; min-width: 40%; }
 #listpanel, #sendtopanel, #optionspanel, #helppanel { display: none; }
-#lookuppanel, #sendtopanel, #listpanel, #optionspanel, #helppanel { line-height: 2em; color: #a52a2a; color: #777; } 
+#lookuppanel, #sendtopanel, #listpanel, #optionspanel, #helppanel { line-height: 2em; color: #a52a2a; color: #777; color: #888; } 
 #listcreator { text-align: right; text-align: end; float: right; margin-top: 5px; font-size: 85%; padding-top:2px; padding-bottom:2px; margin-right: 5px; cursor:pointer; }
 
 
@@ -877,6 +923,8 @@ span[lang|='ur'] {
   and (orientation: portrait) 
   and (-webkit-min-device-pixel-ratio: 2) {
 
+body { font-size: 14px; }
+
 #lookuppanel { height: 9rem; }
 #lookuppanelSub { height: 9rem; }
 #block { width: 15rem; }
@@ -912,6 +960,14 @@ span[lang|='ur'] {
 
 #smallControls img { height: 1.4rem; margin-inline:.1rem; }
 #captureDelete img { height: 1.4rem; }
+
+#tabs #helppaneltab {
+  padding: 0 .2rem;
+}
+
+#charOutput {
+    padding-inline-start: 1rem;
+    }
 
 }
 

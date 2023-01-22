@@ -428,6 +428,23 @@ function convertDec2CP ( textString ) {
 	}
 
 
+function copyListToClipboard () {
+    // find all items in the list and copy char & name to clipboard
+    lines = document.getElementById('chart').querySelectorAll('.ch')
+    //console.log(lines.length)
+    
+    out = ''
+    for (i=0;i<lines.length;i++) {
+        out += lines[i].textContent+'\n'
+        }
+    //console.log(out)
+    
+    navigator.clipboard.writeText(out)
+    }
+
+
+
+
 function createList (formField) {
 	// output: a list of characters for a range given by formField displayed in the left panel
 	// formField: a string of the form 'XXXX:YYYY' indicating a range of characters in hex notation
@@ -444,6 +461,18 @@ function createList (formField) {
 	var newContent = document.createElement( 'div' );
 		newContent.className = 'charList';
 		newContent.id = 'chart';
+    
+    var copy = document.createElement('span')
+    copy.style.float = 'right'
+    img = document.createElement('img')
+    copy.appendChild(img)
+    img.src = 'images/copytiny.svg'
+    img.title = 'Copy the list to the clipboard.'
+    img.style.height = '1rem'
+    img.style.marginInlineEnd = '2rem'
+    img.onclick = copyListToClipboard
+    newContent.appendChild(copy)
+    
 	
 	var prevSubtitle = '';
 	for (i=start; i<=end; i++) {
@@ -599,6 +628,18 @@ function displayUnorderedList ( string ) {
 	var newContent = document.createElement( 'div' );
 		newContent.className = 'charList';
 		newContent.id = 'chart';
+    
+    var copy = document.createElement('span')
+    copy.style.float = 'right'
+    img = document.createElement('img')
+    copy.appendChild(img)
+    img.src = 'images/copytiny.svg'
+    img.title = 'Copy the list to the clipboard.'
+    img.style.height = '1rem'
+    img.style.marginInlineEnd = '2rem'
+    img.onclick = copyListToClipboard
+    newContent.appendChild(copy)
+    
 
 	for (i=0; i<string.length; i++) {
 		codepoint = string.charCodeAt( i ); 
@@ -3348,6 +3389,16 @@ function getScriptInfoPointer (charNum) {
     console.log(charNum,i)
 	if ( i == scriptGroups.length ) return( '' )
     else return i
+	}
+
+
+
+function copyTextArea () {
+    // Copies the content of the text area to the clipboard
+    var node = document.getElementById('picker')
+	node.focus()
+	document.execCommand('selectAll')
+	document.execCommand('copy')
 	}
 
 
