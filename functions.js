@@ -2111,7 +2111,7 @@ function printProperties ( codepoint ) {
          // add img, if available and graphic toggle set
 		if (document.getElementById('graphicsToggle').checked === true && charType === IN_U_DB) {
             out += `<img id="largeChar" alt="${ codepoint }" title="${ codepoint }" src="../c/${ scriptGroup.replace(/ /g,'_')+'/large/'+cpHex }.png"
-                onclick="navigator.clipboard.writeText(String.fromCodePoint(this.title))">`
+                onclick="navigator.clipboard.writeText(String.fromCodePoint(this.title)); document.getElementById('copyNotice').style.display = 'block'; setTimeout(() => { document.getElementById('copyNotice').style.display = 'none'         }, '500')">`
             }       
         // otherwise add text
 		else { 
@@ -3399,6 +3399,11 @@ function copyTextArea () {
 	node.focus()
 	document.execCommand('selectAll')
 	document.execCommand('copy')
+    
+    document.getElementById('copyNotice').style.display = 'block'
+    setTimeout(() => {
+    document.getElementById('copyNotice').style.display = 'none'
+        }, "500")
 	}
 
 
@@ -3423,6 +3428,12 @@ function copyToClipboard (evt) {
 
     var node = evt.target
     navigator.clipboard.writeText(node.textContent)
+    
+
+    document.getElementById('copyNotice').style.display = 'block'
+    setTimeout(() => {
+        document.getElementById('copyNotice').style.display = 'none'
+        }, "500")
 	}
 
 
