@@ -270,7 +270,7 @@ function changeFont (fontName) {
  	}
 
 	
-function changeFontSize (size) {
+function changeFontSizeX (size) {
 	var leftpanel = document.getElementById('chart');
 	
 	if ( (_lastOperation == "range" || _lastOperation == "customrange") 
@@ -291,7 +291,39 @@ function changeFontSize (size) {
 	    	}
 		}  
 	}
-	
+
+
+
+
+
+function changeFontSize (size) {
+	var leftpanel = document.getElementById('chart')
+    
+    var chars = leftpanel.querySelectorAll('.chSpan')
+
+    for (var i=0; i < chars.length; i++) { 
+        chars[i].style.fontSize = size
+        }
+
+
+    var imgs = leftpanel.querySelectorAll('.ch img')
+
+    for (var i=0; i < imgs.length; i++) { 
+        imgs[i].style.height = size
+        }
+	}
+
+
+
+
+
+
+
+
+
+
+
+
 	
 function changeHeight ( height ) { 
 	// changes the height of the visible text in the left panel by user request
