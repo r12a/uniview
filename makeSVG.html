@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 
 
-<title>UniViewSVG 15</title>
+<title>makeSVG 15</title>
 <link rel="stylesheet" href="uniview-style.css">
 
 <!-- &copy; Copyright 2001-2022 Richard Ishida [ishida@w3.org].  All rights reserved.  -->
@@ -19,7 +19,7 @@
 <script src="../app-conversion/conversionfunctions.js"></script>
 </head>
 
-<body>
+<body class="makeSVG">
 <header>
 <div id="header-boilerplate"><div id="site-navigation"> <img id="bp_picture" class="compact" alt=" " src="../shared/images/world.gif"></div><div id="boilerplate"><div id="line" class="midlength">&nbsp;</div></div>
 <div id="topbar"><a href="/">r12a</a> &gt;&gt; apps  &gt;&gt; UniView 15</div><div id="sitelinks" class="noprint"><a href="../r12a.github.io/blog/index.html">blog</a>&nbsp; <a href="../r12a.github.io/doclist.html">docs</a>&nbsp; <a href="../r12a.github.io/maplist.html">maps</a>&nbsp; <a href="../r12a.github.io/applist.html">apps</a>&nbsp; <a href="../r12a.github.io/photos.html">photos</a>&nbsp;&nbsp;</div></div>
@@ -825,6 +825,7 @@
     onclick="changeFontSize(document.getElementById('fontSize').value); return false;"
     >📥</button>
   </div>
+
 </div>
 
 
@@ -847,9 +848,10 @@ Other</span>
 <label title="Search only within the characters shown in a list or table, and highlight the characters found.">
 <input name="localSearch" type="checkbox" id="localSearch" />
 Local</label>
-  
+
 <span id="searchResultCount">Search results found: 0</span>
 </span>
+
 </div>
 
 
@@ -1040,12 +1042,12 @@ Local</label>
   </div-->
 
 <!--div title="Adjust the size of the characters displayed in tables or lists. (Only works if Use Graphics is turned off.)">Left panel font size:
-    <select id="fontSize" name="fontSize" onchange="changeFontSize(this.value)" title="Change the size of characters in the matrix.">
+    <select id="fontSizeX" name="fontSize" onchange="changeFontSize(this.value)" title="Change the size of characters in the matrix.">
       <option value=".75rem">.75rem</option>
       <option value="1rem">1rem</option>
       <option value="1.5rem">1.5rem</option>
       <option value="2rem">2rem</option>
-      <option value="2.5rem" selected>2.5rem</option>
+      <option value="2rem" selected="selected">2.5rem</option>
       <option value="3rem">3rem</option>
       <option value="4rem">4rem</option>
       <option value="5rem">5rem</option>

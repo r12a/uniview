@@ -392,7 +392,7 @@ p		{ margin-top: 0; margin-bottom: 0; }
 
 
 #chart td {
-	width: 30px;
+	/*width: 30px;*/
 	text-align: center;
 	vertical-align: middle;
 	padding: 0;
@@ -414,6 +414,10 @@ td.empty {
 img {
 	cursor: pointer;
 	/* vertical-align: middle;  */
+	}
+#listOutput img {
+	cursor: pointer;
+	vertical-align: middle;
 	}
 propshead {
 	margin-top: 2em;
@@ -798,8 +802,8 @@ span[lang|='ur'] {
 #lookupSelect select { height: 2em; font-size: 90%; }
 #lookupSearch1 { display:flex; flex-direction: row; flex-wrap: nowrap; }
 #lookupSearch1 form { border:0;margin:0;padding:0; }
-#textSearch { height: 2em; width:10rem; font-size:90%; padding-inline: 1em; }
-#lookupSearch2 { text-align: center; }
+#textSearch { height: 2em; width:12rem; font-size:90%; padding-inline: 1em; }
+/* #lookupSearch2 { text-align: center; } */
 #lookupSearch3 { display:flex; flex-direction: row; flex-wrap: nowrap; }
 #lookupSearch3 form { border:0;margin:0;padding:0; }
 
@@ -1043,10 +1047,11 @@ body { font-size: 14px; }
 #searchResultCount {
 	display: none; 
 	color: #a52a2a;
-	font-size: 80%; 
-	/*float:left; 
+	/*font-size: 80%; 
+	float:left; 
 	vertical-align:top;
 	margin-left: 10px;*/
+    margin-inline-start: 1rem;
 	}
 
 .chSpan {
@@ -1055,10 +1060,43 @@ body { font-size: 14px; }
 .charList .chSpan {
     margin-right: .25em;
     }
-#largeChar {
-    font-size: 170px;
-    padding-inline-end: 2rem;
+.makeSVG #largeChar {
     background: white;
+    height: 260px;
+    min-width: 260px;
+    text-align: center;
+    vertical-align: middle;
+    border: 2px solid red;
+    display: inline-block;
+    font-size: 200px;
+    line-height: 250px;
+    font-family: "Noto Sans";
+    }
+.makeSVG #largeChar::before {
+    content: '\25CC';
+    }
+
+/*
+#largeChar {
+    background: white;
+    font-size: 150px;
+    height: 260px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 260px;
+    display: inline-block;
+    }
+*/
+#largeChar {
+    background: white;
+    font-size: 100px;
+    height: 190px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 190px;
+    /*min-width: 190px;*/
+    display: inline-block;
+    margin-inline-end: 1rem;
     }
 
 #chart td.notesAvailable {

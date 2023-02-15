@@ -32,6 +32,7 @@ const HAN_HANG_TANG = 3 // Han, Hangul, or Tangut character
 const SURROGATE = 4  // a surrogate code point
 const PRIVATEUSE = 5 // a private use character
 
+const SVG = 5 // in scriptGroups indicates whether SVG glyphs available
 
 
 // Global variables
@@ -65,6 +66,10 @@ var _charScriptGroup = "Latin"; // records the unicode block of the character in
 var _block = ''; // remembers which block was displayed
 var _showNotes = false  // determines whether or not to display notes for individual characters
 
+
+// make a list of script blocks that have SVG images
+hasSVG = {}
+for (i=0;i<scriptGroups.length;i++) if (scriptGroups[i][SVG] === true) hasSVG[scriptGroups[i][2]] = true
 
 
 function togglePanelDestination () {
@@ -105,6 +110,8 @@ function adjacentChar (codepoint, direction) {
 	}
 
 
+
+
 function addLine (codepoint, newContent) { 
 	// Displays one line in a list of characters in the left panel
 	// codepoint: the dec codepoint for the character to display
@@ -137,11 +144,17 @@ function addLine (codepoint, newContent) {
 				span = div.appendChild( document.createElement( 'span' ))
 				span.className = 'chSpan'
 				span.appendChild( document.createTextNode( getCharFromInt(codepoint) ))
+                span.style.fontSize = document.getElementById('fontSize').value
+                span.style.fontFamily = document.getElementById('chFont').value
 				}
 			else { 
 				img = div.appendChild( document.createElement( 'img' ))
                 scriptGroup = findScriptGroup(codepoint)
-                img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+cpHex+'.png' 
+                if (hasSVG[scriptGroup] === true) imgName = `../c/${ scriptGroup.replace(/ /g,'_') }/${ cpHex }.svg`
+                else imgName = `../c/${ scriptGroup.replace(/ /g,'_') }/large/${ cpHex }.png`
+                img.src = imgName 
+                //img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+cpHex+'.png'
+                img.style.height = document.getElementById('fontSize').value
                 }
 			}
 		}
@@ -156,11 +169,17 @@ function addLine (codepoint, newContent) {
 				span = div.appendChild( document.createElement( 'span' ))
 				span.className = 'chSpan'
 				span.appendChild( document.createTextNode( getCharFromInt(codepoint) ))
+                span.style.fontSize = document.getElementById('fontSize').value
+                span.style.fontFamily = document.getElementById('chFont').value
 				}
 			else { 
 				img = div.appendChild( document.createElement( 'img' ))
                 scriptGroup = findScriptGroup(codepoint)
-                img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+cpHex+'.png' 
+                if (hasSVG[scriptGroup] === true) imgName = `../c/${ scriptGroup.replace(/ /g,'_') }/${ cpHex }.svg`
+                else imgName = `../c/${ scriptGroup.replace(/ /g,'_') }/large/${ cpHex }.png`
+                img.src = imgName 
+                //img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+cpHex+'.png'
+                img.style.height = document.getElementById('fontSize').value
                 }
 			}
 		}
@@ -614,11 +633,22 @@ function createMatrix ( formField ) {
                         img = td.appendChild( document.createElement( 'img' ))
                         cRecord = U[cCell].split(';')
                         scriptGroup = findScriptGroup(cCell)
-                        img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+hexNum+'.png'
+                        
+                        if (hasSVG[scriptGroup] === true) imgName = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+hexNum+'.svg'
+                        else imgName = '../c/'+scriptGroup.replace(/ /g,'_')+'/large/'+hexNum+'.png'
+                        
+                        //img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+hexNum+'.svg'
+                        //imgName = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+hexNum
+                        //if (hasSVG[scriptGroup] === true) imgName += '.svg'
+                        //else imgName += '.png'
+                        img.src = imgName
+                        img.style.height = document.getElementById('fontSize').value
                         }
                     else {
                         td.appendChild( document.createTextNode( getCharFromInt(cCell) ))
                         td.classList.add('chSpan')
+                        td.style.fontSize = document.getElementById('fontSize').value
+                        td.style.fontFamily = document.getElementById('chFont').value
                         }
                     }
             
@@ -642,7 +672,7 @@ function createMatrix ( formField ) {
 		}
 	var removedNode = listDiv.replaceChild( table, oldtable );
 
-	if (document.getElementById('fontSize')) { document.getElementById('fontSize').value = '100%'; }
+	//if (document.getElementById('fontSize')) { document.getElementById('fontSize').value = '100%'; }
 	}
 
 
@@ -690,7 +720,7 @@ function displayUnorderedList ( string ) {
 	if (dugraphics) { document.getElementById('ack').style.display = 'block'; }
 	else { document.getElementById('ack').style.display = 'none'; }
 
-	if (document.getElementById('fontSize')) { document.getElementById('fontSize').value = '100%'; }
+	//if (document.getElementById('fontSize')) { document.getElementById('fontSize').value = '100%'; }
 	}
 
 
@@ -722,7 +752,7 @@ function drawPropertyList (newContent, resultdiv, counter) {
 	if (document.getElementById('directionality').value != 'startup') {
 		highlightList( 4, document.getElementById('directionality').value );
 		}
-	document.getElementById('fontSize').value = '100%';
+	//document.getElementById('fontSize').value = '100%';
 	
 	if (document.getElementById('graphicsToggle').checked == true) { document.getElementById('ack').style.display = 'block'; }
 	else { document.getElementById('ack').style.display = 'none'; }
@@ -741,7 +771,7 @@ function drawSearchList (newContent, resultdiv, counter, dugraphics) {
 
 	removedNode = listDiv.replaceChild( newContent, oldContent );
 
-	if (document.getElementById('fontSize')) { document.getElementById('fontSize').value = '100%'; }
+	//if (document.getElementById('fontSize')) { document.getElementById('fontSize').value = '100%'; }
 	
 //	if (document.getElementById('graphicsToggle').checked == true) { document.getElementById('ack').style.display = 'block'; }
 //	else { document.getElementById('ack').style.display = 'none'; }
@@ -898,7 +928,7 @@ function findString ( searchString ) {
 
 		showCodepoint(records, 'hex');
 		document.getElementById('searchResultCount').innerHTML = count+" records found";
-		document.getElementById('searchResultCount').style.display = block;	
+		document.getElementById('searchResultCount').style.display = 'inline';	
 		}
 	}
 
@@ -1092,7 +1122,12 @@ function highlight2List () {
 	displayUnorderedList(str);
 	}
 
-	
+
+
+
+
+
+
 function listProperties ( searchString ) { console.log('>>> listProperties (', searchString, ')')
 	// effect: outputs in the left panel a list of characters whose properties match searchString
 	// searchString: a string of text to search for in the database that wil be used as a regular expression
@@ -2021,7 +2056,16 @@ function toggleGraphic (graphic) {
                     tds[i].classList.contains('chSpan')) { 
 					img = document.createElement( 'img' )
 				    scriptGroup = findScriptGroup(parseInt(titlefields[3]))
-				    img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+hexNum+'.png'
+                    if (hasSVG[scriptGroup] === true) imgName = `../c/${ scriptGroup.replace(/ /g,'_') }/${ hexNum }.svg`
+                    else imgName = `../c/${ scriptGroup.replace(/ /g,'_') }/large/${ hexNum }.png`
+                    img.src = imgName
+                    img.style.height = document.getElementById('fontSize').value
+
+                    tds[i].style.fontSize = ''
+                    tds[i].style.fontFamily = ''
+
+				    //img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+hexNum+'.png'
+                    
 					text = tds[i].firstChild
 					tds[i].replaceChild(img, text)
                     tds[i].classList.remove('chSpan')
@@ -2032,6 +2076,8 @@ function toggleGraphic (graphic) {
                     ch = getCharFromInt(titlefields[3])
                     tds[i].textContent = ch
                     tds[i].classList.add('chSpan')
+                    tds[i].style.fontSize = document.getElementById('fontSize').value
+                    tds[i].style.fontFamily = document.getElementById('chFont').value
 					}
 				}
 			}
@@ -2050,7 +2096,11 @@ function toggleGraphic (graphic) {
 				if (document.getElementById('graphicsToggle').checked == true && charType === IN_U_DB) {
 					img = document.createElement( 'img' )
 				    scriptGroup = findScriptGroup(parseInt(titlefields[3]))
-				    img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+hexNum+'.png' 
+                    if (hasSVG[scriptGroup] === true) imgName = `../c/${ scriptGroup.replace(/ /g,'_') }/${ hexNum }.svg`
+                    else imgName = `../c/${ scriptGroup.replace(/ /g,'_') }/large/${ hexNum }.png`
+                    img.src = imgName
+                    img.style.height = document.getElementById('fontSize').value
+				    //img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/'+hexNum+'.png' 
 					span = divs[i].getElementsByTagName('span')[0]
 					divs[i].replaceChild(img, span)
 					}
@@ -2060,6 +2110,8 @@ function toggleGraphic (graphic) {
 					var ch = document.createTextNode(getCharFromInt(titlefields[3]))
 					span = document.createElement('span') 
 					span.className = 'chSpan'
+                    span.style.fontSize = document.getElementById('fontSize').value
+                    span.style.fontFamily = document.getElementById('chFont').value
 					span.appendChild(ch)
 					img = divs[i].firstChild
 					divs[i].replaceChild(span, img)
@@ -2135,15 +2187,24 @@ function printProperties ( codepoint ) {
     
 	if (charType == IN_U_DB || charType == HAN_HANG_TANG || charType == PRIVATEUSE) { 
 		cRecord = charData.split(';')
-		if (cRecord[CAN_COMB_CL] > 0) { MsPadding = '\u00A0' }  // ie. this is a combining character
+        
+        // *** REMOVE FOR NOW TO CHECK EFFECT ***
+		//if (cRecord[CAN_COMB_CL] > 0) { MsPadding = '\u00A0' }  // ie. this is a combining character
+		if (cRecord[CAN_COMB_CL] > 0) { MsPadding = '\u25CC' }  // ie. this is a combining character
 
 		// draw the large character
-        out += `<div class="largeCharDiv">`
+        out += `<div class="largeCharDiv"`
+        out += ` style="font-family: ${ document.getElementById('chFont').value };"`
+        out += `>`
         
          // add img, if available and graphic toggle set
 		if (document.getElementById('graphicsToggle').checked === true && charType === IN_U_DB) {
-            out += `<img id="largeChar" alt="${ codepoint }" title="${ codepoint }" src="../c/${ scriptGroup.replace(/ /g,'_')+'/large/'+cpHex }.png"
-                onclick="navigator.clipboard.writeText(String.fromCodePoint(this.title)); document.getElementById('copyNotice').style.display = 'block'; setTimeout(() => { document.getElementById('copyNotice').style.display = 'none'         }, '500')">`
+            if (hasSVG[scriptGroup] === true) imgName = `../c/${ scriptGroup.replace(/ /g,'_') }/${ cpHex }.svg`
+            else imgName = `../c/${ scriptGroup.replace(/ /g,'_') }/large/${ cpHex }.png`
+
+            //out += `<img id="largeChar" alt="${ codepoint }" title="${ codepoint }" src="../c/${ scriptGroup.replace(/ /g,'_')+'/large/'+cpHex }.png"
+            out += `<img id="largeChar" alt="${ codepoint }" title="${ codepoint }" src="${ imgName }"
+                onclick="navigator.clipboard.writeText(String.fromCodePoint(this.title)); document.getElementById('copyNotice').style.display = 'block'; setTimeout(() => { document.getElementById('copyNotice').style.display = 'none' }, '500')">`
             }       
         // otherwise add text
 		else { 

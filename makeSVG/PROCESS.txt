@@ -1,0 +1,37 @@
+
+Set up for copying
+	- turn off graphics
+	- cycle through the items in Uniview and adjust the inspector for font-family, font-size, line-height, to get best fit in the box
+	- most will fit, but some specially wide characters may need to be treated separately afterwards
+	- set the screen grab to just inside the border (and check)
+
+
+Produce PNGs
+	- click on every square in the block and capture the large box content
+	- empty slots should also be captured using cs4 and capturing some red colour
+	- after finishing, move all .png files to svgconversion folder
+	- take a snap of the font etc settings in inspector
+
+
+Convert names
+	- check that all are present & correct
+	- run python3 xrenum.py <start_hex_value> to generate file names
+	- remove non-character images
+
+
+Make SVGs
+	- use https://express.adobe.com/sp to convert each character to .svg
+	- move from Download folder to checkSVG folder to check all are ok & present
+	- remove _adobe_express from the names
+	- move to c folder (with setting snap)
+
+
+Update scriptGroups
+	- add true to end of block line
+
+
+Archive
+	- move the PNG files to Sites/cImages in case they are needed
+	** Check whether these should replace the existing large images in c folder
+
+
