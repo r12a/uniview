@@ -9,12 +9,13 @@ Set up for copying
 Produce PNGs
 	- click on every square in the block and capture the large box content
 	- empty slots should also be captured using cs4 and capturing some red colour
-	- after finishing, move all .png files to svgconversion folder
-	- take a snap of the font etc settings in inspector
+	- after finishing, move all .png files to temp folder
+	- check that all are present & correct
+	- take a snap of the font etc settings in inspector and rename to xsettings.png
 
 
 Convert names
-	- check that all are present & correct
+	- then copy the to-be-svg images to svgconversion folder
 	- run python3 xrenum.py <start_hex_value> to generate file names
 	- remove non-character images
 
