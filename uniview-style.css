@@ -973,6 +973,9 @@ body { font-size: 14px; }
     padding-inline-start: 1rem;
     }
 
+#textSearch { 
+    width: 9rem;
+    }
 }
 
 
