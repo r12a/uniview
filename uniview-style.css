@@ -1075,7 +1075,7 @@ body { font-size: 14px; }
     line-height: 250px;
     font-family: "Noto Sans";
     }
-.makeSVG #largeChar::before {
+.XmakeSVG #largeChar::before {
     content: '\25CC';
     }
 

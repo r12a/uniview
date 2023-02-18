@@ -15,8 +15,10 @@
 <script src="function-text.js"></script>
 <script src="agemap.js"></script>
 <script src="propNames.js"></script>
-<script src="functions.js"></script>
+<!--script src="functions.js"></script-->
+<script src="makeSVGfunctions.js"></script>
 <script src="../app-conversion/conversionfunctions.js"></script>
+
 </head>
 
 <body class="makeSVG">
@@ -1189,7 +1191,21 @@ Local</label>
 	
     <label title="Display notes for characters, where available.">
     <input name="showNotesToggle" type="checkbox" id="showNotesToggle" onclick="toggleNotes(this);" />&nbsp;Show notes</label>
-	</div>
+
+
+<div id="makeSVGControls" style="text-align: right;">
+    &nbsp; &nbsp;
+    Font <input id="svgFontFamily" type="text" style="width:12rem;" value="Noto Sans">
+    Size <input id="svgFontSize" type="text" style="width:3rem;" value="200px">
+    Line <input id="svgLineHeight" type="text" style="width:3rem;" value="250px">
+    Dummy <input id="showDottedCircle" type="checkbox">
+</div>
+
+
+
+</div>
+
+
 
 <div id="blockInfoPointer"></div>
 
@@ -1315,6 +1331,27 @@ function setOutputElementSize () {
     charOutputElement = document.getElementById('charOutputWrapper')
     charOutputElement.style.height = eval(window.innerHeight - charOutputElement.offsetTop - 40) +'px'
     }
+
+function moveToNextCharacter (e) {
+    // moves to next character on right panel when -> pressed
+    if (e.code === 'ArrowRight') {
+        document.getElementById('goforward').click() 
+        e.preventDefault()
+        }
+    else if (e.code === 'Backslash') {
+        document.getElementById('goforward').click() 
+        e.preventDefault()
+        }
+    else if (e.code === 'ArrowLeft') {
+        document.getElementById('gobackward').click() 
+        e.preventDefault()
+        }
+}
+
+
+// event listener to move to next character
+document.querySelector("body").addEventListener('keydown', moveToNextCharacter)
+
 </script>
 </body>
 </html>
