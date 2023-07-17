@@ -526,23 +526,36 @@ img { border-radius: 4px; }
         
 <section id="tailor">
 <h2>Sharing links<a href="#tailor"></a></h2>
-    <p> This is useful for pointing people to particular information using a URL, for example in email. By providing query parameters in the
-              URI you can start up UniView with specific information displayed as follows:</p>
-    <ul>
-              <li><strong>uniview/?char=&lt;hex-codepoint&gt;</strong> Displays the information about the specified character in the right panel on
-        startup.<br/>
-        Eg. <a
-						href="/uniview/?char=0449">http://r12a.github.io/uniview/?char=0449</a></li>
-              <li><strong>uniview/?charlist=&lt;list-of-characters&gt;</strong> Displays the a list of the specified characters in the left panel on
-                startup. <br/>
-                Eg. <a href="/uniview/?charlist=adg">http://r12a.github.io/uniview/?charlist=adg</a></li>
-              <li><strong>uniview/?block=&lt;block_name&gt;</strong> Displays the specified block in the left panel on startup. The block name must
-        be written exactly as it appears in the pulldown selector at the top left of the page, except that any spaces must be replaced by  underscores ('_'), and case is not important.<br/>
-      Eg. <a href="/uniview/?block=ipa_extensions">http://r12a.github.io/uniview/?block=ipa_extensions</a></li>
-              <li><strong>uniview/?codepoints=&lt;list-of-hex-codepoints&gt;</strong> A list of the characters will be displayed in the left panel. Any spaces must be replaced by
-         underscores ('_'), and case is not important.<br/>
-      Eg. <a href="/uniview/?codepoints=449_1234_65">http://r12a.github.io/uniview/?codepoints=449_1234_65</a></li>
-            </ul>
+
+<p> This is useful for pointing people to particular information using a URL, for example in email. By providing query parameters in the
+URI you can start up UniView with specific information displayed as follows:</p>
+
+
+<ul>
+<li><strong>uniview/?char=&lt;hex-codepoint&gt;</strong> Displays the information about the specified character in the right panel on
+startup.<br/>
+Eg. <a
+href="index.html?char=0449" target="_blank">http://r12a.github.io/uniview/?char=0449</a></li>
+
+<li><strong>uniview/?charlist=&lt;list-of-characters&gt;</strong> Displays the a list of the specified characters in the left panel on
+startup. <br/>
+Eg. <a href="index.html?charlist=adg" target="_blank">http://r12a.github.io/uniview/?charlist=adg</a></li>
+
+<li><strong>uniview/?block=&lt;block_name&gt;</strong> Displays the specified block in the left panel on startup. The block name must
+be written exactly as it appears in the pulldown selector at the top left of the page, except that any spaces must be replaced by  underscores ('_'), and case is not important.<br/>
+Eg. <a href="index.html?block=ipa_extensions" target="_blank">http://r12a.github.io/uniview/?block=ipa_extensions</a></li>
+
+<li><strong>uniview/?codepoints=&lt;list-of-hex-codepoints&gt;</strong> A list of the characters will be displayed in the left panel. Any spaces must be replaced by
+underscores ('_'), and case is not important.<br/>
+Eg. <a href="index.html?codepoints=449_1234_65" target="_blank">http://r12a.github.io/uniview/?codepoints=449_1234_65</a></li>
+
+<li><strong>uniview/?range=&lt;start&gt;:&lt;end&gt;</strong> A list of the characters in the range specified will be displayed in the left panel. The start and end values must be in hexadecimal.<br/>
+Eg. <a href="index.html?range=1234:1254" target="_blank">https://r12a.github.io/uniview/index.html?range=1234:1254</a></li>
+</ul>
+
+
+
+
     <p>You should only use one of these query parameters in a single call to UniView.</p>
           <!--<div class="topic"> 
 
@@ -579,7 +592,7 @@ img { border-radius: 4px; }
 
 
 <div class="smallprint"> <span id="version">This version <span id="version-info"> 
-  <!-- #BeginDate format:IS1m -->2021-07-19  7:45<!-- #EndDate --> 
+  <!-- #BeginDate format:IS1m -->2023-07-17  17:13<!-- #EndDate --> 
   </span> GMT. &nbsp;&bull;&nbsp; Copyright <a href="mailto:r12a@w3.org">r12a@w3.org</a>. Licence <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC-By</a>.</span> </div>
   
 
