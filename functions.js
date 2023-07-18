@@ -191,57 +191,19 @@ function addLine (codepoint, newContent) {
 	}
 	
 
+
+
 function addtocharSelect ( codepoint ) {
 	// adds a character to the text area, regardless of whether the up arrow is highlighted
 	// codepoint: integer, the decimal Unicode codepoint to be added
-	var field = document.getElementById( 'picker' )
-	field.value += getCharFromInt(codepoint)
+	var str = document.getElementById( 'picker' ).value
+    str += String.fromCodePoint( codepoint )
+    document.getElementById( 'picker' ).value = str
 	}
 
 
-function addtoPicker (codepoint) { 
-	// codepoint: dec integer, the character to be added
-	// _cluster: boolean, global variable, set if this is a consonant cluster (used for vowels that surround base)
-	// _view: string, indicates which view is showing - this is important, since non-intelligent ordering is needed in the default view
-	
-//	if (! _copy2Picker) { return; }
-	var outputNode = document.getElementById( 'picker' ); // points to the output text area
-	var ch = getCharFromInt(codepoint);
-	
-	//IE support
-	if (document.all) { 
-		outputNode.value = outputNode.value+ch;
-		//outputNode.focus();
-	    //range = document.selection.createRange();
-		
-		//range.text = ch; 
-	    //range.select(); 
-		//outputNode.focus();
-		}
-	// Mozilla and Safari support
-	else if (outputNode.selectionStart || outputNode.selectionStart == '0') {
-		var startPos = outputNode.selectionStart;
-		var endPos = outputNode.selectionEnd;
-		var cursorPos = startPos;
-		var scrollTop = outputNode.scrollTop;
-		var baselength = 0;
-		
-		outputNode.value = outputNode.value.substring(0, startPos)
-              + ch
-              + outputNode.value.substring(endPos, outputNode.value.length);
-		cursorPos += ch.length;
 
-		//outputNode.focus();
-		outputNode.selectionStart = cursorPos;
-		outputNode.selectionEnd = cursorPos;
-		outputNode.scrollTop = scrollTop;
-		}
-	else {
-		outputNode.value += ch;
-		//outputNode.focus();
-		}
-	}
-	
+
 function isMatrix () {
 	// returns true if the left panel contains a matrix, else false
 	nodeArray = document.getElementById('chart').getElementsByTagName("td")
@@ -979,7 +941,7 @@ function getCharType (codepoint) {
     else if (codepoint >= 55296 && codepoint <= 57343) { // surrogates
         return HAN_HANG_TANG
         }
-    else if (findScriptGroup(codepoint) !== sNotAChar) return 1  // unassigned character in block
+    else if (findScriptGroup(codepoint) !== sNotAChar) return UNASSIGNED  // unassigned character in block
     
     else return NONCHARACTER  // unrecognized character
 	}
@@ -1279,6 +1241,8 @@ function nonHighlight2List () {
 	}
 
 	
+
+	
 function output2CharArea () { 
 	// creates a list of all characters in the left panel and adds them to the character area
 	var nodeArray = new Array;
@@ -1300,7 +1264,7 @@ function output2CharArea () {
 				if (cCell.classList.contains('ch') && !cCell.classList.contains('dim') && !cCell.classList.contains('empty')) {
 					var titlefields = cCell.title.split(' ');
 //					str += getCharFromInt(titlefields[3]);
-					addtoPicker(titlefields[3]);
+					addtocharSelect(titlefields[3]);
 					}
 				}
 			}
@@ -1313,7 +1277,7 @@ function output2CharArea () {
 				if (cCell.className.match(/ch/) && !cCell.className.match(/dim/)) { 
 					var titlefields = cCell.title.split(' ');
 //					str += getCharFromInt(titlefields[3]);
-					addtoPicker(titlefields[3]);
+					addtocharSelect(titlefields[3]);
 					}
 			}
 		}
@@ -1412,12 +1376,14 @@ function redrawList () {
 	}
 
 
+
 function setOnclick ( codepoint, node ) {
 	//sets the event functions for node, used by createMatrix, createList, etc.
-	node.onclick = function(){ if (_copy2Picker) { addtoPicker(codepoint); } else { printProperties(codepoint); window.location = '#title'; } };
-	node.ondblclick = function () { addtocharSelect(codepoint) };
+	node.onclick = function(){ if (_copy2Picker) { addtocharSelect(codepoint); } else { printProperties(codepoint); window.location = '#title'; } }
+	node.ondblclick = function () { addtocharSelect(codepoint) }
 	}
-	
+
+
 function setMouseover ( codepoint, node ) {
 	// sets the mouseover event funtion used by createMatrix (only)
 	node.onmouseover = function(){ showName(codepoint, node); }
@@ -2180,7 +2146,7 @@ function printProperties ( codepoint ) {
     
     out += `<button class="clearButtonTop" onclick="listDiv.style.display = 'none'">Close</button>`
     out += `<button class="moveForwardBack" title="${ sPrevChar }" onclick="adjacentChar( ${ codepoint }, -1)">Previous</button>`
-    out += `<button class="moveForwardBack" title="${ sNextChar }" onclick="adjacentChar( ${ codepoint }, 1)">Next</button>`
+    out += `<button id="goforward" class="moveForwardBack" title="${ sNextChar }" onclick="adjacentChar( ${ codepoint }, 1)">Next</button>`
     out += `</span>`
     out += `</div>\n`
    
