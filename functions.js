@@ -3530,10 +3530,10 @@ function showCharacterMarkup () {
 
         hex = chars[i].codePointAt(0).toString(16).toUpperCase()
         while (hex.length < 4) hex = '0'+hex
-        charOut += `&#x${ hex };`
+        charOut += `&amp;#x${ hex };`
         
-        if (i > 0) nameOut += ' + '
-        nameOut += `&lt;code class="uname">U+${ hex } ${ cRecord[CHAR_NAME] }&lt;/code>`
+        if (i > 0) nameOut += ' +'
+        nameOut += ` &lt;code class="uname">U+${ hex } ${ cRecord[CHAR_NAME] }&lt;/code>`
         }
     out += `&lt;bdi lang="${ lang }">${ charOut }&lt;/bdi>${ nameOut }&lt;/span>`
 
