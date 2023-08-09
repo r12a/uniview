@@ -1144,6 +1144,8 @@ Local</label>
 
 <div id="shuttle" style="display: none;" onmouseup="this.style.display='none'; document.getElementById('picker').focus();">
 
+<button onclick="showCharacterMarkup(); return false;" title="Produce markup for the character(s).">Character markup</button><br>
+
 <button onclick="openEscapeWindow(); return false;" title="Convert to escapes.">Convert to escapes</button><br>
 
 <button onclick="openAnalyseWindow(); return false;" title="Open in Analyse String app.">Analyse String</button><br>
@@ -1273,6 +1275,8 @@ Licence <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC-B
 </div><!-- end of div role=main -->
 
 <dialog id="copyNotice">Copied !</dialog>
+
+<dialog id="characterMarkup">Markup</dialog>
 
 <script>
 // stop the startup message

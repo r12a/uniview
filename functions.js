@@ -3500,3 +3500,47 @@ function copyToClipboard (evt) {
 
 
 
+
+
+
+
+function showCharacterMarkup () {
+    // called from pulldown; creates .codepoint markup for character(s) in text area
+    // if the text area contains ^, the characters after are assumed to be the lang attribute value
+    
+    var textarea = document.getElementById('picker').value
+  
+    // get the language
+    if (textarea.includes('\u005E')) {
+        var parts = textarea.split('\u005E')
+        var chars = [... parts[0]]
+        var lang = parts[1]
+        }
+    else {
+        chars = [... document.getElementById('picker').value]
+        lang = 'xxx'
+        }
+
+    var out = `<div id="characterMarkupCopy">&lt;span class="codepoint" translate="no">`
+    var charOut = ''
+    var nameOut = ''
+    for (i=0;i<chars.length;i++) {
+        var charData = getDataFor(chars[i].codePointAt(0))
+        var cRecord = charData.split(';')
+
+        hex = chars[i].codePointAt(0).toString(16).toUpperCase()
+        while (hex.length < 4) hex = '0'+hex
+        charOut += `&#x${ hex };`
+        
+        if (i > 0) nameOut += ' + '
+        nameOut += `&lt;code class="uname">U+${ hex } ${ cRecord[CHAR_NAME] }&lt;/code>`
+        }
+    out += `&lt;bdi lang="${ lang }">${ charOut }&lt;/bdi>${ nameOut }&lt;/span>`
+
+    
+    document.getElementById('characterMarkup').style.display = 'block'
+    document.getElementById('characterMarkup').innerHTML = out + `</div><br><img src="../shared/images/copytiny.svg" style="height:1em;" onclick="navigator.clipboard.writeText(document.getElementById('characterMarkupCopy').textContent); document.getElementById('characterMarkup').style.display = 'none';"> <span style="font-size:1rem; margin-inline-start:2rem; cursor:pointer;" onclick="document.getElementById('characterMarkup').style.display = 'none';">X</span>`
+    
+    }
+
+

@@ -151,6 +151,7 @@ img {
 
 .copyme {
     cursor: pointer;
+    cursor: copy;
     }
 .copyme:hover {
     background: antiquewhite;
@@ -1100,6 +1101,7 @@ body { font-size: 14px; }
     /*min-width: 190px;*/
     display: inline-block;
     margin-inline-end: 1rem;
+    cursor: copy;
     }
 
 #chart td.notesAvailable {
@@ -1222,7 +1224,7 @@ input[type="image"] {
 
 
 
-#copyNotice {
+#copyNotice, #characterMarkup {
     position: fixed;
     top: 40%;
     background-color: #555;
