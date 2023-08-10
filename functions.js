@@ -3518,7 +3518,7 @@ function showCharacterMarkup () {
         }
     else {
         chars = [... document.getElementById('picker').value]
-        lang = 'xxx'
+        lang = 'und'
         }
 
     var out = `<div id="characterMarkupCopy">&lt;span class="codepoint" translate="no">`
