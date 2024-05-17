@@ -2157,8 +2157,9 @@ function printProperties ( codepoint ) {
 
     charData = getDataFor(codepoint)
 	charType = getCharType( codepoint )
-	scriptGroup = findScriptGroup(codepoint)
-    scriptISOCode = findScriptISO(codepoint)
+	scriptGroup = findScriptGroup(codepoint)  // finds the BLOCK name
+    scriptISOCode = findScriptISO(codepoint)  // finds the ISO tag
+    scriptName = linkDB[scriptISOCode].script // the name of the script
 	
     // set up navigational graphics
     out += `<div><span id="charNavigation" `
@@ -2282,7 +2283,7 @@ function printProperties ( codepoint ) {
             </td></tr><tr>`
 
         out += `<tr><td class=" padBlockEnd" colspan="2">
-            Explore the ${ scriptGroup } script <select id="explore" onchange="explore('${ String.fromCodePoint(codepoint) }', this.value, '${ scriptISOCode }', '${ scriptGroup }'); this.value=''">
+            Explore the ${ scriptName } script <select id="explore" onchange="explore('${ String.fromCodePoint(codepoint) }', this.value, '${ scriptISOCode }', '${ scriptName }'); this.value=''">
                 <option value="">Select...</option>
                 <option value="textsamples">Text samples</option>
                 <option value="notofonts">Noto fonts</option>
