@@ -11,7 +11,9 @@
 <script src="u.js"></script>
 <script src="descriptions.js"></script>
 <script src="../shared/code/scriptGroups.js"></script>
+<script src="../shared/code/explore.js"></script>
 <script src="subtitles.js"></script>
+<script src="../scripts/linkdata/linkdb.js"></script>
 <script src="function-text.js"></script>
 <script src="agemap.js"></script>
 <script src="propNames.js"></script>
@@ -388,7 +390,7 @@
                 <option value="Ethiopic Extended-B">Ethiopic Extended-B</option>
 </datalist>               
 
-<input id="customRange1" size="15" name="customRange1" placeholder="0000:0000"  title="Provide two hex digits with :, -, or dots or spaces as separators. NCR, JavaScript, CSS escapes ok." />
+<input id="customRange1" size="15" name="customRange1" placeholder="0000:0000"  title="Provide two hex digits with :, -, or .. or ... or ' to ' as separators. HTML, JavaScript, CSS, and U+ escapes ok." />
 <button class="goButton">📥</button>
 </form>
 </div>
@@ -1144,33 +1146,60 @@ Local</label>
 
 <div id="shuttle" style="display: none;" onmouseup="this.style.display='none'; document.getElementById('picker').focus();">
 
-<button onclick="showCharacterMarkup(); return false;" title="Produce markup for the character(s).">Character markup</button><br>
+<strong>For character(s)</strong><br>
 
-<button onclick="openEscapeWindow(); return false;" title="Convert to escapes.">Convert to escapes</button><br>
+<button onclick="showCharacterMarkup(); return false;" title="Produce markup for the character(s).">Make character markup</button><br>
 
-<button onclick="openAnalyseWindow(); return false;" title="Open in Analyse String app.">Analyse String</button><br>
+<button onclick="explore(document.getElementById('picker').value, 'escapes'); return false;" title="Convert to escapes.">Convert to escapes</button><br>
 
-<button onclick="openUniqueAnalyseWindow(); return false;" title="Open in Analyse String app.">Analyse String (unique)</button><br>
+<button onclick="explore(document.getElementById('picker').value, 'analysestring'); return false;" title="Open in Analyse String app.">Analyse String</button><br>
 
-<button onclick="openListWindow(); return false;" title="Open in List Characters app.">List Characters</button><br>
+<button onclick="
+    chars =  document.getElementById('picker').value
+    filtered = [...chars]
+    const uniqueSet = new Set(filtered)
+    const backToArray = [...uniqueSet]
+    chars = backToArray.join('')
+    explore(chars, 'analysestring'); 
+    return false;"
+    title="Open in Analyse String app but remove duplicates.">Analyse String (unique)</button><br>
 
-<button onclick="openUsageWindow(); return false;" title="Open in Character Usage app.">Character Usage</button><br>
+<button onclick="explore(document.getElementById('picker').value, 'listchars'); return false;" title="Show characters grouped by Unicode block.">List Characters</button><br>
 
-<button onclick="openFontlistWindow('arab'); return false;" title="Open in Font Lister app.">Font Lister</button><br>
+<button onclick="explore(document.getElementById('picker').value, 'charuse'); return false;" title="Open in Character Usage app.">Character Usage</button><br>
 
-<button onclick="openListcatsWindow(); return false;" title="Open in List by category app.">General categories</button><br>
+<button onclick="firstChar = [...document.getElementById('picker').value][0]; explore(document.getElementById('picker').value, 'fontlister', findScriptISO(firstChar.codePointAt(0))); return false;" title="Show system fonts for script of the first character.">Font Lister</button><br>
 
-<button onclick="openListbidiWindow(); return false;" title="Open in Triage Bidi app.">Bidi class</button><br>
+<button onclick="explore(document.getElementById('picker').value, 'listgc'); return false;" title="List characters by General Category properties.">General categories</button><br>
 
-<button onclick="openListlinebreakWindow(); return false;" title="Open in Triage for Linebreaking  app.">Line breaking</button><br>
+<button onclick="explore(document.getElementById('picker').value, 'listbidi'); return false;" title="List characters by Bidirectional properties.">Bidi class</button><br>
 
-<button onclick="openListindicWindow(); return false;" title="Open in Triage for Indic_Syllabic_Category app.">Indic category </button><br>
+<button onclick="explore(document.getElementById('picker').value, 'listlinebreak'); return false;" title="List characters by Line breaking properties.">Line breaking</button><br>
+
+<button onclick="explore(document.getElementById('picker').value, 'listindic'); return false;" title="List characters by Indic Syllabic category.">Indic category</button><br>
+
+<button onclick="
+    firstChar = [...document.getElementById('picker').value][0];
+    explore(firstChar, 'characternotes', findScriptISO(firstChar.codePointAt(0)));
+    return false;"
+    title="Show character notes for the first character.">Character notes</button><br>
 
 <!--button onclick="openScriptPageWindow(); return false;" title="View first character in selection in a page that describes the script.">Script notes</button><br-->
 
-<button onclick="openBlockPageWindow(); return false;" title="View notes for first character in selection.">Character notes</button><br>
+<button onclick="explore(document.getElementById('picker').value, 'graphemeclusters'); return false;" title="Show grapheme cluster boundaries.">Grapheme clusters</button><br>
 
-<button onclick="openGClusterWindow(); return false;" title="Show grapheme cluster boundaries.">Grapheme clusters</button><br>
+<button onclick="explore(document.getElementById('picker').value, 'analyseipa'); return false;" title="Show what IPA letters stand for.">IPA analyser</button><br>
+
+<strong>For the script:</strong><br>
+
+<button onclick="firstChar = [...document.getElementById('picker').value][0]; explore(document.getElementById('picker').value, 'scriptlinks', findScriptISO(firstChar.codePointAt(0))); return false;" title="Show links to other resources for the script of the first character.">More links</button><br>
+
+<button onclick="firstChar = [...document.getElementById('picker').value][0]; explore(document.getElementById('picker').value, 'notofonts', '', findScriptGroup(firstChar.codePointAt(0))); return false;" title="Download Noto fonts for the script of the first character.">Get Noto fonts</button><br>
+
+<button onclick="firstChar = [...document.getElementById('picker').value][0]; explore(document.getElementById('picker').value, 'textsamples', findScriptISO(firstChar.codePointAt(0))); return false;" title="Show text samples for the script of the first character.">Text samples</button><br>
+
+<button onclick="firstChar = [...document.getElementById('picker').value][0]; explore(document.getElementById('picker').value, 'corespec', findScriptISO(firstChar.codePointAt(0))); return false;" title="Show the relevant chapter in the Unicode Core spec.">Unicode chapter</button><br>
+
 
 <div id="closeShuttle" style="cursor: pointer; background: antiquewhite; padding: .25em 1em; border: 4px solid white;" onclick="document.getElementById('shuttle').style.display='none'; document.getElementById('picker').focus();">X</div>
 </div>

@@ -1932,19 +1932,35 @@ function showUnihan (codepoints, inputtype) {
 function tidyRange (rawrange) {
 	// boils down a range to colon separated hex numbers
 	// if error found, returns 0
-	rawrange = rawrange.replace(/^\s+/, '');
-	rawrange = rawrange.replace(/\s+$/, '');
-	rawrange = rawrange.replace(/\s+/, ':');
-	rawrange = rawrange.replace(/[\\uUx\&\#\+\;]/g,'');
+    rawrange = rawrange.trim()
+	//rawrange = rawrange.replace(/^\s+/, '')
+	//rawrange = rawrange.replace(/\s+$/, '')
+	//rawrange = rawrange.replace(/\s+/, ':')
+	rawrange = rawrange.replace(/ to /, ':')
+	rawrange = rawrange.replace(/\s+/g, '')
+	rawrange = rawrange.replace(/[\\uUx\&\#\+\;]/g,'')
+	rawrange = rawrange.replace(/U\+/g,'')
 	rawrange = rawrange.replace(/-/g, ':');
-	rawrange = rawrange.replace(/\.+/g, ':');
-	if ( rawrange == '' || rawrange == ' ' || rawrange == ':') { alert('No range specified.'); return 0; }
-	if ( rawrange.match(/[^abcdefABCDEF0-9\:]/)) { alert('Range incorrectly specified. Unexpected characters found. Range identified: '+rawrange); return 0; }
-	if (!rawrange.match(/:/)) { rawrange += ':'; }
-	rangeArray = rawrange.split(':');
-	if ( rangeArray.length>2 ) { alert('Range incorrectly specified. Two hex numbers expected. Range identified: '+rawrange); return 0; }
+	rawrange = rawrange.replace(/\.\./g, ':');
+	rawrange = rawrange.replace(/\.\.\./g, ':');
+    
+    rawrange = rawrange.toUpperCase()
+        
+    // remove anything except hex digits and colon
+    var hexDigits = new Set (['A','B','C','D','E','F','0','1','2','3','4','5','6','7','8','9',':'])
+    var finalrange = ''
+    for (var i=0;i<rawrange.length;i++) {
+        console.log(rawrange[i],hexDigits.has(rawrange[i]), finalrange)
+        if (hexDigits.has(rawrange[i])) finalrange += rawrange[i]
+        }
+   
+	if ( finalrange == '' || finalrange == ' ' || finalrange == ':') { alert('No range specified.'); return 0 }
+	if ( finalrange.match(/[^abcdefABCDEF0-9\:]/)) { alert('Range incorrectly specified. Unexpected characters found. Range identified: '+finalrange); return 0 }
+	if (!finalrange.match(/:/)) { finalrange += ':' }
+	rangeArray = finalrange.split(':')
+	if ( rangeArray.length>2 ) { alert('Range incorrectly specified. Two hex numbers expected. Range identified: '+finalrange); return 0 }
 
-	return rawrange;
+	return finalrange
 	}
 
 
@@ -2115,6 +2131,11 @@ function toggleNumbers () {
 
 
 
+
+
+
+
+
 function printProperties ( codepoint ) {
 	// displays a description of a single character in the right panel, plus any notes
 	// codepoint: a decimal integer representing the Unicode scalar value of the character to be       displayed
@@ -2137,6 +2158,7 @@ function printProperties ( codepoint ) {
     charData = getDataFor(codepoint)
 	charType = getCharType( codepoint )
 	scriptGroup = findScriptGroup(codepoint)
+    scriptISOCode = findScriptISO(codepoint)
 	
     // set up navigational graphics
     out += `<div><span id="charNavigation" `
@@ -2241,9 +2263,36 @@ function printProperties ( codepoint ) {
         out += `<tr><td>Unicode version:</td><td>${ age2VersionMap[cRecord[AGE_FIELD]] }</td></tr><tr>`
 
         // add link to CLDR properties demo
-        out += `<tr><td class="padBlockStart padBlockEnd" colspan="2"><a href="http://unicode.org/cldr/utility/character.jsp?a=${ cpHex }" target="cldr" style="font-size:110%;">Show character properties</a></td></tr><tr>`
+        out += `<tr><td class="padBlockStart padBlockEnd" colspan="2"><a href="http://unicode.org/cldr/utility/character.jsp?a=${ cpHex }" target="cldr" style="font-size:110%;">Show more character properties</a></td></tr><tr>`
 
 
+
+        // add link to other apps
+        out += `<tr><td class="padBlockStart " colspan="2">
+            Explore this character in <select id="explore" onchange="explore('${ String.fromCodePoint(codepoint) }', this.value, '${ scriptISOCode }', '${ scriptGroup }'); this.value=''">
+                <option value="">Select...</option>
+                <option value="charuse">Character usage</option>
+                <option value="listindic">Indic properties</option>
+                <option value="listlinebreak">Line break properties</option>
+                <option value="listchars">List characters</option>
+                <option value="analyseipa">Analyse IPA</option>
+                <option value="fontlister">Font lister</option>
+                <option value="characternotes">Character notes</option>
+                </select>
+            </td></tr><tr>`
+
+        out += `<tr><td class=" padBlockEnd" colspan="2">
+            Explore the ${ scriptGroup } script <select id="explore" onchange="explore('${ String.fromCodePoint(codepoint) }', this.value, '${ scriptISOCode }', '${ scriptGroup }'); this.value=''">
+                <option value="">Select...</option>
+                <option value="textsamples">Text samples</option>
+                <option value="notofonts">Noto fonts</option>
+                <option value="corespec">Unicode chapter</option>
+                <option value="scriptlinks">More links</option>
+                </select>
+            </td></tr><tr>`
+
+
+// XXXXXXXXXXXXXXXX
 
         //add link to UniHan db
         var pageNum = 0
@@ -2314,6 +2363,11 @@ function printProperties ( codepoint ) {
                     out += `<div class="descLine">${ printDescriptionLine( dRecord[j] ) }</div>`
                     }
                 }
+
+
+
+
+
 
 
 function printDescriptionLine (line) {
