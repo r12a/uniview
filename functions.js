@@ -320,7 +320,7 @@ function clearHighlighting () {
     var nodeArray = document.getElementById('chart').querySelectorAll('.ch')
 	// clear out any existing highlighting
 	for (var i=0; i < nodeArray.length; i++) { 
-		nodeArray[i].classList.remove('dim','c1-1','c2-0','c2-1','c3-0','c3-1','c3-2','c4-0','c4-1','c5-0','c5-1','c5-2','c6-0','c6-1','c6-2','c6-3','c7-0','c8-0','c9-0','c10-0','c11-0','c12-0','c13-0','c14-0','c15-0')
+		nodeArray[i].classList.remove('dim','c1-1','c2-0','c2-1','c3-0','c3-1','c3-2','c4-0','c4-1','c5-0','c5-1','c5-2','c6-0','c6-1','c6-2','c6-3','c7-0','c8-0','c9-0','c10-0','c11-0','c12-0','c13-0','c14-0','c15-0','c16-0')
 	    }
 	}
 
@@ -1431,6 +1431,7 @@ function showAge () {
                 case 'v': c = 'c13-0'; break;
                 case 'w': c = 'c14-0'; break;
                 case 'x': c = 'c15-0'; break;
+                case 'y': c = 'c16-0'; break;
                 }
             nodeArray[i].classList.add(c)
             }
