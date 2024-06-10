@@ -1,0 +1,81 @@
+Step 1
+Download the following from the Unicode site to the UCD directory.
+Blocks-xxx.txt
+DerivedAge-xxx.txt
+NamesList-xxx.txt
+UnicodeData-xxx.txt
+Make copies in the generatedata directory without the version info in the filename.
+
+Step 2
+Run: genScriptGroups.plx
+	Input: Blocks.txt
+	Output: scriptGroups.js
+	
+	Do a diff against /shared/scriptGroups.js and update that file with the new lines
+
+	Add the new blocks to the selector and the #blockhints in index.html
+	
+	
+	
+Step 3
+Run: genDescriptions.plx
+	Input: NamesList.txt
+	Output: descriptions.js + subtitles.js + tempSubtRefs.txt
+
+Remove the first entry in the array created in descriptions.js. 
+Search & replace all & to &amp;.
+
+
+Step 4
+Edit genDerivedAge.plx to add new lines like:
+		@cRecord[1] =~ s/16\.0/y/;
+
+Run: genUnicodeData.plx
+	Input UnicodeData.txt + DerivedAge.txt + tempSubtRefs.txt
+	Output: u.js
+
+	// adds pointers to age.js and to subtitles.js
+	// rearranges order of items to reduce bandwidth
+
+Edit functions.js 
+	in showAge add line such as case 'y': c = 'c16-0'; break;
+	in function clearHighlighting add new version
+	
+Edit uniview-style.css
+	add new version around c16-0 declarations
+
+Edit agemap.js
+	add new version x2
+
+
+Step 5
+Copy the following files to the main directory:
+	descriptions.js
+	u.js
+	names.php
+	subtitles.js
+	
+
+
+Step 6
+Run make_name_list.html
+Copy the resulting file all-names.js to /shared/code/
+
+
+
+----------------------
+
+
+Step 5
+Run: genNamesOnly.plx
+	Input UnicodeData.txt
+	Output: Names.php
+
+Step 6
+Run: genMenu.plx
+	Input: Blocks-xxx.txt
+	Output: menu.txt
+
+Reorder the menu items as needed, and copy paste to index.html.
+
+
