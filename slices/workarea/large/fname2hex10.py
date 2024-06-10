@@ -3,7 +3,7 @@ import os, string, glob, sys
 if len(sys.argv) > 1:
     hexOfFirst = sys.argv[1];
 else:
-    print 'Hex number of first character:'
+    print ('Hex number of first character:')
     hexOfFirst = sys.stdin.readline()[:-1];
 
 filenames = glob.glob('*.png')
@@ -30,9 +30,9 @@ for filename in filenames:
 		hexnum = '0' + hexnum;
 	#print '>'+hexnum;	
 	newname = hexnum + '.png';
-	print filename, ' becomes ', newname
+	print (filename, ' becomes ', newname)
 	os.rename( filename, newname );
 	#decnum = decnum+1;
 	col = col+1
-	print decnum;
+	print (decnum);
 	
