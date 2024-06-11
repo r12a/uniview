@@ -30,7 +30,6 @@
 
 
 
-
 <div role="main">
 <br  style="clear:both; height: 10px;">
 
@@ -1328,6 +1327,23 @@ Licence <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC-B
 <dialog id="copyNotice">Copied !</dialog>
 
 <dialog id="characterMarkup">Markup</dialog>
+
+
+<dialog id="caseConverter">
+	<p>To upper:<br><span id="caseOutputUpper" onclick="navigator.clipboard.writeText(this.textContent);"></span></p>
+    
+	<p>To lower:<br><span id="caseOutputLower" onclick="navigator.clipboard.writeText(this.textContent);"></span></p>
+	
+    <p>To titlecase:<br><span id="caseOutputTitle" onclick="navigator.clipboard.writeText(this.textContent);"></span></p>
+	
+    <p>Characters without conversion:<br><span id="caseOutputNone" onclick="navigator.clipboard.writeText(this.textContent);"></span></p>
+    
+	<p onClick="this.parentNode.style.display = 'none'" style="text-align: end; cursor: pointer; font-size:2rem; margin-block:0;">X</p>
+</dialog>
+
+
+
+
 
 <script>
 // stop the startup message

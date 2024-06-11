@@ -1229,7 +1229,7 @@ input[type="image"] {
 
 
 
-#copyNotice, #characterMarkup {
+#copyNotice, #characterMarkup, #caseConverter {
     position: fixed;
     top: 40%;
     background-color: #555;
@@ -1237,6 +1237,23 @@ input[type="image"] {
     text-align: center;
     border-radius: 1rem;
 }
+
+#caseConverter {
+    text-align: start;
+    background-color: antiquewhite;
+    color: #666;
+    border: 0;
+    }
+
+#caseConverter p {
+    text-align: start;
+    margin-block: 1em;
+    }
+
+#caseConverter span {
+    cursor: copy;
+    font-size: 1.4rem;
+    }
 
 
 

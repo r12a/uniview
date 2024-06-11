@@ -251,7 +251,12 @@ function changeFont (fontName) {
 		
 	document.getElementById('picker').style.fontFamily = _currentFont
 		
-	document.getElementById('characterAsText').style.fontFamily = _currentFont
+	if (document.getElementById('characterAsText')) document.getElementById('characterAsText').style.fontFamily = _currentFont
+		
+	document.getElementById('caseOutputUpper').style.fontFamily = _currentFont
+	document.getElementById('caseOutputLower').style.fontFamily = _currentFont
+	document.getElementById('caseOutputTitle').style.fontFamily = _currentFont
+	document.getElementById('caseOutputNone').style.fontFamily = _currentFont
  	}
 
 	
@@ -1433,6 +1438,84 @@ function showCharacterList ( string ) {
 
 
 function convert2upper ( string, detail ) { 
+	// output: Writes cased versions of string to the caseConverter dialog element
+	// string: a string of characters
+	// detail: if false, just outputs the converted character, otherwise '<source> -> <converted>'
+	// codepoints: an array of decimal code points representing string
+
+	var codepoints = convertChar2Dec(string).split(' ')
+	var uppercase = ''
+	var lowercase = ''
+	var titlecase = ''
+	var singletons = ''
+	var notfound
+	
+	if (detail) {
+		for (var i=0; i<codepoints.length; i++) {
+			cRecord = U[codepoints[i]].split(';')
+			notfound = true
+			if (cRecord[UC_MAP]) {
+				uppercase += ' '+getCharFromInt(parseInt(cRecord[0],16))+'→'+getCharFromInt(parseInt(cRecord[UC_MAP],16))
+				notfound = false
+				}
+			if (cRecord[LC_MAP]) {
+				lowercase += ' '+getCharFromInt(parseInt(cRecord[0],16))+'→'+getCharFromInt(parseInt(cRecord[LC_MAP],16))
+				notfound = false
+				}
+			if (cRecord[TC_MAP]) {
+				titlecase += ' '+getCharFromInt(parseInt(cRecord[0],16))+'→'+getCharFromInt(parseInt(cRecord[TC_MAP],16))
+				notfound = false
+				}
+			if (notfound) { singletons += ' '+getCharFromInt(parseInt(cRecord[0],16)) }
+			}
+		}
+	else {
+		for (var i=0; i<codepoints.length; i++) {
+			cRecord = U[codepoints[i]].split(';')
+			notfound = true
+			if (cRecord[UC_MAP]) {
+				uppercase += getCharFromInt(parseInt(cRecord[UC_MAP],16))
+				notfound = false
+				}
+			else uppercase += String.fromCodePoint(codepoints[i])
+
+			if (cRecord[LC_MAP]) {
+				lowercase += getCharFromInt(parseInt(cRecord[LC_MAP],16))
+				notfound = false
+				}
+			else lowercase += String.fromCodePoint(codepoints[i])
+			if (cRecord[TC_MAP]) {
+				titlecase += getCharFromInt(parseInt(cRecord[TC_MAP],16))
+				notfound = false
+				}
+			else titlecase += String.fromCodePoint(codepoints[i])
+
+			if (notfound) singletons += String.fromCodePoint(codepoints[i])
+			}
+		}
+	
+	if (uppercase=='') { uppercase = 'None found.' }
+	if (lowercase=='') { lowercase = 'None found.' }
+	if (titlecase=='') { titlecase = 'None found.' }
+	if (singletons=='') { singletons = 'None found.' }
+	else {
+		var tempArray = [... singletons]
+		var uniqueSet = new Set(tempArray)
+		singletons = [...uniqueSet].sort().join('')
+		}
+	document.getElementById('caseConverter').style.display = 'block'
+	document.getElementById('caseOutputUpper').textContent = uppercase
+	document.getElementById('caseOutputLower').textContent = lowercase
+	document.getElementById('caseOutputTitle').textContent = titlecase
+	document.getElementById('caseOutputNone').textContent = singletons.replace(/ /g,'')
+
+
+
+	}
+
+
+
+function convert2upperX ( string, detail ) { 
 	// output: ...
 	// string: a string of characters
 	// detail: if false, just outputs the converted character, otherwise '<source> -> <converted>'
