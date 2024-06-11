@@ -943,6 +943,30 @@ function getDataFor (codepoint) {
     while (hexcp.length<4) hexcp='0'+hexcp
 	// return values: 0 not a character; 1 unassigned character in a block; 2 character listed in u.js; 3 character not listed in u.js; 4 surrogate; 5 private use
 	if ( charType == IN_U_DB ) return U[codepoint]
+	//else if (charType == NONCHARACTER) return hexcp+"; is an unrecognised code point.;;;;;;;;;;;;;;;;;"
+	else if (charType == NONCHARACTER) return " is an unrecognised code point.;;;;;;;;;;;;;;;;;"
+	//else if (charType == UNASSIGNED) return hexcp+"; is an unassigned code point inside a defined block.;;;;;;;;;;;;;;;;;"
+	else if (charType == UNASSIGNED) return " is an unassigned code point inside a defined block.;;;;;;;;;;;;;;;;;"
+	//else if (charType == HAN_HANG_TANG) return hexcp+";["+ findScriptGroup( codepoint )+"];Lo;0;L;;;;;N;;;;;;;;;"
+	else if (charType == HAN_HANG_TANG) return "["+ findScriptGroup( codepoint )+"];Lo;0;L;;;;;N;;;;;;;;;"
+	//else if (charType == PRIVATEUSE) return hexcp+";["+ findScriptGroup( codepoint )+"];Co;0;L;;;;;N;;;;;;;;;"
+	else if (charType == PRIVATEUSE) return "["+ findScriptGroup( codepoint )+"];Co;0;L;;;;;N;;;;;;;;;"
+	else if (charType > SURROGATE) return hexcp+";["+ findScriptGroup( codepoint )+"];;;;;;;;;;;;;;;;;"
+	else { 
+        alert("Error in getDataFor: Unexpected value for charType")
+		return hexcp+";[Error];;;;;;;;;;;;;;;;;"
+		}
+	}
+		
+
+function getDataForX (codepoint) {
+	// codepoint: the dec codepoint for the character to display
+	
+	var charType = getCharType(codepoint)
+	var hexcp = codepoint.toString(16).toUpperCase()
+    while (hexcp.length<4) hexcp='0'+hexcp
+	// return values: 0 not a character; 1 unassigned character in a block; 2 character listed in u.js; 3 character not listed in u.js; 4 surrogate; 5 private use
+	if ( charType == IN_U_DB ) return U[codepoint]
 	else if (charType < IN_U_DB) return hexcp+";[Unassigned code point];;;;;;;;;;;;;;;;;"
 	else if (charType == HAN_HANG_TANG) return hexcp+";["+ findScriptGroup( codepoint )+"];Lo;0;L;;;;;N;;;;;;;;;"
 	else if (charType == PRIVATEUSE) return hexcp+";["+ findScriptGroup( codepoint )+"];Co;0;L;;;;;N;;;;;;;;;"
@@ -2222,13 +2246,22 @@ function printProperties ( codepoint ) {
 	var oldContent = document.getElementById('charInfo')
 	listDiv.style.display = 'block'
 
-    charData = getDataFor(codepoint)
-	charType = getCharType( codepoint )
-	scriptGroup = findScriptGroup(codepoint)  // finds the BLOCK name
-    scriptISOCode = findScriptISO(codepoint)  // finds the ISO tag
-    if (scriptISOCode !== '') scriptName = linkDB[scriptISOCode].script // the name of the script
-    else scriptName = ''
-	
+    charData = getDataFor(codepoint) // returns a db record, or mock record for non-characters, etc.
+    console.log('Data:',charData)
+    
+	charType = getCharType( codepoint ) // is this an assigned char, a han/hang/tang char, an unassigned char, etc?
+	console.log('Char type:',charType)
+    
+    scriptGroup = findScriptGroup(codepoint)  // finds the BLOCK name
+    console.log('Script group:',scriptGroup)
+    
+    if (charType === IN_U_DB || charType === HAN_HANG_TANG) {
+        scriptISOCode = findScriptISO(codepoint)  // finds the ISO tag
+        if (scriptISOCode !== '') scriptName = linkDB[scriptISOCode].script // the name of the script
+        else scriptName = ''
+        console.log('ISO code:',scriptISOCode)
+        }
+    
     // set up navigational graphics
     out += `<div><span id="charNavigation" `
         if (_copy2Picker) out += ` style="background:#EDE4D0;"`
@@ -2329,37 +2362,37 @@ function printProperties ( codepoint ) {
 
 
         // add derived age
-        out += `<tr><td>Unicode version:</td><td>${ age2VersionMap[cRecord[AGE_FIELD]] }</td></tr><tr>`
+        if (charType === IN_U_DB) out += `<tr><td>Unicode version:</td><td>${ age2VersionMap[cRecord[AGE_FIELD]] }</td></tr><tr>`
 
         // add link to CLDR properties demo
         out += `<tr><td class="padBlockStart padBlockEnd" colspan="2"><a href="http://unicode.org/cldr/utility/character.jsp?a=${ cpHex }" target="cldr" style="font-size:110%;">Show more character properties</a></td></tr><tr>`
 
 
+        if (charType !== PRIVATEUSE) {
+            // add link to other apps
+            out += `<tr><td class="padBlockStart " colspan="2">
+                Explore this character in <select id="explore" onchange="explore('${ String.fromCodePoint(codepoint) }', this.value, '${ scriptISOCode }', '${ scriptGroup }'); this.value=''">
+                    <option value="">Select...</option>
+                    <option value="charuse">Character usage</option>
+                    <option value="listindic">Indic properties</option>
+                    <option value="listlinebreak">Line break properties</option>
+                    <option value="listchars">List characters</option>
+                    <option value="analyseipa">Analyse IPA</option>
+                    <option value="fontlister">Font lister</option>
+                    <option value="characternotes">Character notes</option>
+                    </select>
+                </td></tr><tr>`
 
-        // add link to other apps
-        out += `<tr><td class="padBlockStart " colspan="2">
-            Explore this character in <select id="explore" onchange="explore('${ String.fromCodePoint(codepoint) }', this.value, '${ scriptISOCode }', '${ scriptGroup }'); this.value=''">
-                <option value="">Select...</option>
-                <option value="charuse">Character usage</option>
-                <option value="listindic">Indic properties</option>
-                <option value="listlinebreak">Line break properties</option>
-                <option value="listchars">List characters</option>
-                <option value="analyseipa">Analyse IPA</option>
-                <option value="fontlister">Font lister</option>
-                <option value="characternotes">Character notes</option>
-                </select>
-            </td></tr><tr>`
-
-        if (scriptName !== '') out += `<tr><td class=" padBlockEnd" colspan="2">
-            Explore the ${ scriptName } script <select id="explore" onchange="explore('${ String.fromCodePoint(codepoint) }', this.value, '${ scriptISOCode }', '${ scriptName }'); this.value=''">
-                <option value="">Select...</option>
-                <option value="textsamples">Text samples</option>
-                <option value="notofonts">Noto fonts</option>
-                <option value="corespec">Unicode chapter</option>
-                <option value="scriptlinks">More links</option>
-                </select>
-            </td></tr><tr>`
-
+            if (scriptName !== '') out += `<tr><td class=" padBlockEnd" colspan="2">
+                Explore the ${ scriptName } script <select id="explore" onchange="explore('${ String.fromCodePoint(codepoint) }', this.value, '${ scriptISOCode }', '${ scriptName }'); this.value=''">
+                    <option value="">Select...</option>
+                    <option value="textsamples">Text samples</option>
+                    <option value="notofonts">Noto fonts</option>
+                    <option value="corespec">Unicode chapter</option>
+                    <option value="scriptlinks">More links</option>
+                    </select>
+                </td></tr><tr>`
+            }
 
 // XXXXXXXXXXXXXXXX
 
@@ -2411,8 +2444,10 @@ function printProperties ( codepoint ) {
         out += `<p class="padBlockStart"><strong>Unicode block: <a href="#" onclick="showSelection( getRange(_charScriptGroup) ); return false;">${ _charScriptGroup }</a></strong></p>`
 
         //display script group
-        _charScriptGroup = scriptGroup
-        out += `<p class="padBlockStart"><strong>Script group: <span class="subcat">${ st[cRecord[SUBTITLE_FIELD]] }</span></strong></p>`
+        if (charType === IN_U_DB) {
+            _charScriptGroup = scriptGroup
+            out += `<p class="padBlockStart"><strong>Script group: <span class="subcat">${ st[cRecord[SUBTITLE_FIELD]] }</span></strong></p>`
+            }
 
         // return block directory name if scriptGroups says that there are character notes for this block
         var blockfile = charInfoPointer(cpHex)
@@ -2439,38 +2474,38 @@ function printProperties ( codepoint ) {
 
 
 
-function printDescriptionLine (line) {
-    // takes a line from a Unicode description for a character and outputs marked up version
-    // line is a string for a single description line in descriptions.js
-    
-    //console.log('printDescriptionLine', line[0],'in')
-    //console.log(line)
-    switch (line[0]) {
-        case '\u2192':  temp = line.replace(/\(/,'').replace(/\)/,'')
-                        if (temp.includes(' - ')) {
-                            temparray = temp.split(' - ')
-                            if (temparray.length === 1) thecharacter = String.fromCodePoint('0x'+temparray[0].replace(/\u2192/,'').trim())
-                            else thecharacter = String.fromCodePoint('0x'+temparray[1].trim())
-                            temp = `<span class="descSymbol">\u2192</span> ${ temparray[1] } <span class="descCharacterSpan copyme">${ thecharacter }</span> ${ temparray[0].replace(/\u2192/,'') }`
-                            return temp
-                            }
-                        else return  `<span class="descSymbol">\u2192</span> ${ line.slice(1) }`
-                        break;
-        case '\u2022':  return `<span class="descSymbol">\u2022</span> ${ line.slice(1) }`
-                        break;
-        case '\u2261':  return `<span class="descSymbol">\u2261</span> ${ line.slice(1) }`
-                        break;
-        case '\u003D':  return `<span class="descSymbol">\u003D</span> ${ line.slice(1) }`
-                        break;
-        case '\u0025':  return `<span class="descSymbol">\u203B</span> ${ line.slice(1) }`
-                        break;
-        case '\u2248':  return `<span class="descSymbol">\u2248</span> ${ line.slice(1) }`
-                        break;
-        case '\u007E':  return `<span class="descSymbol">\u007E</span> ${ line.slice(1) }`
-                        break;
-        default: return line
-        }
-    }
+        function printDescriptionLine (line) {
+            // takes a line from a Unicode description for a character and outputs marked up version
+            // line is a string for a single description line in descriptions.js
+
+            //console.log('printDescriptionLine', line[0],'in')
+            //console.log(line)
+            switch (line[0]) {
+                case '\u2192':  temp = line.replace(/\(/,'').replace(/\)/,'')
+                                if (temp.includes(' - ')) {
+                                    temparray = temp.split(' - ')
+                                    if (temparray.length === 1) thecharacter = String.fromCodePoint('0x'+temparray[0].replace(/\u2192/,'').trim())
+                                    else thecharacter = String.fromCodePoint('0x'+temparray[1].trim())
+                                    temp = `<span class="descSymbol">\u2192</span> ${ temparray[1] } <span class="descCharacterSpan copyme">${ thecharacter }</span> ${ temparray[0].replace(/\u2192/,'') }`
+                                    return temp
+                                    }
+                                else return  `<span class="descSymbol">\u2192</span> ${ line.slice(1) }`
+                                break;
+                case '\u2022':  return `<span class="descSymbol">\u2022</span> ${ line.slice(1) }`
+                                break;
+                case '\u2261':  return `<span class="descSymbol">\u2261</span> ${ line.slice(1) }`
+                                break;
+                case '\u003D':  return `<span class="descSymbol">\u003D</span> ${ line.slice(1) }`
+                                break;
+                case '\u0025':  return `<span class="descSymbol">\u203B</span> ${ line.slice(1) }`
+                                break;
+                case '\u2248':  return `<span class="descSymbol">\u2248</span> ${ line.slice(1) }`
+                                break;
+                case '\u007E':  return `<span class="descSymbol">\u007E</span> ${ line.slice(1) }`
+                                break;
+                default: return line
+                }
+            }
 
 
  //           out += `<div id="descKey"></div>`
@@ -2501,17 +2536,23 @@ function printDescriptionLine (line) {
         }
     
 		
-	else { // this is either  an unassigned character or a surrogate character
-		var group = findScriptGroup(codepoint)
+	else { // this is either an unassigned character or a surrogate character
+		//var group = findScriptGroup(codepoint)
 		
 		// character no. & name
         var hexcpvalue = cpHex
-		while (hexcpvalue.length < 4) { hexcpvalue = '0'+hexcpvalue; }
-        out += `<div style="margin-block-start:10px;">U+${ hexcpvalue } Unassigned character.</div>`
+		while (hexcpvalue.length < 4) { hexcpvalue = '0'+hexcpvalue }
+        //out += `<div style="margin-block-start:10px;">U+${ hexcpvalue } Unassigned character.</div>`
+        charDataRecord = charData.split(';')
+        out += `<div style="margin-block-start:10px;"><span class="chSpan">U+${ hexcpvalue }</span> ${ charDataRecord[0] }.</div>`
 		
 		//find script group
-        out += `<p style="margin-block-start:18px"><strong>Unicode block: </strong><a href="#" onclick="showSelection( getRange(scriptGroup) ); return false;">Unicode block: </a></p>`
-		}
+
+        if (charType === UNASSIGNED) {
+            _charScriptGroup = scriptGroup
+            out += `<p class="padBlockStart"><strong>Unicode block: <a href="#" onclick="showSelection( getRange(_charScriptGroup) ); return false;">${ _charScriptGroup }</a></strong></p>`
+            }
+        }
 
     
     oldContent.innerHTML = out
@@ -2533,491 +2574,6 @@ function printDescriptionLine (line) {
 
 
 
-
-function printPropertiesZ ( codepoint ) { 
-	// displays a description of a single character in the right panel, plus any notes
-	// codepoint: a decimal integer representing the Unicode scalar value of the character to be displayed
-    
-	var MsPadding = ''  // Will be set to a space if this is a non-spacing mark
-	var description = false
-	var div, span, img, table, tbody, tr, td, button, cpHex
-    document.getElementById('descKey').innerHTML = ''
-    dRecord = []
-
-    // get the hex code point value
-    cpHex = codepoint.toString(16).toUpperCase()
-    while (cpHex.length < 4) cpHex = '0'+cpHex
-    
-	var listDiv = document.getElementById( 'charOutput' )
-	var oldContent = document.getElementById('charInfo')
-	listDiv.style.display = 'block'
-
-	var newContent = document.createElement( 'div' )
-        newContent.className = 'charInfo'
-        newContent.setAttribute( 'id', 'charInfo' )
-
-	charData = getDataFor(codepoint)
-	charType = getCharType( codepoint )
-	scriptGroup = findScriptGroup(codepoint)
-	
-    // set up navigational graphics
-	div = newContent.appendChild( document.createElement( 'div' ))
-	span = div.appendChild(document.createElement('span'))
-		span.id = 'charNavigation';
-		if (_copy2Picker) span.style.backgroundColor = '#EDE4D0'
-		else span.style.backgroundColor = '#a52a2a'
-	button = span.appendChild( document.createElement( 'button' ))
-		button.onclick = function () { listDiv.style.display = 'none' };
-		button.appendChild(document.createTextNode('Close'))
-		button.className = 'clearButtonTop'
-	button = span.appendChild( document.createElement( 'button' ))
-		button.onclick = function () { adjacentChar( codepoint, -1 ) }
-		button.appendChild(document.createTextNode('Previous'))
-		button.title = sPrevChar
-		button.className = 'moveForwardBack';
-	button = span.appendChild( document.createElement( 'button' ))
-		button.onclick = function () { adjacentChar( codepoint, 1 ) }
-		button.appendChild(document.createTextNode('Next'))
-		button.title = sPrevChar
-		button.className = 'moveForwardBack' 
-
-
-	if (charType == IN_U_DB || charType == HAN_HANG_TANG || charType == PRIVATEUSE) { 
-		cRecord = charData.split(';')
-		if (cRecord[CAN_COMB_CL] > 0) { MsPadding = '\u00A0' }  // ie. this is a combining character
-
-		// draw the large character
-		div = newContent.appendChild( document.createElement( 'div' ))
-        div.className = 'largeCharDiv'
-        
-         // add img, if available and graphic toggle set
-		if (document.getElementById('graphicsToggle').checked === true && charType === IN_U_DB) {
-			img = div.appendChild( document.createElement( 'img' ))
-            img.setAttribute( 'id', 'largeChar' )
-            img.title = codepoint
-            img.src = '../c/'+scriptGroup.replace(/ /g,'_')+'/large/'+cpHex+'.png'; 
-            }       
-        // otherwise add text
-		else { 
-			span = div.appendChild( document.createElement( 'span' ))
-            span.setAttribute( 'id', 'largeChar' )
-            span.title = codepoint
-            span.className = 'largeChar'
-            span.appendChild( document.createTextNode( MsPadding + getCharFromInt(codepoint) ))
-			}
-        
-		
-		// character no. & name
-        span = document.createElement('span')
-        span.appendChild( document.createTextNode('U+'+cpHex+':'))
-        span.style.marginRight = '.75em'
-        
-		div = newContent.appendChild( document.createElement( 'div' ))
-        div.id = 'characterName'
-        div.addEventListener('click', copyToClipboard)
-        div.style.cursor = 'pointer'
-        div.title = 'Click on this to copy it to the clipboard.'
-        div.style.marginTop = '10px'
-        div.appendChild(span)
-		div.appendChild( document.createTextNode( ' '+cRecord[CHAR_NAME] ))
-
-
-		// add warning if this character is new or changed in a beta version
-        // retired in v15 because it's easier to create a new version, so this info no longer in the database
-		/*if (cRecord[15]) {
-			div = newContent.appendChild( document.createElement( 'div' ));
-				div.className = 'beta';
-			if (cRecord[15] == 'n') { 
-				div.appendChild( document.createTextNode( 'This is a new character in the beta version. The properties may change.' )); 
-				}
-			else { 
-				div.appendChild( document.createTextNode( 'The properties of this character have changed in the beta version. That change is not yet stable. ' )); 
-				a = div.appendChild( document.createElement('a'));
-					a.href = '/tools/uniview_archive/uniview5.1.0f/uniview.php?char='+cRecord[0];
-					a.target = 'old version';
-				a.appendChild( document.createTextNode( 'See the previous version.' )); 
-				}
-			}*/
-		
-		// fill out properties table		
-		table = newContent.appendChild( document.createElement( 'table' ))
-        table.className = 'propsTable'
-        table.width = '90%'
-        table.style.clear = 'both'
-		tbody = table.appendChild( document.createElement( 'tbody' ))
-			
-		tr = tbody.appendChild( document.createElement( 'tr' ))
-		td = tr.appendChild( document.createElement( 'td' ))
-        td.appendChild( document.createTextNode( sGeneralCat ))
-		td = tr.appendChild( document.createElement( 'td' ))
-        td.appendChild( document.createTextNode( cRecord[GEN_CAT]+' - '+generalProp[ cRecord[GEN_CAT] ] ))
-
-		tr = tbody.appendChild( document.createElement( 'tr' ))
-		td = tr.appendChild( document.createElement( 'td' ))
-			td.appendChild( document.createTextNode( sCanonCombClass ))
-		td = tr.appendChild( document.createElement( 'td' ))
-			td.appendChild( document.createTextNode( cRecord[CAN_COMB_CL]+' - '+combClass[ cRecord[CAN_COMB_CL] ] ))
-
-		tr = tbody.appendChild( document.createElement( 'tr' ))
-		td = tr.appendChild( document.createElement( 'td' ))
-			td.appendChild( document.createTextNode( sBidiCat ))
-		td = tr.appendChild( document.createElement( 'td' ))
-			string = cRecord[BIDI_CAT] + ' - ' + bidiProp[ cRecord[BIDI_CAT] ]
-			if (cRecord[9] == 'Y' ) { string += sMirrored }
-			td.appendChild( document.createTextNode( string ))
-
-		if (cRecord[DECOMP_MAP]) {
-			tr = tbody.appendChild( document.createElement( 'tr' ))
-			td = tr.appendChild( document.createElement( 'td' ))
-            td.appendChild( document.createTextNode( sCharDecompMap ))
-			td = tr.appendChild( document.createElement( 'td' ))
-            td.appendChild( document.createTextNode( cRecord[DECOMP_MAP] +  ' \u00A0\u00A0 '))
-            cps = cRecord[DECOMP_MAP].split(' ')
-            dresult = ''
-            for (n=0; n<cps.length; n++) {
-                if (cps[n].charAt(0) != '[') {
-                    dresult += getCharFromInt(parseInt(cps[n],16))+''
-                    }
-                }
-            iespan = document.createElement('span')
-            iespan.setAttribute('class', 'ie')
-            iespan.appendChild( document.createTextNode( dresult ))
-            td.appendChild( iespan )
-			}
-
-		if (cRecord[DEC_DIG_VALUE]) {
-			tr = tbody.appendChild( document.createElement( 'tr' ))
-			td = tr.appendChild( document.createElement( 'td' ))
-				td.appendChild( document.createTextNode( sDecDigitValue ))
-			td = tr.appendChild( document.createElement( 'td' ))
-				td.appendChild( document.createTextNode( cRecord[DEC_DIG_VALUE] ))
-			}
-
-		if (cRecord[DIG_VALUE]) {
-			tr = tbody.appendChild( document.createElement( 'tr' ))
-			td = tr.appendChild( document.createElement( 'td' ))
-				td.appendChild( document.createTextNode( sDigitValue ))
-			td = tr.appendChild( document.createElement( 'td' ))
-				td.appendChild( document.createTextNode( cRecord[DIG_VALUE] ))
-			}
-
-		if (cRecord[NUMERIC_VALUE]) {
-			tr = tbody.appendChild( document.createElement( 'tr' ))
-			td = tr.appendChild( document.createElement( 'td' ))
-				td.appendChild( document.createTextNode( sNumValue ))
-			td = tr.appendChild( document.createElement( 'td' ))
-				td.appendChild( document.createTextNode( cRecord[NUMERIC_VALUE] ))
-			}
-
-		if (cRecord[UNICODE_1_NAME]) {
-			tr = tbody.appendChild( document.createElement( 'tr' ))
-			td = tr.appendChild( document.createElement( 'td' ))
-				td.appendChild( document.createTextNode( sUnicode1Name ))
-			td = tr.appendChild( document.createElement( 'td' ))
-				td.appendChild( document.createTextNode( cRecord[UNICODE_1_NAME] ))
-			}
-
-		if (cRecord[ISO_COMMENT]) {
-			tr = tbody.appendChild( document.createElement( 'tr' ))
-			td = tr.appendChild( document.createElement( 'td' ))
-				td.appendChild( document.createTextNode( s10646Comment ))
-			td = tr.appendChild( document.createElement( 'td' ))
-				td.appendChild( document.createTextNode( cRecord[ISO_COMMENT] ))
-			}
-
-		if (cRecord[UC_MAP]) {
-			tr = tbody.appendChild( document.createElement( 'tr' ))
-			td = tr.appendChild( document.createElement( 'td' ))
-				td.appendChild( document.createTextNode( sUppercaseMap ))
-			td = tr.appendChild( document.createElement( 'td' ))
-				dresult = getCharFromInt(parseInt(cRecord[UC_MAP],16))+''
-				td.appendChild( document.createTextNode( cRecord[UC_MAP] +' \u00A0\u00A0 ' ))
-				iespan = document.createElement('span')
-				iespan.setAttribute('class', 'ie')
-				iespan.appendChild( document.createTextNode( dresult ))
-				td.appendChild( iespan )
-			}
-
-		if (cRecord[LC_MAP]) {
-			tr = tbody.appendChild( document.createElement( 'tr' ))
-			td = tr.appendChild( document.createElement( 'td' ))
-				td.appendChild( document.createTextNode( sLowercaseMap ))
-			td = tr.appendChild( document.createElement( 'td' ))
-				dresult = getCharFromInt(parseInt(cRecord[LC_MAP],16))+''
-				td.appendChild( document.createTextNode( cRecord[LC_MAP] +' \u00A0\u00A0 ' ))
-				iespan = document.createElement('span')
-				iespan.setAttribute('class', 'ie')
-				iespan.appendChild( document.createTextNode( dresult ))
-				td.appendChild( iespan )
-			}
-
-		if (cRecord[TC_MAP]) {
-			tr = tbody.appendChild( document.createElement( 'tr' ))
-			td = tr.appendChild( document.createElement( 'td' ))
-				td.appendChild( document.createTextNode( sTitlecaseMap ))
-			td = tr.appendChild( document.createElement( 'td' ))
-				dresult = getCharFromInt(parseInt(cRecord[TC_MAP],16))
-				td.appendChild( document.createTextNode( cRecord[TC_MAP] +' \u00A0\u00A0 ' ))
-				iespan = document.createElement('span')
-				iespan.setAttribute('class', 'ie')
-				iespan.appendChild( document.createTextNode( dresult ))
-				td.appendChild( iespan );
-			}
-		
-		// add derived age
-		tr = tbody.appendChild( document.createElement( 'tr' ))
-		td = tr.appendChild( document.createElement( 'td' ))
-			td.appendChild( document.createTextNode( 'Unicode version:' ))
-			td.setAttribute('style', 'padding-bottom:15px;')
-		td = tr.appendChild( document.createElement( 'td' ))
-			td.appendChild( document.createTextNode( age2VersionMap[cRecord[AGE_FIELD]] ))
-			td.setAttribute('style', 'padding-bottom:15px;')
-		
-		// add link to CLDR properties demo
-		tr = tbody.appendChild( document.createElement( 'tr' ))
-		td = tr.appendChild( document.createElement( 'td' ))
-			td.setAttribute('colspan', '2')
-			a = td.appendChild( document.createElement( 'a' ))
-			a.appendChild( document.createTextNode( 'Show character properties' ))
-			a.setAttribute( 'href', 'http://unicode.org/cldr/utility/character.jsp?a='+cpHex )
-			a.setAttribute( 'target', 'cldr' )
-			a.style.fontSize = '110%'
-			td.setAttribute('style', 'padding-bottom:15px;')
-
-
-
-		//add link to UniHan db
-		var pageNum = 0
-		var approx = ''
-		if (scriptGroup == 'CJK Unified Ideographs') { pageNum = Math.floor(((codepoint-0x4E00)/40)+2); blockstart = '4E00'; approx = ' [35Mb file!]'  }
-		if (scriptGroup == 'CJK Unified Ideographs Extension A') { pageNum = Math.floor(((codepoint-13312)/56.25)+2); blockstart = '3400'; approx = ', approx [6Mb file!]' }
-		if (scriptGroup == 'CJK Unified Ideographs Extension B') { pageNum = Math.floor(((codepoint-0x20000)/58.67)+2); blockstart = '20000'; approx = ', approx [40Mb file!]' }
-		if (scriptGroup == 'CJK Unified Ideographs Extension C') { pageNum = Math.floor(((codepoint-0x2A700)/78.26)+2); blockstart = '2A700'; approx = ', approx' }
-		if (scriptGroup == 'CJK Unified Ideographs Extension D') { pageNum = Math.floor(((codepoint-0x2B740)/80)+2); blockstart = '2B740' }
-		if (scriptGroup == 'CJK Unified Ideographs Extension E') { pageNum = Math.floor(((codepoint-0x2B820)/80)+2); blockstart = '2B820' }
-		if (scriptGroup == 'CJK Unified Ideographs Extension F') { pageNum = Math.floor(((codepoint-0x2CEB0)/80)+2); blockstart = '2CEB0' }
-		if (scriptGroup == 'Hangul Syllables') { pageNum = Math.floor(((codepoint-0xAC00)/256)+2); blockstart = 'AC00' }
-			
-		// add link to Unihan db
-		if (pageNum > 0 && scriptGroup != 'Hangul Syllables') {
-			p = newContent.appendChild( document.createElement( 'p' ))
-            p.style.marginTop = "18px"
-			p.appendChild( document.createTextNode( 'View data in ' ))
-			a = p.appendChild( document.createElement( 'a' ))
-			a.appendChild( document.createTextNode( 'UniHan database' ))
-			a.setAttribute( 'href', 'http://www.unicode.org/cgi-bin/GetUnihanData.pl?codepoint='+cpHex+'&useutf8=true' )
-			a.setAttribute( 'target', 'unihan' )
-			}
-		
-		// add pointer to PDF code chart page
-		if (pageNum > 0 && scriptGroup) {
-			p = newContent.appendChild( document.createElement( 'p' ))
-			p.appendChild( document.createTextNode( 'View in ' ))
-			a = p.appendChild( document.createElement( 'a' ))
-			a.appendChild( document.createTextNode( 'PDF code charts' ))
-			a.setAttribute( 'href', 'http://www.unicode.org/charts/PDF/U'+blockstart+'.pdf#page='+pageNum )
-			a.setAttribute( 'target', 'unihan' )
-			p.appendChild( document.createTextNode( ' (page '+pageNum+approx+')' ))
-			}
-			
-		
-		// add character if in graphics mode
-		if (document.getElementById('graphicsToggle').checked == true) { 
-			tr = tbody.appendChild( document.createElement( 'tr' ))
-            td = tr.appendChild( document.createElement( 'td' ))
-            td.appendChild( document.createTextNode( 'As text:' ))
-            td = tr.appendChild( document.createElement( 'td' ))
-            td.className = 'astext'
-            td.id = 'characterAsText'
-            td.addEventListener('click', copyToClipboard)
-            td.title = 'Click on this to copy it to the clipboard.'
-            td.style.cursor = 'pointer'
-            td.appendChild( document.createTextNode( MsPadding + getCharFromInt(codepoint) ))
-			}
-
-		// add decimal value
-		tr = tbody.appendChild( document.createElement( 'tr' ))
-		td = tr.appendChild( document.createElement( 'td' ))
-        td.appendChild( document.createTextNode( 'Decimal:' ))
-		td = tr.appendChild( document.createElement( 'td' ))
-        td.appendChild( document.createTextNode( codepoint ))
-
-		// add NCR value
-		tr = tbody.appendChild( document.createElement( 'tr' ))
-		td = tr.appendChild( document.createElement( 'td' ))
-        td.appendChild( document.createTextNode( 'HTML escape:' ))
-		td = tr.appendChild( document.createElement( 'td' ))
-        td.appendChild( document.createTextNode( '&#x'+codepoint.toString(16).toLocaleUpperCase()+';' ))
-
-		// add URL encoded value
-		tr = tbody.appendChild( document.createElement( 'tr' ))
-		td = tr.appendChild( document.createElement( 'td' ))
-        td.appendChild( document.createTextNode( 'URL escape:' ))
-		td = tr.appendChild( document.createElement( 'td' ))
-        td.appendChild( document.createTextNode( convertChar2pEsc(codepoint) ))
-
-		// add link to Conversion tool
-		tr = tbody.appendChild( document.createElement( 'tr' ))
-		td = tr.appendChild( document.createElement( 'td' ))
-        td.setAttribute( 'colspan', '2')
-        td.innerHTML = '<a href="../app-conversion/index.html?q='+getCharFromInt(codepoint)+'" target="conversion">More alternative forms</a>'
-
-
-			
-		//add link to CLDR
-		//p = newContent.appendChild( document.createElement( 'p' ))
-        //p.style.marginTop = "18px"
-		//p.appendChild( document.createTextNode( 'More properties at ' ))
-		//a = p.appendChild( document.createElement( 'a' ))
-		//a.appendChild( document.createTextNode( 'See more Character Properties' ))
-		//a.setAttribute( 'href', 'http://unicode.org/cldr/utility/character.jsp?a='+cpHex )
-		//a.setAttribute( 'target', 'cldr' )
-		//a.style.fontSize = '120%'
-		
-		//add link to decodeUnicode
-		//p = newContent.appendChild( document.createElement( 'p' ))
-        //p.style.marginTop = "0px"
-		//p.appendChild( document.createTextNode( 'Descriptions at ' ))
-		//a = p.appendChild( document.createElement( 'a' ))
-		//a.appendChild( document.createTextNode( 'decodeUnicode' ))
-		//a.setAttribute( 'href', 'http://www.decodeunicode.org/U+'+cpHex )
-		//a.setAttribute( 'target', 'decodeunicode' )
-		
-		//add link to FileFormat
-		//p = newContent.appendChild( document.createElement( 'p' ))
-        //p.style.marginTop = "0px"
-		//p.appendChild( document.createTextNode( 'Java data at ' ))
-		//a = p.appendChild( document.createElement( 'a' ))
-		//a.appendChild( document.createTextNode( 'FileFormat' ))
-		//a.setAttribute( 'href', 'http://www.fileformat.info/info/unicode/char/'+cpHex )
-		//a.setAttribute( 'target', 'fileformat' )
-		
-
-		
-		
-
-		//find script group
-		_charScriptGroup = scriptGroup
-		p = newContent.appendChild( document.createElement( 'p' ))
-        p.style.marginTop = "18px"
-		strong = p.appendChild( document.createElement( 'strong' ))
-		strong.appendChild( document.createTextNode( sScriptGroup ))
-		a = p.appendChild( document.createElement( 'a' ))
-        a.href = '#'
-        a.onclick = function () { showSelection( getRange(_charScriptGroup) ); return false; }
-		a.appendChild( document.createTextNode( _charScriptGroup ))
-		
-		
-		// display script group
-		p = newContent.appendChild( document.createElement( 'p' ))
-		p.style.marginTop = "18px"
-		strong = p.appendChild( document.createElement( 'strong' ))
-		strong.appendChild( document.createTextNode( 'Script group: ' ))
-		span = p.appendChild( document.createElement( 'span') )
-        span.className = 'subcat';
-		span.appendChild( document.createTextNode( st[cRecord[SUBTITLE_FIELD]] ))
-
-
-		// return block name if this character listed as contained in block doc
-		var blockfile = charInfoPointer(cpHex)
-		
-		
-		// display Description heading
-		if (desc[eval('0x'+cpHex)] || blockfile) { 
-			p = newContent.appendChild( document.createElement( 'p' ))
-            p.style.marginTop = "18px"
-			strong = p.appendChild( document.createElement( 'strong' ))
-			strong.appendChild( document.createTextNode( sDescription ))
-
-			// display any Unicode descriptions
-			if (desc[eval('0x'+cpHex)]) {
-				dRecord = desc[eval('0x'+cpHex)].split('¶')
-				description = true
-				for (var j=0; j < dRecord.length; j++ ) {
-                    dRecord[j] = dRecord[j].replace(/\[/,'<').replace(/\]/,'>')
-                    
-                    if (dRecord[j][0] === '\u2192') {
-                        temp = dRecord[j].replace(/\(/,'').replace(/\)/,'')
-                        temparray = temp.split('-')
-                        thecharacter = String.fromCodePoint('0x'+temparray[1].trim())
-                        temp = `\u2192 ${ temparray[1] } ${ thecharacter } ${ temparray[0].replace(/\u2192/,'') }`
-                        dRecord[j] = temp
-                        }
-					p.appendChild( document.createTextNode( dRecord[j] ))
-					p.appendChild( document.createElement( 'br' ))
-					}
-				}
-
-
-			// display notes if there are any, and if required
-			if (blockfile && document.getElementById('showNotesToggle').checked) {  
-				p.appendChild( document.createElement( 'br' ))
-				span = p.appendChild( document.createElement('span') )
-				span.className = 'notesexpl'
-				a = span.appendChild( document.createElement('a'))
-				a.href = '../scripts/'+blockfile+'/block.html#char'+cpHex
-				a.target = 'blockdata'
-				a.appendChild( document.createTextNode('Open the notes page in a separate window.'))
-				span.style.fontSize = '80%'
-
-				document.getElementById('notesIframe').src = '../scripts/'+blockfile+'/block.html?char='+cpHex
-				}
-			// if _showNotes isn't on, just mention that there are some notes
-			else if (blockfile) {  
-				p.appendChild( document.createElement( 'br' ))
-				span = p.appendChild( document.createElement('span') )
-				span.className = 'notesexpl'
-				span.appendChild( document.createTextNode( 'Notes are available for this character.' ))
-				span.style.fontSize = '80%'
-
-				document.getElementById('notesIframe').src = 'blank.html'
-				}
-			else document.getElementById('notesIframe').src = 'blank.html'
-			}
-		else document.getElementById('notesIframe').src = 'blank.html'
-		}
-		
-		
-		
-	else { // this is either  an unassigned character or a surrogate character
-		var group = findScriptGroup(codepoint)
-		
-		// character no. & name
-		div = newContent.appendChild( document.createElement( 'div' ))
-        div.style.marginTop = '10px'
-		var hexcpvalue = cpHex
-		while (hexcpvalue.length < 4) { hexcpvalue = '0'+hexcpvalue; }
-		div.appendChild( document.createTextNode( 'U+'+hexcpvalue+' '+'Unassigned character.' ))
-		
-		//find script group
-		p = newContent.appendChild( document.createElement( 'p' ))
-        p.style.marginTop = "18px"
-		strong = p.appendChild( document.createElement( 'strong' ))
-		strong.appendChild( document.createTextNode( sScriptGroup ))
-		a = p.appendChild( document.createElement( 'a' ))
-        a.href = '#'
-        a.onclick = function () { showSelection( getRange(scriptGroup) ); return false; }
-		a.appendChild( document.createTextNode( scriptGroup ))
-		}
-		
-		
-	var removedNode = listDiv.replaceChild( newContent, oldContent )
-
-		
-	div = newContent.appendChild( document.createElement( 'div' ))
-    div.id = 'charNavigation'
-    if (_copy2Picker) div.style.backgroundColor = '#EDE4D0'
-    else div.style.backgroundColor = '#a52a2a'
-	button = div.appendChild( document.createElement( 'button' ))
-    button.onclick = function () { listDiv.style.display = 'none'; }
-    button.appendChild(document.createTextNode('Close'))
-    button.className = 'clearButtonBottom'
-    
-    // ensure that the top of the information shows
-    document.getElementById('charOutputWrapper').scrollTop = 0 
-    
-    if (dRecord.length > 0) makeDescKey(dRecord)
-	}	
 
 
 var timeout	= 500;
