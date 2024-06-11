@@ -220,19 +220,19 @@ function changeFont (fontName) {
 	
 	//deal with accidents or resets
 	if (fontName == sApplyFont || fontName == '') {
-		document.getElementById('chFont').value = _defaultFont;
-		_currentFont = _defaultFont;
+		document.getElementById('chFont').value = _defaultFont
+		_currentFont = _defaultFont
 		}
 	else { _currentFont = fontName; }
 		
 	// make the changes
-	var leftpanel = document.getElementById('chart');
+	var leftpanel = document.getElementById('chart')
 	
 	if ( isMatrix() ) {
-		nodeArray = leftpanel.getElementsByTagName("td");
+		nodeArray = leftpanel.getElementsByTagName("td")
 		for (var i=0; i < nodeArray.length; i++) { 
 			if (nodeArray[i].className != 'hexNum') {
-				nodeArray[i].style.fontFamily = _currentFont;
+				nodeArray[i].style.fontFamily = _currentFont
 				}
 	    	}
 	   }
@@ -240,38 +240,21 @@ function changeFont (fontName) {
 	else { nodeArray = leftpanel.getElementsByTagName('span') 
 		for (var i=0; i < nodeArray.length; i++) { 
 			if (nodeArray[i].className == 'chSpan') {
-				nodeArray[i].style.fontFamily = _currentFont; 
+				nodeArray[i].style.fontFamily = _currentFont
 				}
 	    	}
 		} 
 		
 	if ( document.getElementById('largeChar')) {
-		document.getElementById('largeChar').style.fontFamily = _currentFont;
+		document.getElementById('largeChar').style.fontFamily = _currentFont
 		}
+		
+	document.getElementById('picker').style.fontFamily = _currentFont
+		
+	document.getElementById('characterAsText').style.fontFamily = _currentFont
  	}
 
 	
-function changeFontSizeX (size) {
-	var leftpanel = document.getElementById('chart');
-	
-	if ( (_lastOperation == "range" || _lastOperation == "customrange") 
-		&& !(document.getElementById('listMatrixToggle').checked) ) {
-		nodeArray = leftpanel.getElementsByTagName("td");
-		for (var i=0; i < nodeArray.length; i++) { 
-			if (nodeArray[i].className != 'hexNum') {
-				nodeArray[i].style.fontSize = size;
-				}
-	    	}
-	   }
-		
-	else { nodeArray = leftpanel.getElementsByTagName('span'); 
-		for (var i=0; i < nodeArray.length; i++) { 
-			if (nodeArray[i].className.match(/ch/)) {
-				nodeArray[i].style.fontSize = size; 
-				}
-	    	}
-		}  
-	}
 
 
 
