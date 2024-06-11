@@ -60,7 +60,7 @@ img { border-radius: 4px; }
   <div id="toc"><!-- placeholder --></div>
   <div class="noprint">
     <h2 class="notoc"><a id="links">Related links</a></h2>
-    <p><a href="/uniview/">UniView</a></p>
+    <p><a href="index.html">UniView</a></p>
   </div>
   </nav>
 </aside>
@@ -70,7 +70,7 @@ img { border-radius: 4px; }
 
 
 <section>
-  <p> UniView is a Web-based application for working with Unicode characters. No need to install anything – just open in a browser. You can look up  or find characters (using graphics or fonts) and related information, view whole character blocks or custom ranges, select characters to paste into your document, paste in and discover unknown characters, search for characters using regular expressions, do hex/dec/ncr conversions, highlight character types, etc. etc. <strong>It supports Unicode 15.0</strong> and is
+  <p> UniView is a Web-based application for working with Unicode characters. No need to install anything – just open in a browser. You can look up  or find characters (using graphics or fonts) and related information, view whole character blocks or custom ranges, select characters to paste into your document, paste in and discover unknown characters, search for characters using regular expressions, do hex/dec/ncr conversions, highlight character types, etc. etc. <strong>It supports Unicode 16.0 (beta)</strong> and is
     written with Web Standards to work on a variety of browsers.</p>
   <p>You can find the source code <a href="https://github.com/r12a/uniview">on github</a>, and a <a href="https://github.com/r12a/uniview/commits/gh-pages">list of recent changes</a>. See also the <a href="versiondata">change log</a> for a summary of changes in each release. If you spot a bug, <a href="https://github.com/r12a/uniview/issues">please raise a github issue</a>.</p>
   <p id="main_map"><strong>Click on the area you need help with:</strong></p>
@@ -80,25 +80,27 @@ img { border-radius: 4px; }
   
   <section>
 <map name="helpSelector">
-  <area shape="rect" coords="102,63,153,80" href="#filter" />
-  <area shape="rect" coords="159,62,223,80" href="#options" />
-  <area shape="rect" coords="279,60,347,82" href="#block_info" />
-  <area shape="rect" coords="30,83,214,133" href="#show_block" />
-  <area shape="rect" coords="212,84,342,114" href="#show_range" />
-  <area shape="rect" coords="14,206,166,237" href="#find_block" />
-  <area shape="rect" coords="31,135,345,177" href="#find_control" />
-  <area shape="rect" coords="33,181,124,200" href="#use_graphics" />
-  <area shape="rect" coords="128,182,256,203" href="#show_list" />
-  <area shape="rect" coords="264,182,346,201" href="#show_notes" />
-  <area shape="rect" coords="343,232,371,364" href="#destination_toggle" />
-  <area shape="rect" coords="393,65,686,158" href="#text_area" title="Text area" />
-  <area shape="rect" coords="396,159,685,206" href="#text_area_controls" />
-<area shape="rect" coords="5,251,293,813" href="#char_list_panel" title="Character list panel" />
-  <area shape="rect" coords="371,232,712,784" href="#char_detail_panel" title="Character details panel" />
-  <area shape="rect" coords="8,830,351,945" href="#tags" title="Tags" />
-  <area shape="rect" coords="355,808,713,1232" href="#notes_panel" title="Notes panel" />
+  <area shape="rect" coords="70,56,121,73" href="#filter" />
+  <area shape="rect" coords="122,56,186,74" href="#options" />
+  <area shape="rect" coords="5,180,163,206" href="#block_info" />
+  <area shape="rect" coords="157,98,246,116" href="#find_block" />
+  <area shape="rect" coords="158,74,285,100" href="#show_range" />
+  <area shape="rect" coords="4,71,158,115" href="#find_block" />
+  <area shape="rect" coords="176,114,284,138" href="#left_font_size" />
+  <area shape="rect" coords="4,150,283,177" href="#find_control_codepoints" />
+  <area shape="rect" coords="3,115,175,151" href="#find_control_text" />
+  <area shape="rect" coords="341,186,432,205" href="#use_graphics" />
+  <area shape="rect" coords="432,184,560,205" href="#show_list" />
+  <area shape="rect" coords="560,185,642,204" href="#show_notes" />
+  <area shape="rect" coords="3,210,38,234" href="#destination_toggle" />
+  <area shape="rect" coords="353,52,708,141" href="#text_area" title="Text area" />
+  <area shape="rect" coords="352,141,708,185" href="#text_area_controls" />
+<area shape="rect" coords="10,231,349,676" href="#char_list_panel" title="Character list panel" />
+  <area shape="rect" coords="352,213,711,692" href="#char_detail_panel" title="Character details panel" />
+  <area shape="rect" coords="8,679,351,794" href="#tags" title="Tags" />
+  <area shape="rect" coords="366,744,719,1232" href="#notes_panel" title="Notes panel" />
 </map>
-<p><img usemap="#helpSelector" alt="Help selector." src="images/help/help.png"/></p>
+<p><img usemap="#helpSelector" alt="Help selector." src="images/help/help.png" style="width:716px;"></p>
 </section>
   
  
@@ -120,170 +122,311 @@ img { border-radius: 4px; }
 <h2><a href="#controlsexplained">Lookup controls</a></h2>
 
 
+
+
 <section id="find_block">
-    <h3><a href="#find_block">Look up &gt; find a block name</a></h3>
-    <p><img src="images/help/block_finder.png" alt=""></p>
-    <p>The  control with the placeholder text &quot;Find a block name&quot; helps you find a block when you don't know how the name starts, or find a list of blocks with names that share the same text.</p>
-<p>Just below that control is a pulldown control that lists all Unicode blocks, grouped by type or region. </p>
-<p>Click on the <img src="images/help/down_arrow.png" alt=""> icon to refresh the results.</p>
+<h3><a href="#find_block">Look up &gt; find a block name</a></h3>
+
+<p><img src="images/help/block_finder.png" alt=""></p>
+
+<p>The  control with the placeholder text <code class="kw" translate="no" style="font-style: italic;">Find a block name</code> helps you find a block when you don't know how the name starts, or find a list of blocks with names that share the same text.</p>
+
 <p>For example, to find a Pahlavi block, start typing 'pah'. You'll see the following:</p>
+
 <p><img src="images/help/block_finder_example.png" alt=""></p>
- <p>Click on either of the block names. The name will appear in the field where you typed 'pah'. Chrome and Safari will immediately show the Unicode block you chose, but for Firefox you will need to hit return to show the block.</p>
-    <p>Notes:</p>
-    <ul>
-      <li>You can display the result as either a table or a list (that includes names) by clicking the check box lower down entitled <span class="onscreen">Show range as list</span>.</li>
-      <li>Unassigned character positions are shown in the table with a greyed out background.</li>
-      <li>You can also specify a Unicode range by typing or pasting a hex code point range into the <span class="onscreen">Show range</span> box below this control.</li>
-    </ul>
+
+<p>Click on one of the block names. The name will appear in the field where you typed 'pah'. Chrome and Safari will immediately show the Unicode block you chose, but for Firefox you will need to hit return to show the block.</p>
+
+
+<p>Just below that  is a pulldown control with placeholder text <code class="kw" translate="no" style="font-style: italic;">Select a block</code> that lists all Unicode blocks, grouped by type or region. </p>
+
+<p>Click on the <img src="images/help/down_arrow.png" alt=""> icon to refresh the results.</p>
+<p>Notes:</p>
+<ul>
+<li>You can display the result as either a table or a list (that includes names) by clicking the check box lower down entitled <span class="onscreen">Show range as list</span>.</li>
+
+<li>Unassigned character positions are shown in the table with a greyed out background.</li>
+<li>You can also specify a Unicode range by typing or pasting a hex code point range into the <span class="onscreen">Show range</span> box below this control.</li>
+</ul>
 </section>
 
 
 
 
 <section id="show_range">
-    <h3><a href="#show_range">Look up &gt; Show range</a></h3>
-    <p><img src="images/help/show_range.png" alt=""></p>
-    <p>If you type or paste a start and end code point value (in hex) into this control, the characters in the range will display below. Note that this can only be one contiguous range.</p>
-    <p>Click on the <img src="images/help/down_arrow.png" alt=""> icon to refresh the results.</p>
-    <p>If the range you select does not fill a whole column when displayed as a table, surrounding characters are greyed out. (When displaying as a list, you will only see the characters in the range.)</p>
-    <p>The  range field will accept various formats, making it easier to paste a range from elsewhere. The numbers must be in hexadecimal form but can be separated by either a colon (the default), a hyphen, one or more spaces, or one or more periods. The code point values themselves can be in the following formats: 1234, &amp;#x1234;, \1234;, \u1234, U+1234. The actual number of hex digits can be between 1 and 6.</p>
-    <p>Notes:</p>
-    <ul>
-      <li>You can display the result as either a table or a list (that includes names) by clicking the check box lower down entitled <span class="onscreen">Show range as list</span>.</li>
-    </ul>
-  </section>
-          <section id="find_control">
-    <h3><a href="#find_control">Look up &gt; search</a></h3>
-    <p><img src="images/help/find_control.png" alt=""></p>
-<p>This control accepts a list of codepoint values in hexadecimal or decimal, a list of characters or a search string. After adding content to the input box, click on the appropriate button above the control to activate lookup. (If the correct button was already highlighted, you could just hit Enter or click on <img border="0" src="images/apply.gif" align="bottom" alt="the down-arrow icon" />. )</p>
-    <p>Click on <img src="images/clearpicker.png" alt="the X icon" /> to quickly clear the control.</p>
-    <h4>Looking for hex or dec codepoints</h4>
-    
-    <p>By default the control expects hex codepoint values. To look up a decimal value, click on the <span class="onscreen">Dec</span> button.</p>
-    <p>This field is very forgiving about the format of the text entered into the box. Most types of  character escapes will be recognised, and you can even paste in surrounding text. For example, UniView will detect and list the characters referred to by code point in the text &quot;<em>the decomposition mapping is &lt;U+CE20, U+11B8&gt;, and not &lt;U+110E, U+1173, U+11B8&gt;.</em>&quot; Of course, this is not foolproof, but should provide the desired results most of the time.</p>
-    <h4>Looking for characters</h4>
-    <p>If the <span class="onscreen">Characters</span> button is selected, each character in the control will be processed. (Much of the time you will probably find it easier to use the <span class="onscreen">text area</span>  for this, but this control can be used if you want to look up some characters without disturbing a set of characters you are building up or using in the <span class="onscreen">text area</span>.)</p>
-    <h4>Searching for text</h4>
-    <p>By selecting the <span class="onscreen">Text</span> button you can search for text in the Unicode database, and returns a list of matching characters.</p>
-    <p>You can  use  regular expressions in searches. For example, suppose you wanted to
-              find all characters with the word 'tet'. You could type into the input field, <code>\btet\b</code>. The \b represents a word boundary. If you wanted to search for entries containing either the word 'tet' or the word 'tat' you can use the 'or' operator <code>|</code> as in <code>\btet\b|\btat\b</code>. (In UniView a colon can be used as a short form of <code>\b</code> so the example could have been written <code>:tet:</code>).</p>
-    <p>Another example: You want to search for 'alpha', but you only want results for the Latin characters (not the many Greek or
-              mathematical results). Simply use the following search string <code>latin.*alpha</code>. The <code>.*</code> represents any number of intervening
-              characters.</p>
-    <p>Basic regular expressions that work in  JavaScript  code should work. </p>
-    <p><img src="images/help/find_control2.png" alt=""></p>
-<p>By default searches match against  character names and alternative names in the main Unicode database, and also searches the information displayed for an individual character under the heading Description in the right panel. You can limit the search using the <span class="onscreen">Names</span>, <span class="onscreen">Descriptions</span> and <span class="onscreen">Other</span> check boxes that appear below the  input box. <span class="onscreen">Other</span> refers to alternative names. If you want to set these before searching, just click on the <span class="onscreen">Text</span> button with nothing in the input box. It will bring up the checkboxes, which you can set as required. Then just enter your search string and click again on the <span class="onscreen">Text</span> button.</p>
-    <p>You can also limit the search to the  characters  currently in a list or table.  To limit the search, select the check box labelled <span class="onscreen">Local</span>.  Matching characters will be highlighted. (You can then produce a list of just the highlighted characters by clicking on the icon next to <span class="onscreen">Filter </span><span class="onscreen">&gt; Make list from highlights</span>. If you need to refine your search, you could then search again on this list, and so on.)</p>
-    <p>To clear the highlighting after doing a local search, just clear the <span class="onscreen">Find</span> input box, and hit the <span class="onscreen">Search</span> button again.</p>
-  </section>
-  
-  
-  <section id="use_graphics">
-    <h3><a href="#use_graphics">Look up &gt; Use graphics</a></h3>
-    <p><img src="images/help/use_graphics.png" alt=""></p>
-    <p>If the check box is selected,  characters (apart from those in the <span class="onscreen">text area</span>  and notes area) will be shown as images, rather than text. </p>
-    <p>Dedicated images are available for all characters except for those in the large Han, Hangul and Tangut blocks. Many of those characters are 
-              however also available thanks to an agreement with the folks who run the <a href="http://decodeunicode.org/">decodeunicode</a> server.</p>
-    <p>If you  want to find fonts, check out the <a href="/scripts/links">script resource pages</a>. When you select a Unicode block, a pointer to the relevant page appears at the top right of the panel. </p>
-  </section>
-  
-  
-  <section id="show_list">
-    <h3><a href="#show_list">Look up &gt; Show tables as a list</a></h3>
-    <p><img src="images/help/show_list.png" alt=""></p>
-    <p>If the check box is selected when you want to display a Unicode block or range, the characters will be displayed as a list, rather than a table.</p>
-    <p>You can also use this to switch between table and list views of a range you have just selected.</p>
-  </section>
-  
-  
-  <section id="show_notes">
-    <h3><a href="#show_notes">Look up &gt; Show notes</a></h3>
-    <p><img src="images/help/show_notes.png" alt=""></p>
-    <p>If you display information about a character in the <span class="onscreen">Character details panel</span> (lower right) and  there are notes available for that character they will be displayed at the bottom of the page if this control is selected.</p>
-<p>Not all characters have associated notes. When <span class="onscreen">Show block </span>is turned on, characters in the matrix for which there are notes are highlighted with an orange bar below. See the example here:</p>
-<p><img src="images/help/note_highlights.png" alt=""></p>
-    <p>The notes are not authoritative. They are compiled by myself as I learn about various scripts and characters. They are made available in case they are of use, but you should not assume that they are always correct, and they are certainly not complete.</p>
-  </section>
-  
-  
-  <section id="block_info">
-    <h3><a href="#block_info">Block info link</a></h3>
-    <p><img src="images/help/block_info.png" alt=""></p>
-    <p>The block info link appears when you select a block for display. Click on it to open a page of useful links related to that block. (The page opens in another window.)</p>
-  </section>
+<h3><a href="#show_range">Look up &gt; Show range</a></h3>
+
+<p><img src="images/help/show_range.png" alt=""></p>
+
+<p>If you type or paste a start and end code point value (in hex) into this control, the characters in the range will display below. Note that this can only be one contiguous range.</p>
+
+<p>Click on the <img src="images/help/down_arrow.png" alt=""> icon to refresh the results.</p>
+
+<p>If the range you select does not fill a whole column when displayed as a table, surrounding characters are greyed out. (When displaying as a list, you will only see the characters in the range.)</p>
+
+<p>The  range field will accept various formats, making it easier to paste a range from elsewhere. The numbers must be in hexadecimal form (between 1 and 6 digits) but can be separated by any of the following:</p>
+
+<ul>
+<li>: (colon)</li>
+<li>- (hyphen)</li>
+<li>. | .. | ... (one or more periods)</li>
+<li>to (the word 'to')</li>
+<li>one or more spaces</li>
+</ul>
+
+<p>The code point values themselves can be in plain hex, HTML, CSS, JavaScript, or U+ formats, eg. 1234, &amp;#x1234;, \1234;, \u1234, U+1234.</p>
+
+
+<p>Notes:</p>
+
+<ul>
+<li>You can display the result as either a table or a list (that includes names) by clicking the check box lower down entitled <span class="onscreen">Show range as list</span>.</li>
+</ul>
 </section>
+
+
+
+
+
+
+
+
+<section id="find_control_text">
+<h3><a href="#find_control_text">Look up &gt; search for text</a></h3>
+
+<p><img src="images/help/find_control.png" alt=""></p>
+
+<p>This set of controls allows you to search for text in the Unicode database, and returns a list of matching characters.</p>
+
+<p>You can  use  regular expressions in searches. For example, suppose you wanted to find all characters with the word 'tet'. You could type into the input field, <code>\btet\b</code>. The \b represents a word boundary. If you wanted to search for entries containing either the word 'tet' or the word 'tat' you can use the 'or' operator <code>|</code> as in <code>\btet\b|\btat\b</code>.</p>
+
+<p>Another example: You want to search for 'alpha', but you only want results for the Latin characters (not the many Greek or
+mathematical results). Simply use the following search string <code>latin.*alpha</code>. The <code>.*</code> represents any number of intervening
+characters.</p>
+
+<p>Any basic regular expression that works in  JavaScript  code should work. </p>
+
+<p>By default, searches match against  character names and alternative names in the main Unicode database, and also search the information displayed for an individual character under the heading Description in the right panel. You can limit the search using the <span class="onscreen">Names</span>, <span class="onscreen">Descriptions</span> and <span class="onscreen">Other</span> check boxes that appear below the  input box. <span class="onscreen">Other</span> refers to alternative names.</p>
+
+<p>You can also limit the search to the  characters  currently in a list or table.  To do this, select the check box labelled <span class="onscreen">Local</span>.  Matching characters will be highlighted. (You can then produce a list of just the highlighted characters by clicking on the icon next to <span class="onscreen">Filter </span><span class="onscreen">&gt; Make list from highlights</span>. If you need to refine your search, you could then search again on this list, and so on.)</p>
+</section>
+
+
+
+
+
+<section id="find_control_codepoints">
+<h3><a href="#find_control_codepoints">Look up &gt; search for codepoints</a></h3>
+
+<p><img src="images/help/find_control2.png" alt=""></p>
+
+<p>Type one or more hex codepoint values, decimal codepoint values, or characters into the appropriate input field and click on <img src="images/help/find.png" alt="Find icon" style="height:1.4rem;">.</p>
+
+
+
+
+<h4>Looking for hex or dec codepoints</h4>
+
+<p>This field is very forgiving about the format of the text entered into the box. Most types of  character escape will be recognised, and you can even paste in surrounding text. For example, UniView will detect and list the characters referred to by code point in the text &quot;<em>the decomposition mapping is &lt;U+CE20, U+11B8&gt;, and not &lt;U+110E, U+1173, U+11B8&gt;.</em>&quot; Of course, this is not foolproof, but should provide the desired results most of the time.</p>
+
+<p> Separate multiple hex and dec values with a space.</p>
+
+
+
+<h4>Looking for characters</h4>
+
+<p>If the <span class="onscreen">Characters</span> button is selected, each character in the control will be processed. (Much of the time you will probably find it easier to use the <span class="onscreen">text area</span>  for this, but this control can be used if you want to look up some characters without disturbing a set of characters you are building up or using in the <span class="onscreen">text area</span>.)</p>
+</section>
+
+
+
+
+
+
+
+
+
+
+<section id="use_graphics">
+<h3><a href="#use_graphics">Look up &gt; Use graphics</a></h3>
+
+<p><img src="images/help/use_graphics.png" alt=""></p>
+
+<p>If the check box is selected,  characters (apart from those in the <span class="onscreen">text area</span>  and notes area) will be shown as images, rather than text. </p>
+
+<p>Dedicated images are available for all characters except for those in the large Han, Hangul and Tangut blocks.  I recommend installing the free <a href="http://www.babelstone.co.uk/Fonts/Han.html">Babelstone Han</a> and <a href="http://www.babelstone.co.uk/Fonts/Yinchuan.html">Tangut Yinchuan</a> fonts to get good coverage.</p>
+
+<p>You can set a font for the displayed characters using the <code class="kw" translate="no">Options &gt; Change Font</code> control. If you want to find MacOS, Windows, Noto, or SIL fonts, check out the <a href="../scripts/fontlist/index.html" target="_blank">Font lister</a> page. When you select a Unicode block, a pointer to the relevant page appears at the top right of the panel.</p>
+</section>
+
+
+
+
+
+
+
+
+<section id="show_list">
+<h3><a href="#show_list">Look up &gt; Show tables as a list</a></h3>
+
+<p><img src="images/help/show_list.png" alt=""></p>
+
+<p>If this check box is selected when you want to display a Unicode block or range, the characters will be displayed as a list, rather than a table.</p>
+
+<p>You can also use this to switch between table and list views of a range you have just selected.</p>
+</section>
+
+
+
+
+
+
+
+<section id="show_notes">
+<h3><a href="#show_notes">Look up &gt; Show notes</a></h3>
+
+<p><img src="images/help/show_notes.png" alt=""></p>
+
+<p>If this control is selected and you display information about a character in the <span class="onscreen">Character details panel</span> (lower right), any available notes will be displayed at the bottom of the page.</p>
+
+<p>The notes are created while writing <a href="../scripts/index.html#scriptnotes" target="_blank">Orthography Notes</a>. Those pages are continually revised, in which case the notes may also change from time to time.</p>
+
+<p>The <code class="kw" translate="no">Used by</code> links point to orthographies known to the <a href="../app_charuse/index.html" target="_blank">Character Use</a> app that use this character.</p>
+</section>
+
+
+
+
+
   
+  
+<section id="left_font_size">
+<h3><a href="#left_font_size">Look up &gt; Size</a></h3>
+
+<p><img src="images/help/size.png" alt=""></p>
+
+<p>This control allows you to change the size of the characters in the lower left panel (independently of text elsewhere on the page). Note: It  has no effect when viewing characters as graphics.</p>
+
+<p>To see all text larger, use the normal browser method for zooming (eg. Ctrl++ and Ctrl+-).</p>
+
+<p>If you want to find MacOS, Windows, Noto, or SIL fonts, check out the <a href="../scripts/fontlist/index.html" target="_blank">Font lister</a> page.</p>
+</section>
+
+
+
+
+
+
+
+
+<section id="block_info">
+<h3><a href="#block_info">Block info link</a></h3>
+<p><img src="images/help/block_info.png" alt=""></p>
+<p>The block info link appears when you select a block for display. Click on it to open a page of useful links related to that block. (The page opens in another window.)</p>
+</section>
+</section>
+
+
+
+
+
+
+
+
+
+
 <section id="text_area">
 <h2><a href="#text_area">Text area</a></h2>
-          <p>The <span class="onscreen">Text area</span>  is associated with a set of controls for managing characters as text. It makes UniView like a character map or picker tool, but also much more. You can add characters to the text area from other parts of UniView, or you can simply paste text into it for analysis.</p>
-          <p>The insertion point for characters echoed to  the text area  can be changed in most browsers by just clicking where you want characters to appear. If you highlight a range of text, any typed or echoed characters will replace the highlighted range.</p>
-    <p id="text_area_controls"><strong class="leadin">Text area controls.</strong> You can interact with the text in the text area using the icons below it. They are described here:</p>
-          <ul>
+
+<p>The <span class="onscreen">Text area</span>  is associated with a set of controls for managing characters as text. It makes UniView like a character map or picker tool, but also much more. You can add characters to the text area from other parts of UniView, or you can simply paste text into it for analysis.</p>
+
+<p>The insertion point for characters echoed to  the text area  can be changed in most browsers by just clicking where you want characters to appear. If you highlight a range of text, any typed or echoed characters will replace the highlighted range.</p>
+
+
+
+<p id="text_area_controls"><strong class="leadin">Text area controls.</strong> You can interact with the text in the text area using the icons below it. They are described here:</p>
+
+
+<ul>
 <li>
-  <p><img src="images/clickfromcparea.png" alt="with the two arrows" style="height: 2em; width: 2em;" /> Creates  a list in the <span ><span class="onscreen">Character list panel</span></span> of the characters in the <span class="onscreen">Text area</span>. This is particularly useful for investigating text with characters you can't see or correctly identify. Simply paste the text into the text area and click on this icon, and UniView will produce a list of the names and code points for all the characters in the text area. </p>
+<p><img src="images/clickfromcparea.png" alt="with the two arrows" style="height: 3em; width: 3em;" /> Creates  a list in the <span ><span class="onscreen">Character list panel</span></span> of the characters in the <span class="onscreen">Text area</span>. This is particularly useful for investigating text with characters you can't see or correctly identify. Simply paste the text into the text area and click on this icon, and UniView will produce a list of the names and code points for all the characters in the text area. </p>
+</li>
+
+<li>
+<p><img src="images/clicktocparea.png" alt="with the two arrows" style="height: 3em; width: 3em;" />  Copies to the <span class="onscreen">Text area</span> all the characters currently displayed in a list or table in the <span class="onscreen">Character list panel</span>. This is particularly useful for capturing search results, or making a list of all characters in a block, etc.</p>
+<p>If you have filtered out characters in the <span class="onscreen">Character list panel</span>, only the unfiltered characters will be added to the text area.</p>
+</li>
+
+<li>
+<p><img border="0" src="images/selectall.png" align="bottom" alt="with two facing square brackets" style="height:3em;"> Highlights all the text in the box. (Particularly useful to check you have caught all combining characters when copy-pasting to another location.)</p>
+</li>
+
+<li>
+<p><img src="images/clearpicker.png" alt="X" style="height:3em;"> Clears all text from the text area.</p>
+</li>
+
+
+<li>
+<p><img border="0" src="images/addspace.png" align="bottom" alt="with a low line" style="height:3em;"> Adds spaces between each of the characters in the text area. This is useful for generating space-separated lists of characters, or sometimes just for making it easier to see what characters are in the text area.</p>
 </li>
 <li>
-  <p><img src="images/clicktocparea.png" alt="with the two arrows" style="height: 2em; width: 2em;" />  Copies to the <span class="onscreen">Text area</span> all the characters currently displayed in a list or table in the <span class="onscreen">Character list panel</span>. This is particularly useful for capturing search results, or making a list of all characters in a block, etc.</p>
-  <p>If you have filtered out characters in the <span class="onscreen">Character list panel</span>, only the unfiltered characters will be added to the text area.</p>
+
+<p><img border="0" src="images/removespace.png" align="bottom" alt="with a low line" style="height:3em;"> Removes whitespace from between each of the characters in the text area. (This can be useful for counting characters, see below).</p>
 </li>
+
 <li>
-<p><img border="0" src="images/selectall.png" align="bottom" alt="with two facing square brackets" /> Highlights all the text in the box. (Particularly useful to check you have caught all combining characters when copy-pasting to another location.)</p>
-</li>
-            <li>
-<p><img border="0" src="images/addspace.png" align="bottom" alt="with a low line" /> Adds spaces between each of the characters in the text area. This is useful for generating space-separated lists of characters, or sometimes just for making it easier to see what characters are in the text area.</p>
-</li>
-<li>
-<p><img border="0" src="images/removespace.png" align="bottom" alt="with a low line" /> Removes whitespace from between each of the characters in the text area. (This can be useful for counting characters, see below).</p>
-</li>
-            <li>
-              <p><img border="0" src="images/addcomma.png" align="bottom" alt="with a low line" />  Adds commas between each of the characters in the text area. This is useful for generating comma-separated lists of characters to be copy-pasted elsewhere.</p>
+<p><img border="0" src="images/addcomma.png" align="bottom" alt="with a low line" style="height:3em;">  Adds commas between each of the characters in the text area. This is useful for generating comma-separated lists of characters to be copy-pasted elsewhere.</p>
 <p>Note: If you are using UniView on an iPad in portrait mode, this control is not available.</p>
-            </li>
-            <li>
-              <p><img src="images/expand.png" alt="the hyphen icon" /> Any hyphen-separated lists in the text area are expanded. For example, if you have <samp>A-Z</samp> in the text box, it will be replaced with <samp>ABCDEFGHIJKLMNOPQRSTUVWXYZ</samp>.  You can expand multiple ranges at the same time. For example, <samp>A-Za-z0-9</samp> will expand to include all intervening characters for the three ranges specified.            </p>
-<p><img src="images/rotate.png" alt="the hyphen icon" /> Allows you to convert a list of items on a single line to a vertical list. Add spaces where you want line-breaks to appear, then click on this icon.</p>
+</li>
+
+<li>
+<p><img src="images/expand.png" alt="the hyphen icon" style="height:3em;"> Any hyphen-separated lists in the text area are expanded. For example, if you have <samp>A-Z</samp> in the text box, it will be replaced with <samp>ABCDEFGHIJKLMNOPQRSTUVWXYZ</samp>.  You can expand multiple ranges at the same time. For example, <samp>A-Za-z0-9</samp> will expand to include all intervening characters for the three ranges specified.</p></li>
+
+<li>
+<p><img src="images/rotate.png" alt="the hyphen icon" style="height:3em;"> Allows you to convert a list of items on a single line to a vertical list. Add spaces where you want line-breaks to appear, then click on this icon.</p>
 <p>Note: If you are using UniView on an iPad in portrait mode, this control is not available.</p>
-            </li>
-            <li>
-              <p><img src="images/count.png" alt="the hash icon" /> Counts the number of codepoints in the text area.</p>
-            </li>
+</li>
+
 <li>
-<p><img src="images/convertPicker2Char.png" alt="convert Picker to Char" /> Converts all the characters in the text area to space-separated hexadecimal values. <img src="images/convertPicker2Hex.png" alt="convert Picker to Hex" /> Does the inverse: it converts a set of space-separated hex codes to characters. In fact, it can also accept a range of escapes as input, and they don't need to be space-separated.</p>
+<p><img src="images/count.png" alt="the hash icon" style="height:3em;"> Counts the number of codepoints in the text area.</p>
 </li>
-            <li>
-              <p><img src="images/han.png" alt="the icon that looks like a Japanese character" /> Look up the Han characters in the text area in the UniHan database.  (Opens a page in a separate window.)</p>
-    <p>If you have more than one code point or character in the box, UniView will open a separate window containing Unihan information for each. If you try to open more than 5 windows, a warning will pop up.</p>
-    <p>You can also find a link to the Unihan database in the <span class="onscreen">character details panel</span>  when a CJK Unified Ideograph is displayed there.</p>
-            </li>
-            <li>
-<p><img src="images/convert.png" alt="the icon with overlapping boxes" /> Converts any character escapes in the text area to ordinary characters.</p>
-<p>This is particularly useful if you drag and drop a hex code point value from the <span class="onscreen">Character details panel</span> (such as that of a decomposition, or uppercase value). Clicking on this icon will convert the numbers to the character they represent.</p>
-</li>
+
 <li>
-  <p><img src="images/openConvert.png" alt="the icon with overlapping boxes" /> Opens a page in a separate window that converts characters in the text area to various escape or other forms.</p>
-  <p>(You can also look up a single character at a time from the <span class="onscreen">Character details panel</span> by clicking on the <span class="onscreen">Conversion tool</span> link.)</p>
+<p><img src="images/case_simple.png" alt="Analyse" style="height:3em;"> Displays the characters in the text area  as a list in the lower right part of the page with all relevant characters converted to uppercase, lowercase and titlecase. Characters that had no case conversion information are also listed.</p>
 </li>
-            <li>
-              <p><img src="images/case_simple.png" alt="Analyse" /> Displays the characters in the text area  as a list in the lower right part of the page with all relevant characters converted to uppercase, lowercase and titlecase. Characters that had no case conversion information are also listed.</p>
-            </li>
-            <li>
-              <p><img src="images/case_detail.png" alt="Analyse" /> Produces the same kind of output as clicking on the icon just above, but shows the mappings for those characters that have been changed, eg. <samp>e→E</samp>.</p>
-            </li>
-            <li>
-              <p><img border="0" src="images/nfc.png" align="bottom" alt="ç" /> or <img border="0" src="images/nfd.png" align="bottom" alt="the NFD icon" /> Converts the text in the text area to Unicode Normalization Form C or D (NFC or NFD). The change may not be obvious, but if you click on <img border="0" src="images/apply.gif" align="bottom" alt="the down-arrow icon" /> you should see any changes to the text.</p>
-            </li>
-            <li>
-              <p><img src="images/clearpicker.png" alt="X" /> Clears all text from the text area.</p>
-            </li>
-          </ul>
+
+<li>
+<p><img src="images/han.png" alt="the icon that looks like a Japanese character" style="height:3em;"> Look up the Han characters in the text area in the UniHan database.  (Opens a page in a separate window.)</p>
+<p>If you have more than one code point or character in the box, UniView will open a separate window containing Unihan information for each. If you try to open more than 5 windows, a warning will pop up.</p>
+<p>You can also find a link to the Unihan database in the <span class="onscreen">character details panel</span>  when a CJK Unified Ideograph is displayed there.</p>
+</li>
+
+<li>
+<p><img border="0" src="images/nfc.png" align="bottom" alt="ç" style="height:3em;"> or <img border="0" src="images/nfd.png" align="bottom" alt="the NFD icon" style="height:3em;"> Converts the text in the text area to Unicode Normalization Form C or D (NFC or NFD). The change may not be immediately obvious, but if you click on <img src="images/clickfromcparea.png" alt="with the two arrows" style="height: 1.4em; width: 1.4em;"> you should see any changes to the text.</p>
+</li>
+
+<li>
+<p><img src="images/convertPicker2Char.png" alt="convert Picker to Char" style="height:3em;"> Converts all the characters in the text area to space-separated hexadecimal values.</p>
+<p><img src="images/convertPicker2Hex.png" alt="convert Picker to Hex" style="height:3em;"> Does the inverse: it converts a set of space-separated hex codes to characters. In fact, it can also accept a range of escapes as input, and they don't need to be space-separated.</p>
+</li>
+
+<li>
+<p><img src="images/transfer.png" alt="Open in other apps" style="height:3em;"> Opens other apps or pages based on the character(s) or script found in the text area. (Some options will only work with the first of multiple characters – such as those options that look up the script.)</p>
+</li>
+</ul>
 </section>
         
+
+
+
+
+
 
 
 <section>
 <h2 id="char_list_panel"><a href="#char_list_panel">Character list panel</a></h2>
 
-<img  style="float: left; margin: 0 2em 2em 7.5%" src="images/help/list_panel.png" alt=""/>
+<img  style="float: left; margin: 0 2em 2em 7.5%; width:240px;" src="images/help/list_panel.png" alt=""/>
 <p>The character list panel is where you will see tables and lists of characters that you generate from elsewhere in UniView.</p>
 <p>When characters are displayed in table format and you hover over a character in this area you will see the code point and name appear at the top of the panel.</p>
 <p>Whether in table or list format, if you click on a character one of two things will happen. Either details for that character will appear to the right, or the character will be added to the text area. The former is the default, but the latter will happen if you click on the icon described just below.</p>
@@ -310,7 +453,7 @@ img { border-radius: 4px; }
 <section style="clear:both;">
 <h2 id="tags"><a href="#notes_panel">Tags</a></h2>
 
-<p style="text-align:center;"><img src="images/help/tags.png" alt=""/></p>
+<p style="text-align:center;"><img src="images/help/tags.png" alt="" style="height:9em;"></p>
 <p>For each block or range of characters, these links allow you to quickly highlight characters with the property <code class="kw" translate="no">letter</code>, <code class="kw" translate="no">mark</code>, <code class="kw" translate="no">number</code>, <code class="kw" translate="no">punctuation</code>, or <code class="kw" translate="no">symbol</code>. For more fine-grained property distinctions, see the <span class="onscreen">Filter</span> panel.</p>
 <p>In addition, there are links for each of the subdivisions in the Unicode charts. Note that the subdivisions are listed in the order they appear in the charts, so in some cases there are more than one link with the same name. This is the case in Bengali, as you can see above, for the subdivisions called 'Various signs'.</p>
 <p>(Since the highlight function is used for this, don't forget that, if you happen to highlight a useful subset of characters and want to work with just those, you can use the <span class="onscreen">Make list from highlights</span> command, or click on the <img border="0" src="images/tochar.png" align="bottom" alt="upwards pointing arrow" /> icon to move those characters into the text area.)</p>
@@ -321,20 +464,31 @@ img { border-radius: 4px; }
 <section style="clear:both;">
 <h2 id="char_detail_panel"><a href="#char_detail_panel">Character detail panel</a></h2>
 
-<img style="float: right; margin: 0 32% 2em 2em" src="images/help/details_panel.png" alt=""/>
+<img style="float: right; margin: 0 32% 2em 2em; width:240px;" src="images/help/details_panel.png" alt="">
 <p>This panel shows detailed information and links for a single character.</p>
 <p>The previous and next clickable text at the top allows you to step through characters in the block one by one. It skips code values that don't have assignments, and at the end of a block it will move you to the first character of the following block, and vice versa.</p>
-<p>Han and hangul characters you will see a link <span class="onscreen">View in PDF code charts (pageXX)</span>. For Han blocks, this will open the PDF file for the block. The PDF is useful if there is no picture or font glyph for that character, but also allows you to see the variant forms of the character. Get <a href="#canviewhan">more information</a>.</p>
+<p>For Han and Hangul characters you will see a link <span class="onscreen">View in PDF code charts (pageXX)</span>. For Han blocks, this will open the PDF file for the block. The PDF is useful if there is no picture or font glyph for that character, but also allows you to see the variant forms of the character. Get <a href="#canviewhan">more information</a>.</p>
+<p>There are two pull-down controls for characters that belong to a block related to a writing system, but only one for other blocks. These provide links that allow you to explore this character or the relevant script in other apps and pages.</p>
 </section>
+
+
+
+
+
+
+
 
 
 
 <section style="clear:both;">
 <h2 id="notes_panel"><a href="#notes_panel">Notes panel</a></h2>
 
-<p style="text-align:center;"><img src="images/help/notes_panel.png" alt=""/></p>
+<p style="text-align:center;"><img src="images/help/notes_panel.png" alt="" style="width:300px;"></p>
+
 <p>The notes panel appears only when a check mark appears alongside <span class="onscreen">Show notes</span> in the <span class="onscreen">Lookup panel</span>. It also only appears if notes actually exist for character being displayed in the <span class="onscreen">Character details panel</span>.</p>
-<p>The notes provide information I have gathered while learning about scripts, and should not be considered authoritative. Notes may change and new notes will be added from time to time.</p>
+
+<p>The notes are created during work on the various <a href="../scripts/index.html#scriptnotes" target="_blank">Orthography Notes</a> pages. Notes may change and new notes will be added from time to time.</p>
+
 <p>If a note is displayed, you'll also find a link at the bottom of the <span class="onscreen">Character details panel</span> that allows you to open the full page from which the notes were taken. These pages carry annotations for a whole Unicode block or set of blocks.</p>
 </section>
 
@@ -346,17 +500,17 @@ img { border-radius: 4px; }
 
   <p><strong>Click on the area you need help with:</strong></p>
 <map name="filterSelector">
-  <area shape="rect" coords="10,29,411,76" href="#show_properties" />
+  <area shape="rect" coords="1,34,402,81" href="#show_properties" />
   <area shape="rect" coords="5,85,316,116" href="#list_from_highlights" />
   <area shape="rect" coords="6,145,175,180" href="#show_age" />
   <area shape="rect" coords="6,118,318,145" href="#list_from_unhighlight" />
-  <area shape="rect" coords="4,4,91,27" href="#main_map" />
-  <area shape="rect" coords="163,2,249,26" href="#options" />
+  <area shape="rect" coords="8,3,95,26" href="#main_map" />
+  <area shape="rect" coords="179,4,265,28" href="#options" />
 <area shape="rect" coords="1,190,260,711" href="#char_list_panel" title="Character list panel" />
   <area shape="rect" coords="295,188,596,704" href="#char_detail_panel" title="Character details panel" />
   <area shape="rect" coords="15,718,572,899" href="#notes_panel" title="Notes panel" />
 </map>
-<p style="text-align:center;"><img usemap="#filterSelector" alt="Filter selector." src="images/help/filter_panel.png"/></p>
+<p style="text-align:center;"><img usemap="#filterSelector" alt="Filter selector." src="images/help/filter_panel.png" style="width:400px;"></p>
 
 
   <section id="show_properties">
@@ -385,7 +539,7 @@ img { border-radius: 4px; }
     <p><img src="images/help/show_age.png" alt=""></p>
     <p>This control allows you to see when a character was added to Unicode. It shows version numbers for characters added after Unicode version 1.1.</p>
     <p>You can also find the same information on a character-by-character basis in the <span class="onscreen">Character detail panel</span> for that character.</p>
-    <p>To remove the information, click on the <img src="images/clearpicker.png" alt="X" /> icon alongside, or display  new  data in the left panel.</p>
+    <p>To remove the information, click on the <span style="color:red;">X</span> icon alongside, or display  new  data in the left panel.</p>
   </section>
 </section>
 
@@ -397,56 +551,81 @@ img { border-radius: 4px; }
 
   <p><strong>Click on the area you need help with:</strong></p>
 <map name="optionSelector">
-  <area shape="rect" coords="7,28,238,52" href="#show_u" />
-  <area shape="rect" coords="7,53,380,76" href="#list_format" />
-  <area shape="rect" coords="8,97,284,119" href="#left_max_pixels" />
-  <area shape="rect" coords="7,75,320,98" href="#hide_numbers" />
+  <area shape="rect" coords="4,56,235,80" href="#show_u" />
+  <area shape="rect" coords="5,31,391,56" href="#list_format" />
+  <area shape="rect" coords="5,107,288,133" href="#change_font" />
+  <area shape="rect" coords="4,79,318,107" href="#hide_numbers" />
   <area shape="rect" coords="7,4,91,28" href="#main_map" />
   <area shape="rect" coords="88,2,163,28" href="#filter" />
   <area shape="rect" coords="6,140,204,167" href="#left_font_size" />
-  <area shape="rect" coords="7,119,351,141" href="#left_max_pixels" />
+  <!--area shape="rect" coords="309,110,653,132" href="#left_max_pixels" /-->
 </map>
-<p style="text-align:center;"><img usemap="#optionSelector" alt="Option selector." src="images/help/options_panel.png"/></p>
+<p style="text-align:center;"><img usemap="#optionSelector" alt="Option selector." src="images/help/options_panel.png"  style="width:500px;"></p>
+
+
+  
+<section id="list_format">
+<h3><a href="#list_format">Options &gt; List format</a></h3>
+
+<p><img src="images/help/list_format.png" alt=""></p>
+
+<p>This allows you to change the order and items in lists appearing in the lower left panel. By default, you would see something like this:</p>
+<blockquote><img src="images/help/listed_items.png" alt="0980 BENGALI ANJI\n0990 BENGALI LETTER AI\n09A0 BENGALI LETTER TTHA" style="height:6em;"></blockquote>
+
+<p>With this control you can position the character before or after the number (or both!) or remove it altogether. You can also specify whether the list should show the number and/or the name of the character.</p>
+
+<p>This control is provided for people who want some control over how the list will look when copied and pasted into their text. </p>
+</section>
+
+
+
 
 
          <!--section id="removeunassigned">
     <h3><a href="#removeunassigned">Options &gt; Remove unassigned characters from list</a></h3>
     <p>If you have unassigned characters in a list in the lower left panel this control will remove them from the list.</p>
   </section-->
-  <section id="show_u">
-    <h3><a href="#show_u">Options &gt; Show U+ in lists</a></h3>
-    <p><img src="images/help/show_u.png" alt=""></p>
-	<p>If this is checked, hex code point numbers in lists in lists will be preceded by U+. The default is just the number.</p>
-  </section>
-  
-  <section id="list_format">
-    <h3><a href="#list_format">Options &gt; List format</a></h3>
-    <p><img src="images/help/list_format.png" alt=""></p>
-    <p>This allows you to change the order and items in lists appearing in the lower left panel. By default, you would see something like this:</p>
-    <blockquote>0968  २  DEVANAGARI DIGIT TWO</blockquote>
-    <p>With this control you can position the character before or after the number (or both!) or remove it altogether. You can also specify whether the list should show the number and/or the name of the character.</p>
-    <p>This control is provided for people who want some control over how the list will look when copied and pasted into their text. </p>
-  </section>
-  
-  <section id="hide_numbers">
-    <h3><a href="#hide_numbers">Options &gt; Hide numbers around matrix</a></h3>
-    <p><img src="images/help/hide_numbers.png" alt=""></p>
-    <p>This allows you to hide the column and row numbers around a table. The default is to show the numbers.</p>
-  </section>
-  
+<section id="show_u">
+<h3><a href="#show_u">Options &gt; Show U+ in lists</a></h3>
+
+<p><img src="images/help/show_u.png" alt=""></p>
+<p>If this is checked, hex code point numbers in lists will be preceded by U+. The default is just the number.</p>
+</section>
+
+
+
+
+<section id="hide_numbers">
+<h3><a href="#hide_numbers">Options &gt; Hide numbers around matrix</a></h3>
+
+<p><img src="images/help/hide_numbers.png" alt=""></p>
+
+<p>This allows you to hide the column and row numbers around a table. The default is to show the numbers.</p>
+</section>
+
+
+
+<!--
   <section id="left_max_pixels">
     <h3><a href="#left_max_pixels">Options &gt; Left panel max height</a></h3>
     <p><img src="images/help/left_panel_height.png" alt=""></p>
     <p> These controls allows you to change the height of the display box in the lower left panel. Just enter the height you want in pixels (just the number) or select a preset size.</p>
     <p>This is particularly useful when you are dealing with lists on a small screen such as a netbook. If you set the height to something like 400px, you can scroll through a long list, but still see the details in the right panel when you click on a character in the list.</p>
   </section>
+-->
+
+
+
   
-  <section id="left_font_size">
-    <h3><a href="#left_font_size">Options &gt; Left panel font size</a></h3>
-    <p><img src="images/help/left_panel_font.png" alt=""></p>
-    <p>This control allows you to increase the size of the characters in the lower left panel (independently of text elsewhere on the page). Note: It  has no effect when viewing characters as graphics.</p>
-    <p>To see all text larger, use the normal browser method for zooming (eg. Ctrl++ and Ctrl+- in browsers on Windows).</p>
-  </section>
+<section id="change_font">
+<h3><a href="#change_font">Change font</a></h3>
+
+<p><img src="images/help/change_font.png" alt=""></p>
+<p>Allows you to change the font used for characters in the tables and lists. It also affects the large character at the top of the right-hand panel.</p>
+<p>Add the font name to the input field and click on the icon to the right to apply it. (Of course, this only works if <code class="kw" translate="no">Use Graphics</code> is deselected.)</p>
+
+<p>To find MacOS, Windows, Noto, or SIL fonts, check out the <a href="../scripts/fontlist/index.html" target="_blank">Font lister</a> page.</p>
+</section>
 </section>
 
 
@@ -466,11 +645,11 @@ img { border-radius: 4px; }
 			</div-->
           <section class="topic" id="cancreatehllist">
     <h3 class="collapse"><a href="cancreatehllist">Create a list of only those characters that are highlighted</a></h3>
-    <p>On the <span class="onscreen">Filter</span> tab,  click on <img border="0" src="images/apply.gif" align="bottom" alt="the down-arrow icon" /> next to <span class="onscreen">Make list from highlights</span>. The characters shown in the lower left panel will be reduced to a list of just those that were highlighted. (This is particularly useful for refining searches.)</p>
+    <p>On the <span class="onscreen">Filter</span> tab,  click on  <span class="onscreen">Make list from highlights</span>. The characters shown in the lower left panel will be reduced to a list of just those that were highlighted. (This is particularly useful for refining searches.)</p>
   </section>
           <section class="topic" id="cancreatenothl">
     <h3 class="collapse"><a href="#cancreatenothl">Create a list of only those characters that are NOT highlighted</a></h3>
-    <p>On the <span class="onscreen">Filter</span> tab,  click on <img border="0" src="images/apply.gif" align="bottom" alt="the down-arrow icon" /> next to <span class="onscreen">Make list from non-highlighted items</span>. The characters shown in the lower left panel will be reduced to a list of just those that were not highlighted. (This is particularly useful for refining searches.)</p>
+    <p>On the <span class="onscreen">Filter</span> tab,  click on  <span class="onscreen">Make list from non-highlighted items</span>. The characters shown in the lower left panel will be reduced to a list of just those that were not highlighted. (This is particularly useful for refining searches.)</p>
   </section>
   <section class="topic" id="candecpoint">
     <h3 class="collapse"><a href="#candecpoint">Find out the decimal code point value for a character</a></h3>
@@ -492,29 +671,31 @@ img { border-radius: 4px; }
     <p>For some Han blocks, the number of characters per page in the PDF file varies slightly. In this case you will see the text <span class="onscreen">approx</span>; you may have to look at a page adjacent to the one you are taken to for these characters.</p>
 <p>Note that some of the PDF files are quite large. If the file size exceeds 3Mb, a warning is included.</p>
   </section>
-  <section class="topic" id="canotherdb">
-    <h3 class="collapse"><a href="#canotherdb">Look up information about a character in other databases</a></h3>
-    <p> The following options are available from the <span class="onscreen">Character details panel</span>.</p>
-    <p>Click on the <span class="onscreen">CLDR's Property demo</span> link. A new window will open to show the entry for that character in the
-              CLDR database. This provides additional, less commonly used data and properties relating to the character.</p>
-    <p>Click on the <span class="onscreen">decodeUnicode</span> link. A new window will open to show the entry for that character in the
-              decodeUnicode database. decodeUnicode is a wiki where people can provide information about characters.</p>
-    <p><a href="http://www.decodeunicode.org/http://www.decodeunicode.org/">decodeUnicode.org</a> is a wiki where people can contribute
-              information about Show blocks and characters. It is developed at the Department of Design at the University of Applied Sciences in Mainz. The
-              project is supported by the Federal Ministry of Education and Research (BMBF) and has the objectives of creating a basis for fundamental typographic
-              research and facilitating a textual approach to the characters of the world for all computer users. (They also provide the graphic versions of
-              characters for UniView.)</p>
-    <p>Click on the <span class="onscreen">FileFormat</span> link. A new window will open to show the
-              entry for that character in the FileFormat database.</p>
-    <p>The FileFormat pages provide useful information for Java and .Net programmers.</p>
-    <p> Click on the <span class="onscreen">Conversion tool</span> link. A new window will open to show
-              a number of possible alternative representations of the character, eg. numeric character entity references, percent escaped forms, hex and decimal
-              code point information, etc.</p>
-  </section>
-          <section class="topic" id="canbelong">
-    <h3 class="collapse"><a href="#canbelong">Display the block to which the character belongs</a></h3>
-    <p>Click on the link next to the subheading <span class="onscreen">Show block</span> in the <span class="onscreen">Character details panel</span> and all characters in that block will be displayed as a list or table (according to your settings).</p>
-  </section>
+
+
+
+
+
+<section class="topic" id="canotherdb">
+<h3 class="collapse"><a href="#canotherdb">Look up information about a character in other databases</a></h3>
+
+<p> The following options are available from the <span class="onscreen">Character details panel</span>.</p>
+
+<p>Click on the <span class="onscreen">Show more character properties</span> link. A new window will open to show the entry for that character in the    CLDR's property demo. This provides additional, less commonly used data and properties relating to the character.</p>
+
+
+<p>Select a destination from the <span class="onscreen">Explore this character in</span> control. A new window will open to show this character in another app.</p>
+
+
+<p>Select a destination from the <span class="onscreen">Explore the ... script</span> control. A new window will open to show information related to the script to which the character belongs.</p>
+</section>
+
+
+
+<section class="topic" id="canbelong">
+<h3 class="collapse"><a href="#canbelong">Display the block to which the character belongs</a></h3>
+<p>Click on the link next to the subheading <span class="onscreen">Show block</span> in the <span class="onscreen">Character details panel</span> and all characters in that block will be displayed as a list or table (according to your settings).</p>
+</section>
 </section>
         
         
@@ -581,10 +762,18 @@ Eg. <a href="index.html?range=1234:1254" target="_blank">https://r12a.github.io/
 				<p>Apart from things like IPA characters (which are spread across several blocks), I tend to use separate files for separate scripts, but
 					you can decide whether your file contains notes on characters from a single block or many blocks. It doesn't matter. </p>
 			</div>--></section>
+
+
+
+
+
+
 <section id="thanks">
-  <h2><a href="#thanks">Acknowledgements and thanks</a></h2>
-          <p> François Yergeau co-developed the Unicode Code Converter utility, and translated it into French.</p>
-          <p> Patrick Andries translated UniView into French, but that was many versions ago, and the French version is no longer available.</p>
+<h2><a href="#thanks">Acknowledgements and thanks</a></h2>
+
+<p> François Yergeau co-developed the original Unicode Code Converter utility, and translated it into French. That code is no longer used for UniView.</p>
+
+<p> Patrick Andries translated UniView into French, but that was many versions ago, and the French version is no longer available.</p>
 </section>
         
         
@@ -592,7 +781,7 @@ Eg. <a href="index.html?range=1234:1254" target="_blank">https://r12a.github.io/
 
 
 <div class="smallprint"> <span id="version">This version <span id="version-info"> 
-  <!-- #BeginDate format:IS1m -->2023-07-17  17:13<!-- #EndDate --> 
+  <!-- #BeginDate format:IS1m -->2024-06-11  12:18<!-- #EndDate --> 
   </span> GMT. &nbsp;&bull;&nbsp; Copyright <a href="mailto:r12a@w3.org">r12a@w3.org</a>. Licence <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC-By</a>.</span> </div>
   
 
