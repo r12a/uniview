@@ -1,4 +1,44 @@
 
+
+Go to https://www.unicode.org/Public/draft/UCD/charts/blocks/
+	save pdf to disk
+
+Open the pdf in Adobe Acrobat
+	set the zoom to 450%
+	use cmd-shift-5 to span 4 rows at a time (rows 0, 4, 8, C)
+	
+Open uniview/SLICES/large.psd
+	turn on slice tool (sub of crop)
+	drag in each snap and align with guides
+	check everything fits, and if not then adjust
+
+	select Export/Save for Web (legacy)
+	click Save
+	check options say
+		Images Only
+		Default Settings
+		All User Slices
+	save to SLICES/large/
+
+Open Finder
+	copy large/images to large/
+
+In console
+	run python3 fname2hex10.py using hex number of first character as parameter
+
+In Finder
+	remove all blanks in large/
+	open /c and create new directory with large subdirectory
+	
+Clean up
+
+
+
+
+
+
+
+
 open the pdf in Adobe Acrobat
 set the zoom to 75%
 prtn scr (cmd-shift-4) and open graphic in PhotoShop and copy
