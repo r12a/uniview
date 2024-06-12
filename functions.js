@@ -1476,7 +1476,8 @@ function convert2upper ( string, detail ) {
 	
 	if (detail) {
 		for (var i=0; i<codepoints.length; i++) {
-			cRecord = U[codepoints[i]].split(';')
+            if (getCharType(codepoints[i]) !== IN_U_DB) cRecord = "Not in database;Lo;0;L;;;;;N;;;;;;;;;".split(';')
+			else cRecord = U[codepoints[i]].split(';')
 			notfound = true
 			if (cRecord[UC_MAP]) {
 				uppercase += ' '+getCharFromInt(parseInt(cRecord[0],16))+'→'+getCharFromInt(parseInt(cRecord[UC_MAP],16))
@@ -1495,7 +1496,8 @@ function convert2upper ( string, detail ) {
 		}
 	else {
 		for (var i=0; i<codepoints.length; i++) {
-			cRecord = U[codepoints[i]].split(';')
+            if (getCharType(codepoints[i]) !== IN_U_DB) cRecord = "Not in database;Lo;0;L;;;;;N;;;;;;;;;".split(';')
+			else cRecord = U[codepoints[i]].split(';')
 			notfound = true
 			if (cRecord[UC_MAP]) {
 				uppercase += getCharFromInt(parseInt(cRecord[UC_MAP],16))
