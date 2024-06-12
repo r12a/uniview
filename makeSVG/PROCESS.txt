@@ -3,12 +3,12 @@ Set up for copying
 	- turn off graphics
 	- cycle through the items in Uniview and adjust the inspector for font-family, font-size, line-height, to get best fit in the box
 	- most will fit, but some specially wide characters may need to be treated separately afterwards
-	- set the screen grab to just inside the border (and check)
+	- set the screen grab to just inside the border (and check) - should be 255x255 px
 
 
 Produce PNGs
-	- click on every square in the block and capture the large box content
-	- empty slots should also be captured using cs4 and capturing some red colour
+	- click on every square in the block and capture the large box content (use the right cursor key to move through)
+	- empty slots should also be captured after clicking on the dummy checkbox (gives a red colour)
 	- after finishing, move all .png files to temp folder
 	- check that all are present & correct
 	- take a snap of the font etc settings in inspector and rename to xsettings.png
@@ -18,6 +18,13 @@ Convert names
 	- then copy the to-be-svg images to svgconversion folder
 	- run python3 xrenum.py <start_hex_value> to generate file names
 	- remove non-character images
+
+
+Archive pngs
+	- move the PNG files to Sites/cImages in case they are needed
+	- replace the existing large images in c folder
+	- run ImageOptim on them
+	
 
 
 Make SVGs
@@ -31,8 +38,8 @@ Update scriptGroups
 	- add true to end of block line
 
 
-Archive
+Archive svgs
 	- move the PNG files to Sites/cImages in case they are needed
-	** Check whether these should replace the existing large images in c folder
+	- copy svg files to c folder (alongside small images)
 
 
