@@ -2190,7 +2190,11 @@ function printProperties ( codepoint ) {
         
         // *** REMOVE FOR NOW TO CHECK EFFECT ***
 		//if (cRecord[CAN_COMB_CL] > 0) { MsPadding = '\u00A0' }  // ie. this is a combining character
-		if (cRecord[CAN_COMB_CL] > 0) { MsPadding = '\u25CC' }  // ie. this is a combining character
+		if (cRecord[CAN_COMB_CL] > 0 && document.getElementById('dottedCircle').checked) {
+            MsPadding = '\u25CC'
+            //MsPadding = '\u05D0'
+            }  // ie. this is a combining character
+        else MsPadding = ''
 
         // draw the large character
         out += `<div class="largeCharDiv"`
@@ -2208,8 +2212,9 @@ function printProperties ( codepoint ) {
         // otherwise add text
 		else { 
             out += `<span id="largeChar" class="copyme" title="${ codepoint }"`
+            if (document.getElementById('rtl').checked) out += `  dir="rtl"`  
             out += ` style="font-family: ${ document.getElementById('svgFontFamily').value }; font-size: ${ document.getElementById('svgFontSize').value }; line-height: ${ document.getElementById('svgLineHeight').value };`
-            if (document.getElementById('showDottedCircle').checked) out += `  background:red;`  
+            if (document.getElementById('colourBackground').checked) out += `  background:red;`  
             out += `"`
             out += `>${ MsPadding + getCharFromInt(codepoint) }</span>`
             }

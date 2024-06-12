@@ -1195,10 +1195,21 @@ Local</label>
 
 <div id="makeSVGControls" style="text-align: right;">
     &nbsp; &nbsp;
-    Font <input id="svgFontFamily" type="text" style="width:12rem;" value="Noto Sans">
+    Font 
+<input id="svgFontFamily" type="text" style="width:9rem;" value="Noto Sans">
     Size <input id="svgFontSize" type="text" style="width:3rem;" value="200px">
     Line <input id="svgLineHeight" type="text" style="width:3rem;" value="250px">
-    Dummy <input id="showDottedCircle" type="checkbox">
+    &#x25CC; <input id="dottedCircle" type="checkbox">
+    RTL <input id="rtl" type="checkbox">
+    Dummy <input id="colourBackground" type="checkbox">
+    
+<button onClick="
+   document.getElementById('largeChar').style.fontFamily =  document.getElementById('svgFontFamily').value
+   document.getElementById('largeChar').style.fontSize = document.getElementById('svgFontSize').value
+   document.getElementById('largeChar').style.lineHeight = document.getElementById('svgLineHeight').value
+   if (document.getElementById('colourBackground').checked)  document.getElementById('largeChar').style.backgroundColor = 'red'
+   else document.getElementById('largeChar').style.backgroundColor = ''
+    ">Apply</button>
 </div>
 
 
