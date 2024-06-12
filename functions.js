@@ -2248,20 +2248,21 @@ function printProperties ( codepoint ) {
 	var oldContent = document.getElementById('charInfo')
 	listDiv.style.display = 'block'
 
+    console.log('%c' + 'Creating UniView right panel for "'+getCharFromInt(codepoint)+'" (printProperties):', 'color:' + 'green' + ';font-weight:normal;')
     charData = getDataFor(codepoint) // returns a db record, or mock record for non-characters, etc.
-    console.log('Data:',charData)
+    console.log('\tData:',charData)
     
 	charType = getCharType( codepoint ) // is this an assigned char, a han/hang/tang char, an unassigned char, etc?
-	console.log('Char type:',charType)
+	console.log('\tChar type:',charType)
     
     scriptGroup = findScriptGroup(codepoint)  // finds the BLOCK name
-    console.log('Script group:',scriptGroup)
+    console.log('\tScript group:',scriptGroup)
     
     if (charType === IN_U_DB || charType === HAN_HANG_TANG) {
         scriptISOCode = findScriptISO(codepoint)  // finds the ISO tag
         if (scriptISOCode !== '') scriptName = linkDB[scriptISOCode].script // the name of the script
         else scriptName = ''
-        console.log('ISO code:',scriptISOCode)
+        console.log('\tISO code:',scriptISOCode)
         }
     
     // set up navigational graphics
