@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Make name list</title>
+
+<!-- Run this once for each update to Unicode. Take the output in the textarea and use it to replace the content of /block/all-notes.js -->
+
+<script src="../u.js">
+</script>
+<script>
+
+function doit () { 
+	out = 'var charData = {\n'
+	for (i=0;i<U.length;i++) {
+		if (U[i]) {
+			hex = i.toString(16)
+			fields = U[i].split(';')
+			while (hex.length < 4) hex = '0'+hex
+            hex = hex.toUpperCase()
+			out += '"\\u{'+hex+'}":"'+fields[0]
+			if (fields[1][0] === 'M') out += '\u200B'
+			out += '",\n'
+			}
+		}
+	out += '}'
+	document.getElementById('output').value = out
+	}
+
+</script>
+<style>
+p, input, #character  { font-size: 150%; }
+</style>
+</head>
+
+<body>
+<textarea id="output" style="width: 100%; height: 600px;"></textarea>
+
+<p><button type="submit" onClick="doit(); return false;">Go</button></p>
+
+
+</body>
+</html>

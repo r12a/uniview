@@ -1,0 +1,84 @@
+This file shows, for information, the mappings between various items and compressed representations used to reduce file size. It is not read in by any routine.
+
+
+Unicode versions
+1.1		a
+2.0		b
+2.1		c
+3.0		d
+3.1		e
+3.2		f
+4.0		g
+4.1		h
+5.0		i
+5.1		j
+5.2		k
+6.0		l
+6.1		m
+6.2		n
+6.3		o
+7.0		p
+8.0		q
+9.0		r
+10.0	s
+11.0	t
+12.0	u
+13.0	v
+14.0	w
+15.0	x
+
+
+
+Constants for U array record fields
+const CHAR_NAME = 0 // character name
+const GEN_CAT = 1 // general category
+const CAN_COMB_CL = 2 // canonical combining class
+const BIDI_CAT = 3 // bidi category
+const DECOMP_MAP = 4 // decomposition mapping
+const UC_MAP = 5 // uppercase mapping
+const LC_MAP = 6 // lowercase mapping
+const TC_MAP = 7 // titlecase mapping
+const SUBTITLE_FIELD = 8; // where subtitle reference is found
+const AGE_FIELD = 9; // where Unicode version is found
+
+const DEC_DIG_VALUE = 10 // decimal digit value		
+const DIG_VALUE = 11 // digit value					
+const NUMERIC_VALUE = 12 // numeric value			
+const UNICODE_1_NAME = 13 // Unicode 1 name
+const ISO_COMMENT = 14 // ISO 10646 comment
+
+line 2128 9 mirrored?
+
+
+// character types
+const NONCHARACTER = 0   // unrecognised code point
+const UNASSIGNED = 1  // unassigned code point inside a defined block
+const IN_U_DB = 2 // a character in the u.js database
+const HAN_HANG_TANG = 3 // Han, Hangul, or Tangut character
+const SURROGATE = 4  // a surrogate code point
+const PRIVATEUSE = 5 // a private use character
+
+
+
+
+
+PREVIOUS constants for U array record fields
+const HEX_NUM = 0 // hex number						**** DELETE THIS
+const CHAR_NAME = 1 // character name
+const GEN_CAT = 2 // general category
+const CAN_COMB_CL = 3 // canonical combining class
+const BIDI_CAT = 4 // bidi category
+const DECOMP_MAP = 5 // decomposition mapping
+const DEC_DIG_VALUE = 6 // decimal digit value		**** MOVE TO END ?
+const DIG_VALUE = 7 // digit value					**** MOVE TO END ?
+const NUMERIC_VALUE = 8 // numeric value			**** MOVE TO END ?
+const UNICODE_1_NAME = 10 // Unicode 1 name
+const ISO_COMMENT = 11 // ISO 10646 comment
+const UC_MAP = 12 // uppercase mapping
+const LC_MAP = 13 // lowercase mapping
+const TC_MAP = 14 // titlecase mapping
+const BETA = 15 // beta indicator					**** DELETE THIS
+const GRAPHIC_FIELD = 16; // where graphic information is found **** DELETE THIS
+const SUBTITLE_FIELD = 17; // where subtitle reference is found
+const AGE_FIELD = 18; // where Unicode version is found
+

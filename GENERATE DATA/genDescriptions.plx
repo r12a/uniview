@@ -9,7 +9,7 @@
 open( SOURCEFILE, "NamesList.txt" ) || die "Could not read NamesList.txt.";
 open( OUTFILE, ">descriptions.js" ) || die "Could not open descriptions.js.";
 open( STFILE, ">subtitles.js" ) || die "Could not open subtitles.js.";
-open( REFFILE, ">tempSubtRefs.php" ) || die "Could not open tempSubtRefs.php.";
+open( REFFILE, ">tempSubtRefs.txt" ) || die "Could not open tempSubtRefs.txt.";
 
 $counter = 0;
 $buffer = '';
@@ -18,7 +18,6 @@ $titlecount = -1;
 
 print OUTFILE "var desc = new Array();\n";
 print STFILE "var st = new Array();\n";
-print REFFILE "<?php\n\$stref = array();\n";
 print STDOUT "Creating new descriptions.js file...\n";
 while ( <SOURCEFILE> ) {
 	if ( (index( $_, '@' ) != 0) && (index( $_, "\t\t") != 0) ) { # if line doesn't begin with @ or two tabs
@@ -37,7 +36,7 @@ while ( <SOURCEFILE> ) {
 				$buffer = '';
 				}
 			$currHex = substr( $_, 0, index( $_, '¶') );	
-			print REFFILE '$stref[', hex( $currHex ), ']=', $titlecount, ";\n"; 	# print current subtitle number to temp ref file
+			print REFFILE hex( $currHex ), ':', $titlecount, "\n"; 	# print current subtitle number to temp ref file
 			print STDOUT $counter++, ' ' ;
 			}
 		else {  # this is data to collect in the buffer
@@ -83,7 +82,6 @@ while ( <SOURCEFILE> ) {
 #		}
 #	}
 
-print REFFILE "?>";
 
 close( SOURCEFILE ) || die "Can't close NamesList.txt";
 close( OUTFILE ) || die "Can't close descriptions.php";
