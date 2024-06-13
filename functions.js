@@ -2520,7 +2520,8 @@ function printProperties ( codepoint ) {
                 out += `<div>`
                 out += `<div class="notesexpl"><a href="../scripts/${ blockfile }/block.html#char${ cpHex }" target="blockdata" style="font-size:80%;">Open the notes page in a separate window.</a></div>`
 
-                document.getElementById('notesIframe').src = '../scripts/'+blockfile+'/block.html?char='+cpHex
+                //document.getElementById('notesIframe').src = '../scripts/'+blockfile+'/block.html?char='+cpHex
+                document.getElementById('notesIframe').src = '../scripts/'+blockfile+'/character.html?q='+String.fromCodePoint(parseInt(cpHex, 16))
                 }
 
 
