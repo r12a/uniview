@@ -1780,6 +1780,7 @@ function showProperties (value) { console.log('>>> showProperties (', value, ')'
 	}
 
 
+
 function showRange () {
 	// clean up the range and check whether we have already downloaded the data
 	// if so, it call drawSelection to draw characters
@@ -1929,13 +1930,13 @@ function foundInList (ch, range) {
 function displayTags (list) {
 	var out = ''
 	
-	out += '<a href="none" onclick="showProperties(\'(;Lu;|;Ll;|;Lt;|;Lm;|;Lo;)\'); return false;">letter</a> '
-	out += ' • <a href="none" onclick="showProperties(\'(;Mn;|;Mc;|;Me;)\'); return false;">mark</a> '
-	out += ' • <a href="none" onclick="showProperties(\'(;Nd;|;Nl;|;No;)\'); return false;">number</a> '
-	out += ' • <a href="none" onclick="showProperties(\'(;Pc;|;Pd;|;Ps;|;Pe;|;Pi;|;Pf;|;Po;)\'); return false;">punctuation</a> '
-	out += ' • <a href="none" onclick="showProperties(\'(;Sm;|;Sc;|;Sk;|;So;)\'); return false;">symbol</a> '
-	out += ' • <a href="none" onclick="showProperties(\'(;Cc;|;Cf;|;Co;|;Cn;)\'); return false;">other</a> '
-	out += ' • <a href="none" onclick="showProperties(\'none\'); return false;">X</a><br/>'
+	out += `<a href="none" onclick="document.getElementById('locallist').checked=true; showProperties(\'(;Lu;|;Ll;|;Lt;|;Lm;|;Lo;)\'); return false;">letter</a> `
+	out += ` &bull; <a href="none" onclick="document.getElementById('locallist').checked=true;  showProperties(\'(;Mn;|;Mc;|;Me;)\'); return false;">mark</a> `
+	out += ` &bull; <a href="none" onclick="document.getElementById('locallist').checked=true; showProperties(\'(;Nd;|;Nl;|;No;)\'); return false;">number</a> `
+	out += ` &bull; <a href="none" onclick="document.getElementById('locallist').checked=true; showProperties(\'(;Pc;|;Pd;|;Ps;|;Pe;|;Pi;|;Pf;|;Po;)\'); return false;">punctuation</a> `
+	out += ` &bull; <a href="none" onclick="document.getElementById('locallist').checked=true; showProperties(\'(;Sm;|;Sc;|;Sk;|;So;)\'); return false;">symbol</a> `
+	out += ` &bull; <a href="none" onclick="document.getElementById('locallist').checked=true; showProperties(\'(;Cc;|;Cf;|;Co;|;Cn;)\'); return false;">other</a> `
+	out += ` &bull; <a href="none" onclick="showProperties(\'none\'); return false;">X</a><br/>`
 	
 	if (list.length > 0) {
 		for (var i=0;i<list.length;i++) {
