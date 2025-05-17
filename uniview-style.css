@@ -636,6 +636,11 @@ span[lang|='ur'] {
 .c16-0 img { opacity:0.5; filter:alpha(opacity=50); }
 .c16-0:before { content: '16.0'; font-size: 9px; color: black; display: block; }
 
+.c17-0 { background-color:beige; }
+#chart td.c17-0 { padding-top: 0px; }  div.c17-0 { padding-left: 20px; }
+.c17-0 img { opacity:0.5; filter:alpha(opacity=50); }
+.c17-0:before { content: '17.0'; font-size: 9px; color: black; display: block; }
+
 
 .cshelp { border:0; margin:0; padding:0; background-color: #ffa500; color: white; cursor: pointer; }
 
