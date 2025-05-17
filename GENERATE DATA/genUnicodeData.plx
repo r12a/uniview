@@ -34,6 +34,7 @@ while ( <AGEFILE> ) {
 				@cRecord[1] =~ s/14\.0/w/;
 				@cRecord[1] =~ s/15\.0/x/;
 				@cRecord[1] =~ s/16\.0/y/;
+				@cRecord[1] =~ s/17\.0/z/;
 				@cRecord[1] =~ s/1\.1/a/;
 				@cRecord[1] =~ s/2\.0/b/;
 				@cRecord[1] =~ s/2\.1/c/;
@@ -66,6 +67,7 @@ while ( <AGEFILE> ) {
 					@cRecord[2] =~ s/14\.0/w/;
 					@cRecord[2] =~ s/15\.0/x/;
 					@cRecord[2] =~ s/16\.0/y/;
+					@cRecord[2] =~ s/17\.0/z/;
 					@cRecord[2] =~ s/1\.1/a/;
 					@cRecord[2] =~ s/2\.0/b/;
 					@cRecord[2] =~ s/2\.1/c/;
