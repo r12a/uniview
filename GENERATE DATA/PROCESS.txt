@@ -27,7 +27,7 @@ Search & replace all & to &amp;.
 
 
 Step 4
-Edit genDerivedAge.plx to add new lines like:
+Edit genUnicodeData.plx to add new lines like:
 		@cRecord[1] =~ s/16\.0/y/;
 
 Run: genUnicodeData.plx
@@ -66,10 +66,10 @@ Copy the resulting file all-names.js to /shared/code/
 ----------------------
 
 
-Step 5
+Step 7
 Run: genNamesOnly.plx
 	Input UnicodeData.txt
-	Output: Names.php
+	Output: all-names.js
 
 Step 6
 Run: genMenu.plx
