@@ -2036,6 +2036,8 @@ function tidyRange (rawrange) {
 	rawrange = rawrange.replace(/[\\uUx\&\#\+\;]/g,'')
 	rawrange = rawrange.replace(/U\+/g,'')
 	rawrange = rawrange.replace(/-/g, ':');
+	rawrange = rawrange.replace(/–/g, ':');
+	rawrange = rawrange.replace(/,/g, ':');
 	rawrange = rawrange.replace(/\.\./g, ':');
 	rawrange = rawrange.replace(/\.\.\./g, ':');
     
