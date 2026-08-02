@@ -2228,6 +2228,23 @@ function toggleNumbers () {
 
 
 
+function highlightCharInTable (ch) {
+    // after creating a table by clicking on the block name in the right
+    // side, this highlights the character on the right side
+    
+    const table = document.getElementById('chart')
+    if (typeof table === 'undefined') return
+    
+    tdNodes = table.querySelectorAll('td')
+    if (tdNodes.length === 0) return
+    
+    for (td of tdNodes) {
+        if (td.title.includes(ch)) td.style.border = '4px solid darkorange'
+        }
+    }
+
+
+
 
 
 
@@ -2448,7 +2465,7 @@ function printProperties ( codepoint ) {
 
         //show Unicode block, with link
         _charScriptGroup = scriptGroup
-        out += `<p class="padBlockStart"><strong>Unicode block: <a href="#" onclick="showSelection( getRange(_charScriptGroup) ); return false;">${ _charScriptGroup }</a></strong></p>`
+        out += `<p class="padBlockStart"><strong>Unicode block: <a href="#" onclick="showSelection( getRange(_charScriptGroup) ); highlightCharInTable(${ codepoint }); return false;">${ _charScriptGroup }</a></strong></p>`
 
         //display script group
         if (charType === IN_U_DB) {
