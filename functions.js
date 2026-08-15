@@ -2389,7 +2389,7 @@ function printProperties ( codepoint ) {
         if (charType === IN_U_DB) out += `<tr><td>Unicode version:</td><td>${ age2VersionMap[cRecord[AGE_FIELD]] }</td></tr><tr>`
 
         // add link to CLDR properties demo
-        out += `<tr><td class="padBlockStart padBlockEnd" colspan="2"><a href="http://unicode.org/cldr/utility/character.jsp?a=${ cpHex }" target="cldr" style="font-size:110%;">Show more character properties</a></td></tr><tr>`
+        out += `<tr><td class="padBlockStart padBlockEnd" colspan="2"><a href="https://util.unicode.org/UnicodeJsps/character.jsp?a=${ cpHex }" target="cldr" style="font-size:110%;">Show more character properties</a></td></tr><tr>`
 
 
         if (charType !== PRIVATEUSE) {
