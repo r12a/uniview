@@ -2283,7 +2283,7 @@ function printProperties ( codepoint ) {
         out += `<tr><td>Unicode version:</td><td>${ age2VersionMap[cRecord[AGE_FIELD]] }</td></tr><tr>`
 
         // add link to CLDR properties demo
-        out += `<tr><td class="padBlockStart padBlockEnd" colspan="2"><a href="http://unicode.org/cldr/utility/character.jsp?a=${ cpHex }" target="cldr" style="font-size:110%;">Show character properties</a></td></tr><tr>`
+        out += `<tr><td class="padBlockStart padBlockEnd" colspan="2"><a href="https://util.unicode.org/UnicodeJsps/character.jsp?a=${ cpHex }" target="cldr" style="font-size:110%;">Show character properties</a></td></tr><tr>`
 
 
 
@@ -2698,7 +2698,7 @@ function printPropertiesZ ( codepoint ) {
 			td.setAttribute('colspan', '2')
 			a = td.appendChild( document.createElement( 'a' ))
 			a.appendChild( document.createTextNode( 'Show character properties' ))
-			a.setAttribute( 'href', 'http://unicode.org/cldr/utility/character.jsp?a='+cpHex )
+			a.setAttribute( 'href', 'https://util.unicode.org/UnicodeJsps/character.jsp?a='+cpHex )
 			a.setAttribute( 'target', 'cldr' )
 			a.style.fontSize = '110%'
 			td.setAttribute('style', 'padding-bottom:15px;')
@@ -2789,7 +2789,7 @@ function printPropertiesZ ( codepoint ) {
 		//p.appendChild( document.createTextNode( 'More properties at ' ))
 		//a = p.appendChild( document.createElement( 'a' ))
 		//a.appendChild( document.createTextNode( 'See more Character Properties' ))
-		//a.setAttribute( 'href', 'http://unicode.org/cldr/utility/character.jsp?a='+cpHex )
+		//a.setAttribute( 'href', 'https://util.unicode.org/UnicodeJsps/character.jsp?a='+cpHex )
 		//a.setAttribute( 'target', 'cldr' )
 		//a.style.fontSize = '120%'
 		
