@@ -7,7 +7,7 @@ UnicodeData-xxx.txt
 Make copies in the generatedata directory without the version info in the filename.
 
 Step 2
-Run: genScriptGroups.plx
+Run: perl genScriptGroups.plx
 	Input: Blocks.txt
 	Output: scriptGroups.js
 	
@@ -18,7 +18,7 @@ Run: genScriptGroups.plx
 	
 	
 Step 3
-Run: genDescriptions.plx
+Run: perl genDescriptions.plx
 	Input: NamesList.txt
 	Output: descriptions.js + subtitles.js + tempSubtRefs.txt
 
@@ -30,7 +30,7 @@ Step 4
 Edit genUnicodeData.plx to add new lines like:
 		@cRecord[1] =~ s/16\.0/y/;
 
-Run: genUnicodeData.plx
+Run: perl genUnicodeData.plx
 	Input UnicodeData.txt + DerivedAge.txt + tempSubtRefs.txt
 	Output: u.js
 
