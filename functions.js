@@ -2395,9 +2395,14 @@ function printProperties ( codepoint ) {
 
 
         if (charType !== PRIVATEUSE) {
-            // add link to other apps
+            // add link to other apps - escape values embedded in the inline onchange handler
+            var escAttr = function (s) { return String(s).replace(/[\\'"<>]/g, function (c) { return { '\\':'\\\\', "'":"\\'", '"':'&quot;', '<':'&lt;', '>':'&gt;' }[c] }) }
+            var safeChar = escAttr(String.fromCodePoint(codepoint))
+            var safeISOCode = escAttr(scriptISOCode)
+            var safeGroup = escAttr(scriptGroup)
+            var safeScriptName = escAttr(scriptName)
             out += `<tr><td class="padBlockStart " colspan="2">
-                Explore this character in <select id="explore" onchange="explore('${ String.fromCodePoint(codepoint) }', this.value, '${ scriptISOCode }', '${ scriptGroup }'); this.value=''">
+                Explore this character in <select id="explore" onchange="explore('${ safeChar }', this.value, '${ safeISOCode }', '${ safeGroup }'); this.value=''">
                     <option value="">Select...</option>
                     <option value="charuse">Character usage</option>
                     <option value="listindic">Indic properties</option>
@@ -2410,7 +2415,7 @@ function printProperties ( codepoint ) {
                 </td></tr><tr>`
 
             if (scriptName !== '') out += `<tr><td class=" padBlockEnd" colspan="2">
-                Explore the ${ scriptName } script <select id="explore" onchange="explore('${ String.fromCodePoint(codepoint) }', this.value, '${ scriptISOCode }', '${ scriptName }'); this.value=''">
+                Explore the ${ scriptName } script <select id="explore" onchange="explore('${ safeChar }', this.value, '${ safeISOCode }', '${ safeScriptName }'); this.value=''">
                     <option value="">Select...</option>
                     <option value="textsamples">Text samples</option>
                     <option value="notofonts">Noto fonts</option>
