@@ -915,7 +915,9 @@ function getCharType (codepoint) {
         (codepoint >= 0x2B740 && codepoint <= 0x2B81F) || (codepoint >= 0x2B820 && codepoint <= 0x2CEAF) || (codepoint >= 0x2CEB0 && codepoint <= 0x2EBEF) ||   // CJK Ext D, E, F
         (codepoint >= 0x30000 && codepoint <= 0x3134F) || (codepoint >= 0x31350 && codepoint <= 0x323AF) || // CJK G, H
         (codepoint >= 0xAC00 && codepoint <= 0xD7AF) ||   // hangul syllables
-        (codepoint >= 0x17000 && codepoint <= 0x187FF)  // tangut
+        (codepoint >= 0x17000 && codepoint <= 0x187FF) || // tangut
+        (codepoint >= 0x18E00 && codepoint <= 0x191DF) || // jurchen
+        (codepoint >= 0x3D000 && codepoint <= 0x3FC3F) // seal
         ) { 
         return HAN_HANG_TANG
         }
