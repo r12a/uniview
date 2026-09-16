@@ -1447,6 +1447,7 @@ function showAge () {
                 case 'x': c = 'c15-0'; break;
                 case 'y': c = 'c16-0'; break;
                 case 'z': c = 'c17-0'; break;
+                case 'A': c = 'c18-0'; break;
                 }
             nodeArray[i].classList.add(c)
             }
