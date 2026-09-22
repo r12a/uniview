@@ -31,6 +31,7 @@ const IN_U_DB = 2 // a character in the u.js database
 const HAN_HANG_TANG = 3 // Han, Hangul, or Tangut character
 const SURROGATE = 4  // a surrogate code point
 const PRIVATEUSE = 5 // a private use character
+const IMAGE_NO_DATA = 6 // Jurchen - no data but images available
 
 const SVG = 5 // in scriptGroups indicates whether SVG glyphs available
 
@@ -96,7 +97,29 @@ function togglePanelDestination () {
 		}
 	}
 
-function adjacentChar (codepoint, direction) {
+
+
+
+
+
+
+
+function adjacentCharXX (codepoint, direction) {
+	// output: shows the next or previous character in the database in the details panel
+	// codepoint: integer, the decimal Unicode scalar value of the character currently displayed
+	// direction: integer, either 1 or -1
+	
+    const charType = getCharType(codepoint)
+	while ((charType === IMAGE_NO_DATA || codepoint !== 0) && codepoint !== U.length) {
+		codepoint += direction
+		if (charType === IN_U_DB || charType === HAN_HANG_TANG || charType === IMAGE_NO_DATA) { break }
+		}
+	printProperties(codepoint)
+	}
+
+
+
+function adjacentCharX (codepoint, direction) {
 	// output: shows the next or previous character in the database in the details panel
 	// codepoint: integer, the decimal Unicode scalar value of the character currently displayed
 	// direction: integer, either 1 or -1
@@ -107,6 +130,21 @@ function adjacentChar (codepoint, direction) {
 		if (charType === IN_U_DB || charType === HAN_HANG_TANG) { break }
 		}
 	printProperties(codepoint)
+	}
+
+
+
+function adjacentChar (codepoint, direction) {
+	// output: shows the next or previous character in the database in the details panel
+	// codepoint: integer, the decimal Unicode scalar value of the character currently displayed
+	// direction: integer, either 1 or -1
+	
+	while (codepoint !== 0 && codepoint !== U.length) {
+		codepoint += direction
+        var charType = getCharType(codepoint)
+		if (charType === IN_U_DB || charType === HAN_HANG_TANG || charType === IMAGE_NO_DATA) { break }
+		}
+	if (codepoint !== 0 && codepoint !== U.length) printProperties(codepoint)
 	}
 
 
@@ -601,7 +639,27 @@ function createMatrix ( formField ) {
                         td.style.fontFamily = document.getElementById('chFont').value
                         }
                     }
-            
+                 
+                // character has image and images required, but no data (eg. Jurchen)
+				if (charType === IMAGE_NO_DATA) {
+                    if (document.getElementById('graphicsToggle').checked === true) {
+                        while( hexNum.length < 4 ) hexNum = '0' + hexNum
+                        img = td.appendChild( document.createElement( 'img' ))
+                        scriptGroup = findScriptGroup(cCell)
+                        
+                        imgName = '../c/'+scriptGroup.replace(/ /g,'_')+'/large/'+hexNum+'.png'
+                        
+                        img.src = imgName
+                        img.style.height = document.getElementById('fontSize').value
+                        }
+                    else {
+                        td.appendChild( document.createTextNode( getCharFromInt(cCell) ))
+                        td.classList.add('chSpan')
+                        td.style.fontSize = document.getElementById('fontSize').value
+                        td.style.fontFamily = document.getElementById('chFont').value
+                        }
+                    }
+           
                 // surrogates
 				if (charType === SURROGATE) {
                     td.appendChild( document.createTextNode( 'X' ))              
@@ -916,10 +974,13 @@ function getCharType (codepoint) {
         (codepoint >= 0x30000 && codepoint <= 0x3134F) || (codepoint >= 0x31350 && codepoint <= 0x323AF) || // CJK G, H
         (codepoint >= 0xAC00 && codepoint <= 0xD7AF) ||   // hangul syllables
         (codepoint >= 0x17000 && codepoint <= 0x187FF) || // tangut
-        (codepoint >= 0x18E00 && codepoint <= 0x191DF) || // jurchen
+        //(codepoint >= 0x18E00 && codepoint <= 0x191DF) || // jurchen
         (codepoint >= 0x3D000 && codepoint <= 0x3FC3F) // seal
         ) { 
         return HAN_HANG_TANG
+        }
+    else if (codepoint >= 0x18E00 && codepoint <= 0x191DF) {
+        return IMAGE_NO_DATA
         }
     else if ( U[codepoint] ) {
         return IN_U_DB
@@ -950,7 +1011,7 @@ function getDataFor (codepoint) {
 	//else if (charType == UNASSIGNED) return hexcp+"; is an unassigned code point inside a defined block.;;;;;;;;;;;;;;;;;"
 	else if (charType == UNASSIGNED) return " is an unassigned code point inside a defined block.;;;;;;;;;;;;;;;;;"
 	//else if (charType == HAN_HANG_TANG) return hexcp+";["+ findScriptGroup( codepoint )+"];Lo;0;L;;;;;N;;;;;;;;;"
-	else if (charType == HAN_HANG_TANG) return "["+ findScriptGroup( codepoint )+"];Lo;0;L;;;;;N;;;;;;;;;"
+	else if (charType == HAN_HANG_TANG || charType == IMAGE_NO_DATA) return "["+ findScriptGroup( codepoint )+"];Lo;0;L;;;;;N;;;;;;;;;"
 	//else if (charType == PRIVATEUSE) return hexcp+";["+ findScriptGroup( codepoint )+"];Co;0;L;;;;;N;;;;;;;;;"
 	else if (charType == PRIVATEUSE) return "["+ findScriptGroup( codepoint )+"];Co;0;L;;;;;N;;;;;;;;;"
 	else if (charType > SURROGATE) return hexcp+";["+ findScriptGroup( codepoint )+"];;;;;;;;;;;;;;;;;"
@@ -2282,7 +2343,7 @@ function printProperties ( codepoint ) {
     scriptGroup = findScriptGroup(codepoint)  // finds the BLOCK name
     console.log('\tScript group:',scriptGroup)
     
-    if (charType === IN_U_DB || charType === HAN_HANG_TANG) {
+    if (charType === IN_U_DB || charType === HAN_HANG_TANG || charType === IMAGE_NO_DATA) {
         scriptISOCode = findScriptISO(codepoint)  // finds the ISO tag
         if (scriptISOCode !== '') scriptName = linkDB[scriptISOCode].script // the name of the script
         else scriptName = ''
@@ -2302,7 +2363,7 @@ function printProperties ( codepoint ) {
     out += `</div>\n`
    
     
-	if (charType == IN_U_DB || charType == HAN_HANG_TANG || charType == PRIVATEUSE) { 
+	if (charType == IN_U_DB || charType == HAN_HANG_TANG || charType == PRIVATEUSE || charType === IMAGE_NO_DATA) { 
 		cRecord = charData.split(';')
         
         // *** REMOVE FOR NOW TO CHECK EFFECT ***
@@ -2315,7 +2376,7 @@ function printProperties ( codepoint ) {
         out += `>`
         
          // add img, if available and graphic toggle set
-		if (document.getElementById('graphicsToggle').checked === true && charType === IN_U_DB) {
+		if (document.getElementById('graphicsToggle').checked === true && (charType === IN_U_DB || charType === IMAGE_NO_DATA)) {
             if (hasSVG[scriptGroup] === true) imgName = `../c/${ scriptGroup.replace(/ /g,'_') }/${ cpHex }.svg`
             else imgName = `../c/${ scriptGroup.replace(/ /g,'_') }/large/${ cpHex }.png`
 
@@ -2329,12 +2390,25 @@ function printProperties ( codepoint ) {
             }
         out += `</div>\n`
 
-		
+
+
         // character no. & name
         out += `<div id="characterName" class="copyme" title="Click on this to copy it to the clipboard.">`
         out += `<span style="margin-inline-end:.75em;">U+${ cpHex }:</span>`
         out += `${ ' '+cRecord[CHAR_NAME] }`
         out += `</div>\n`
+
+
+
+        //show Unicode block, with link
+        _charScriptGroup = scriptGroup
+        out += `<p class="padBlockStart" style="margin-block-start:3em;"><strong>Unicode block: <a href="#" onclick="showSelection( getRange(_charScriptGroup) ); highlightCharInTable(${ codepoint }); return false;">${ _charScriptGroup }</a></strong></p>`
+
+        //display script group
+        if (charType === IN_U_DB) {
+            _charScriptGroup = scriptGroup
+            out += `<p class="padBlockStart"><strong>Script group: <span class="subcat">${ st[cRecord[SUBTITLE_FIELD]] }</span></strong></p>`
+            }
 
 
 
@@ -2465,7 +2539,7 @@ function printProperties ( codepoint ) {
         out += `</tbody></table>`
 
 
-
+/* MOVED UPWARDS
         //show Unicode block, with link
         _charScriptGroup = scriptGroup
         out += `<p class="padBlockStart"><strong>Unicode block: <a href="#" onclick="showSelection( getRange(_charScriptGroup) ); highlightCharInTable(${ codepoint }); return false;">${ _charScriptGroup }</a></strong></p>`
@@ -2475,7 +2549,7 @@ function printProperties ( codepoint ) {
             _charScriptGroup = scriptGroup
             out += `<p class="padBlockStart"><strong>Script group: <span class="subcat">${ st[cRecord[SUBTITLE_FIELD]] }</span></strong></p>`
             }
-
+*/
         // return block directory name if scriptGroups says that there are character notes for this block
         var blockfile = charInfoPointer(cpHex)
 
